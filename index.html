@@ -748,6 +748,32 @@
 .st-ok{font-size:10.5px;color:#3a9a5c;font-weight:900;background:#e3f7ea;border-radius:9px;padding:3px 9px}
 .st-ck{flex:0 0 auto;background:linear-gradient(135deg,#b79bf0,#9270d8);color:#fff;border:none;border-radius:11px;padding:6px 14px;font-size:11px;font-weight:900;cursor:pointer}
 .st-ck:active{transform:scale(.96)}
+.st-hist{flex:0 0 auto;background:#f0e8ff;border:none;border-radius:10px;padding:3px 9px;font-size:9.5px;font-weight:800;color:#7a52c0;cursor:pointer;margin-right:6px}
+.st-hist:active{transform:scale(.95)}
+/* 学习任务·近14天打卡历史 */
+.hist-chart{display:flex;align-items:flex-end;gap:5px;height:120px;padding:6px 2px 0;overflow-x:auto}
+.hist-col{flex:0 0 auto;width:30px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.hist-bar{width:18px;border-radius:5px 5px 0 0;background:linear-gradient(180deg,#c9b3f5,#a987e6);min-height:3px;transition:height .3s}
+.hist-bar.ok{background:linear-gradient(180deg,#7ed494,#4caf6e)}
+.hist-c{font-size:9.5px;font-weight:900;color:#6a5a8a;margin-top:3px}
+.hist-d{font-size:8px;color:#a99ab8;line-height:1.2;text-align:center;margin-top:2px}
+.hist-sum{font-size:11px;color:#6a5a8a;background:#f6f1ff;border-radius:12px;padding:8px 10px;margin-top:10px;line-height:1.6}
+.hist-sum b{color:#7a52c0;font-size:13px}
+/* m2/m5 任务打卡卡片（绿系，与 m6 紫系区分） */
+.tk-card{background:linear-gradient(160deg,#f4fbf5,#e9f7ee);border:1.5px solid #cfeede;border-radius:16px;padding:11px 12px;margin-bottom:9px;position:relative;overflow:hidden}
+.tk-card.done{background:linear-gradient(160deg,#eafaf0,#d8f3e2);border-color:#bfe9cd}
+.tk-card::after{content:"";position:absolute;right:-12px;bottom:-12px;width:42px;height:42px;background:radial-gradient(circle,#dcf3e2,transparent 70%);opacity:.6}
+.tk-top{display:flex;align-items:center;gap:8px}
+.tk-name{font-size:13px;font-weight:900;color:#2f5a3a;flex:1;line-height:1.2}
+.tk-meta{font-size:10px;color:#7a9a82;margin-top:5px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-weight:600}
+.tk-prog{height:8px;background:#e2f1e7;border-radius:6px;margin:8px 0 7px;overflow:hidden}
+.tk-bar{height:100%;background:linear-gradient(90deg,#7ed494,#4caf6e);border-radius:6px;transition:width .3s}
+.tk-card.done .tk-bar{background:linear-gradient(90deg,#5cc47e,#3f9d5e)}
+.tk-foot{display:flex;align-items:center;gap:8px}
+.tk-cnt{font-size:10.5px;color:#4a7a5a;font-weight:800}
+.tk-ok{font-size:10.5px;color:#3a9a5c;font-weight:900;background:#e3f7ea;border-radius:9px;padding:3px 9px}
+.tk-ck{flex:0 0 auto;background:linear-gradient(135deg,#7ed494,#4caf6e);color:#fff;border:none;border-radius:11px;padding:6px 14px;font-size:11px;font-weight:900;cursor:pointer}
+.tk-ck:active{transform:scale(.96)}
 /* ===== 学习模块·疾病详情长页（淡紫多巴胺） ===== */
 #m6DiseaseMask .dz-card{max-width:400px;max-height:90vh;overflow-y:auto;background:linear-gradient(180deg,#fbf7ff,#f3edfb);padding:0}
 #dzBody{}
@@ -1492,10 +1518,10 @@ function switchModule(id,btn){
 
 function isDone(mod){
   if(mod==='m1'){const c=state.cards.m1||{};return ['m1-1','m1-2','m1-3','m1-4'].every(k=>c[k]);}
-  if(mod==='m2'){const a=state.tasks.m2||[];return a.length>0&&a.every(t=>t.done);}
+  if(mod==='m2'){const a=state.tasks.m2||[];return a.length>0&&a.every(t=>taskCnt(t)>=taskGoal(t));}
   if(mod==='m3')return (state.inspire||[]).length>=1;
   if(mod==='m4')return Object.keys(state.quizDone||{}).length>=1;
-  if(mod==='m5'){const c=state.circles.m5||[false,false,false];const tl=state.tasks.m5||[];const list=tl.every(t=>t.done);return c[0]&&c[1]&&c[2]&&(tl.length===0||list);}
+  if(mod==='m5'){const c=state.circles.m5||[false,false,false];const tl=state.tasks.m5||[];const list=tl.every(t=>taskCnt(t)>=taskGoal(t));return c[0]&&c[1]&&c[2]&&(tl.length===0||list);}
   if(mod==='m6')return state.pomoMin>=1||studyDoneToday();
   if(mod==='m7')return (state.fin.records||[]).length>=1;
   if(mod==='m8'){const u=state.unlock||{};return ['u1','u2','u3','u4','u5'].every(k=>u[k]);}
@@ -1506,10 +1532,10 @@ function isDone(mod){
 
 function updateProgress(mod){
   if(mod==='m1'){const c=state.cards.m1||{};const n=['m1-1','m1-2','m1-3','m1-4'].filter(k=>c[k]).length;setNum('c-m1-n',n);setBar('bar-m1',n/4*100);}
-  if(mod==='m2'){const a=state.tasks.m2||[];const n=a.filter(t=>t.done).length;setNum('c-m2-n',n);setNum('c-m2-t',a.length);setBar('bar-m2',a.length?n/a.length*100:0);}
+  if(mod==='m2'){const a=state.tasks.m2||[];const n=a.filter(t=>taskCnt(t)>=taskGoal(t)).length;setNum('c-m2-n',n);setNum('c-m2-t',a.length);setBar('bar-m2',a.length?n/a.length*100:0);}
   if(mod==='m3'){const n=(state.inspire||[]).length;setNum('c-m3-n',n);setBar('bar-m3',Math.min(n/5,1)*100);}
   if(mod==='m4'){const n=Object.keys(state.quizDone||{}).length;setNum('c-m4-n',n);setBar('bar-m4',Math.min(n/10,1)*100);}
-  if(mod==='m5'){const c=state.circles.m5||[false,false,false];let n=c.filter(Boolean).length;const extra=(state.tasks.m5||[]).filter(t=>t.done).length;n+=extra;const tot=3+(state.tasks.m5||[]).length;setNum('c-m5-n',n);setBar('bar-m5',tot?n/tot*100:0);}
+  if(mod==='m5'){const c=state.circles.m5||[false,false,false];let n=c.filter(Boolean).length;const extra=(state.tasks.m5||[]).filter(t=>taskCnt(t)>=taskGoal(t)).length;n+=extra;const tot=3+(state.tasks.m5||[]).length;setNum('c-m5-n',n);setBar('bar-m5',tot?n/tot*100:0);}
   if(mod==='m6'){setNum('c-m6-n',state.pomoMin);setBar('bar-m6',Math.min(state.pomoMin/120,1)*100);}
   if(mod==='m7'){const b=state.fin.balance||0;const g=state.fin.goal||2000;setNum('fin-balance',b);setBar('bar-m7',g?Math.max(0,Math.min(b/g,1))*100:0);}
   if(mod==='m8'){const u=state.unlock||{};const n=['u1','u2','u3','u4','u5'].filter(k=>u[k]).length;setNum('c-m8-n',n);setBar('bar-m8',n/5*100);
@@ -1550,24 +1576,44 @@ function addItem(mod){
   showModal('新增任务',[
     {label:'任务内容',type:'text',id:'txt',ph:'例如：21:00 逻辑训练'},
     {label:'截止时间(可选)',type:'time',id:'due'},
+    {label:'每日目标量(选填,如 50;留空=每天打卡 1 次)',type:'text',id:'amt',ph:'例如 50'},
     {label:'提醒方式',type:'seg',id:'rm',opts:['闹钟+短信','仅闹钟','仅短信','不提醒'],def:'闹钟+短信'}
   ],(v)=>{
     const arr=state.tasks[mod]||(state.tasks[mod]=[]);
-    arr.push({id:uid(),text:v.txt,done:false,due:v.due,rm:v.rm});
+    arr.push({id:uid(),text:v.txt,done:false,due:v.due,rm:v.rm,amt:parseInt(v.amt)||0,log:{}});
     renderList(mod);updateProgress(mod);
   });
 }
+function taskGoal(t){return (t.amt&&t.amt>0)?t.amt:1;}
+function taskCnt(t){const today=todayStr();return (t.log&&t.log[today])||0;}
 function renderList(mod){
   const box=document.getElementById('list-'+mod);if(!box)return;
   const arr=state.tasks[mod]||[];
+  if(!arr.length){box.innerHTML='<div class="dl-nores" style="padding:10px">还没有任务，点下面"新增"加一个，每天打卡见成长 📈</div>';return;}
+  const today=todayStr();
   box.innerHTML=arr.map(t=>{
-    const over=(t.due&&!t.done&&isOverdue(t.due))?' over':'';
-    const due=t.due?'<span class="due'+over+'">⏰'+t.due+'</span>':'';
-    return '<div class="item '+(t.done?'done':'')+'" data-id="'+t.id+'" onclick="toggleItem(this,\''+mod+'\')">'
-      +'<div class="check-btn '+(t.done?'done':'')+'"></div>'
-      +'<div class="t">'+esc(t.text)+'</div>'+due
-      +'<button class="del" onclick="delItem(event,\''+mod+'\',\''+t.id+'\')">×</button></div>';
+    const cnt=taskCnt(t),goal=taskGoal(t),pct=Math.min(cnt/goal*100,100),done=cnt>=goal;
+    const over=(t.due&&!done&&isOverdue(t.due))?' over':'';
+    const due=t.due?'<span class="due'+over+'">⏰'+t.due+(isOverdue(t.due)?' 已过期':'')+'</span>':'';
+    const amtTxt=t.amt>0?('每日 '+t.amt+' · '):'每天打卡 · ';
+    return '<div class="tk-card'+(done?' done':'')+'">'
+      +'<div class="tk-top"><div class="tk-name">'+esc(t.text)+'</div><button class="del" onclick="delItem(event,\''+mod+'\',\''+t.id+'\')">×</button></div>'
+      +'<div class="tk-meta">'+amtTxt+due+'</div>'
+      +'<div class="tk-prog"><div class="tk-bar" style="width:'+pct+'%"></div></div>'
+      +'<div class="tk-foot"><span class="tk-cnt">今日 '+cnt+'/'+goal+(done?' ✅':'')+'</span>'
+      +(done?'<span class="tk-ok">今日达标 🎉</span>':'<button class="tk-ck" onclick="taskCheckin(\''+mod+'\',\''+t.id+'\')">✅ 打卡</button>')
+      +'</div></div>';
   }).join('');
+}
+function taskCheckin(mod,id){
+  const arr=state.tasks[mod]||[];const t=arr.find(x=>x.id===id);if(!t)return;
+  t.log=t.log||{};const today=todayStr();
+  t.log[today]=(t.log[today]||0)+1;
+  const goal=taskGoal(t);
+  saveSilent();renderList(mod);
+  if(t.log[today]>=goal){toast('「'+t.text+'」今日达标，太棒了！🎉');burstFW();}
+  else toast('已打卡：'+t.text+' '+t.log[today]+'/'+goal);
+  updateProgress(mod);
 }
 function toggleItem(el,mod){
   const id=el.dataset.id;const arr=state.tasks[mod]||[];
@@ -3227,7 +3273,7 @@ function studyTaskRender(){
     const dl=t.deadline?('<span class="st-dl'+(t.deadline<today?' over':'')+'">📅 '+t.deadline+(t.deadline<today?' 已过期':'')+'</span>'):'';
     const amtTxt=t.amt>0?('每日 '+t.amt+' · '):'每天打卡 · ';
     return '<div class="st-card'+(done?' done':'')+'">'
-      +'<div class="st-top"><div class="st-name">'+esc(t.name)+'</div><button class="del" onclick="studyTaskDel('+i+')">×</button></div>'
+      +'<div class="st-top"><div class="st-name">'+esc(t.name)+'</div><button class="st-hist" onclick="studyTaskHistory(\''+t.id+'\')">📅 历史</button><button class="del" onclick="studyTaskDel('+i+')">×</button></div>'
       +'<div class="st-meta">'+amtTxt+dl+(t.note?'<span class="st-note">📝 '+esc(t.note)+'</span>':'')+'</div>'
       +'<div class="st-prog"><div class="st-bar" style="width:'+pct+'%"></div></div>'
       +'<div class="st-foot"><span class="st-cnt">今日 '+cnt+'/'+goal+(done?' ✅':'')+'</span>'
@@ -3246,6 +3292,20 @@ function studyTaskCheckin(id){
   if(typeof updateProgress==='function')updateProgress('m6');
 }
 function studyTaskDel(i){state.studyTasks.splice(i,1);saveSilent();studyTaskRender();if(typeof updateProgress==='function')updateProgress('m6');}
+function studyTaskHistory(id){
+  const t=(state.studyTasks||[]).find(x=>x.id===id);if(!t)return;
+  const goal=studyTaskGoal(t);
+  const wd=['日','一','二','三','四','五','六'];let days=[];
+  const today=new Date();
+  for(let i=13;i>=0;i--){const d=new Date(today);d.setDate(d.getDate()-i);const ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');days.push({ds,c:(t.log&&t.log[ds])||0});}
+  const max=Math.max(goal,...days.map(x=>x.c),1);
+  const rows=days.map(x=>{const pct=Math.min(x.c/max*100,100);const ok=goal>0&&x.c>=goal;return '<div class="hist-col"><div class="hist-bar'+(ok?' ok':'')+'" style="height:'+pct+'%"></div><div class="hist-c">'+x.c+'</div><div class="hist-d">'+x.ds.slice(5)+'<br>'+wd[new Date(x.ds).getDay()]+'</div></div>';}).join('');
+  const total=days.reduce((s,x)=>s+x.c,0);
+  const okDays=days.filter(x=>goal>0&&x.c>=goal).length;
+  showModal('📅 '+t.name+' · 近 14 天打卡',[
+    {type:'html',html:'<div class="hist-chart">'+rows+'</div><div class="hist-sum">近 14 天累计打卡 <b>'+total+'</b> 次 ｜ 每日目标 '+goal+' ｜ 达标日 <b>'+okDays+'</b> 天<br>坚持看得见，继续加油 💪</div>'}
+  ],null,true);
+}
 
 /* ================= 财务管理·自动记账 + 汇总升级 ================= */
 const WX_BILLS=[{m:'微信支付·蜜雪冰城',item:'珍珠奶茶',amt:12,cat:'餐饮'},{m:'美团外卖',item:'黄焖鸡米饭',amt:32,cat:'餐饮'},{m:'永辉超市',item:'水果蔬菜',amt:45,cat:'日用品'},{m:'滴滴出行',item:'打车到公司',amt:23,cat:'交通'}];
