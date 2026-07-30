@@ -729,6 +729,25 @@
 .fin-summary .sm-down{color:#2f9e63;font-weight:800}
 .fin-summary .sm-warn{display:block;margin-top:7px;background:#fff;border-radius:11px;padding:7px 9px;font-size:10.5px;color:#d8453a;font-weight:800;border:1.5px solid #ffd0cc}
 
+/* ===== 学习模块·学习任务管理 ===== */
+.st-card{background:linear-gradient(160deg,#fbf7ff,#f1e9fb);border:1.5px solid #e3d6f5;border-radius:16px;padding:11px 12px;margin-bottom:9px;position:relative;overflow:hidden}
+.st-card.done{background:linear-gradient(160deg,#eefbf0,#e3f7ea);border-color:#cdeed5}
+.st-card::after{content:"";position:absolute;right:-12px;bottom:-12px;width:42px;height:42px;background:radial-gradient(circle,#e8dcfa,transparent 70%);opacity:.6}
+.st-card.done::after{background:radial-gradient(circle,#d6f3dd,transparent 70%)}
+.st-top{display:flex;align-items:center;gap:8px}
+.st-name{font-size:13px;font-weight:900;color:#4a3a6a;flex:1;line-height:1.2}
+.st-meta{font-size:10px;color:#9a86b8;margin-top:5px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-weight:600}
+.st-dl{background:#f0e8ff;border-radius:8px;padding:1px 7px;color:#7a52c0}
+.st-dl.over{background:#ffe6e2;color:#c0392b}
+.st-note{color:#a090b8}
+.st-prog{height:8px;background:#ece3fa;border-radius:6px;margin:8px 0 7px;overflow:hidden}
+.st-bar{height:100%;background:linear-gradient(90deg,#b79bf0,#9270d8);border-radius:6px;transition:width .3s}
+.st-card.done .st-bar{background:linear-gradient(90deg,#7ed494,#4caf6e)}
+.st-foot{display:flex;align-items:center;gap:8px}
+.st-cnt{font-size:10.5px;color:#7a6a98;font-weight:800}
+.st-ok{font-size:10.5px;color:#3a9a5c;font-weight:900;background:#e3f7ea;border-radius:9px;padding:3px 9px}
+.st-ck{flex:0 0 auto;background:linear-gradient(135deg,#b79bf0,#9270d8);color:#fff;border:none;border-radius:11px;padding:6px 14px;font-size:11px;font-weight:900;cursor:pointer}
+.st-ck:active{transform:scale(.96)}
 /* ===== 学习模块·疾病详情长页（淡紫多巴胺） ===== */
 #m6DiseaseMask .dz-card{max-width:400px;max-height:90vh;overflow-y:auto;background:linear-gradient(180deg,#fbf7ff,#f3edfb);padding:0}
 #dzBody{}
@@ -1161,8 +1180,10 @@
   <div class="sec-sub">左右滑动卡片，点卡片翻面看答案</div>
   <div class="flip-wrap" id="flip-m6"></div>
   <button class="add-btn" onclick="addFlip()">➕ 加一张背诵卡</button>
-  <div id="list-m6"></div>
-  <button class="add-btn" onclick="addItem('m6')">➕ 新增学习任务(可设截止)</button>
+  <div class="sec-title">📚 学习任务管理</div>
+  <div class="sec-sub">定目标、设截止日，每天打卡，看见自己的积累 📈</div>
+  <div id="study-task-list"></div>
+  <button class="add-btn" onclick="studyTaskAdd()">➕ 新增学习任务</button>
   <div class="tip">🎓 <b>框架背诵法</b>：先搭骨架(如"病因-表现-治疗")再填血肉；配合艾宾浩斯复习点(1/2/4/7/15天)反复巩固，记得又牢又久～</div>
   <div class="sec-title">📝 智能刷题</div>
   <div class="sec-sub">选范围自动出题，答完即判分、给解析，错题自动进错题本</div>
@@ -1428,6 +1449,7 @@ function defaultState(){
     exercise:{goal:30,log:[]},
     disease:{wrong:[],review:{},lib:{}},
     flips:{m6:[],m9:[]},
+    studyTasks:[],
     fin:{records:[],cycles:[],goal:2000,balance:0},
     remind:{m1:{alarm:true,sms:true},m2:{alarm:true,sms:true},m3:{alarm:true,sms:true},m4:{alarm:true,sms:true},m5:{alarm:true,sms:true},m6:{alarm:true,sms:true},m7:{alarm:true,sms:true},m8:{alarm:true,sms:true},m9:{alarm:true,sms:true},m10:{alarm:true,sms:true}},
     checkins:{},
@@ -1474,7 +1496,7 @@ function isDone(mod){
   if(mod==='m3')return (state.inspire||[]).length>=1;
   if(mod==='m4')return Object.keys(state.quizDone||{}).length>=1;
   if(mod==='m5'){const c=state.circles.m5||[false,false,false];const tl=state.tasks.m5||[];const list=tl.every(t=>t.done);return c[0]&&c[1]&&c[2]&&(tl.length===0||list);}
-  if(mod==='m6')return state.pomoMin>=1;
+  if(mod==='m6')return state.pomoMin>=1||studyDoneToday();
   if(mod==='m7')return (state.fin.records||[]).length>=1;
   if(mod==='m8'){const u=state.unlock||{};return ['u1','u2','u3','u4','u5'].every(k=>u[k]);}
   if(mod==='m9')return (state.recCount+state.topicCount)>=1;
@@ -1644,6 +1666,7 @@ function showModal(title,fields,cb,readonly){
     if(f.type==='text')html+='<input id="mf-'+f.id+'" placeholder="'+(f.ph||'')+'">';
     else if(f.type==='textarea')html+='<textarea id="mf-'+f.id+'" placeholder="'+(f.ph||'')+'" rows="'+(f.rows||3)+'"></textarea>';
     else if(f.type==='time')html+='<input type="time" id="mf-'+f.id+'">';
+    else if(f.type==='date')html+='<input type="date" id="mf-'+f.id+'">';
     else if(f.type==='select')html+='<select id="mf-'+f.id+'">'+f.opts.map(o=>'<option>'+o+'</option>').join('')+'</select>';
     else if(f.type==='seg')html+='<div class="segs">'+f.opts.map(o=>'<div class="seg'+(o===f.def?' active':'')+'" onclick="segPick(this)">'+o+'</div>').join('')+'</div>';
     html+='</div>';
@@ -3175,7 +3198,54 @@ function m6StudyCard(id){
  const today=todayStr();const due=QZ_NODES.find(n=>!rev[id].done.includes(n)&&addDays(rev[id].base,n)<=today);
  if(due){rev[id].done=rev[id].done||[];rev[id].done.push(due);if(rev[id].done.length>=5)burstFW();saveSilent();m6RenderReview();toast('复习打卡完成，记忆更牢啦 🧠');}
 }
-function renderM6Ext(){m6RenderWrong();m6RenderReview();}
+function renderM6Ext(){m6RenderWrong();m6RenderReview();studyTaskRender();}
+/* ===== m6 学习任务管理（name / deadline / daily amount / check-in） ===== */
+function studyTaskGoal(t){return (t.amt&&t.amt>0)?t.amt:1;}
+function studyTaskCnt(t){const today=todayStr();return (t.log&&t.log[today])||0;}
+function studyDoneToday(){const arr=state.studyTasks||[];if(!arr.length)return false;return arr.some(t=>studyTaskCnt(t)>=studyTaskGoal(t));}
+function studyTaskAdd(){
+  showModal('➕ 新增学习任务',[
+    {label:'任务名称',type:'text',id:'name',ph:'例如 考研英语单词 / 每天阅读'},
+    {label:'截止日期(可选)',type:'date',id:'dl'},
+    {label:'每日目标量(选填,如 50 表示每天 50 个；留空=每天打卡 1 次)',type:'text',id:'amt',ph:'例如 50'},
+    {label:'备注(选填)',type:'text',id:'note',ph:'例如 用 APP 背'}
+  ],v=>{
+    const amt=parseInt(v.amt)||0;
+    state.studyTasks=state.studyTasks||[];
+    state.studyTasks.push({id:uid(),name:v.name||'学习任务',deadline:v.dl||'',amt:amt,note:v.note||'',log:{}});
+    saveSilent();studyTaskRender();
+    toast('已添加学习任务：'+(v.name||'学习任务')+' 📚');
+  });
+}
+function studyTaskRender(){
+  const box=document.getElementById('study-task-list');if(!box)return;
+  const arr=state.studyTasks||[];
+  if(!arr.length){box.innerHTML='<div class="dl-nores" style="padding:10px">还没有学习任务，点下面"新增"定个小目标，每天打卡见证积累 📈</div>';return;}
+  const today=todayStr();
+  box.innerHTML=arr.map((t,i)=>{
+    const cnt=studyTaskCnt(t),goal=studyTaskGoal(t),pct=Math.min(cnt/goal*100,100),done=cnt>=goal;
+    const dl=t.deadline?('<span class="st-dl'+(t.deadline<today?' over':'')+'">📅 '+t.deadline+(t.deadline<today?' 已过期':'')+'</span>'):'';
+    const amtTxt=t.amt>0?('每日 '+t.amt+' · '):'每天打卡 · ';
+    return '<div class="st-card'+(done?' done':'')+'">'
+      +'<div class="st-top"><div class="st-name">'+esc(t.name)+'</div><button class="del" onclick="studyTaskDel('+i+')">×</button></div>'
+      +'<div class="st-meta">'+amtTxt+dl+(t.note?'<span class="st-note">📝 '+esc(t.note)+'</span>':'')+'</div>'
+      +'<div class="st-prog"><div class="st-bar" style="width:'+pct+'%"></div></div>'
+      +'<div class="st-foot"><span class="st-cnt">今日 '+cnt+'/'+goal+(done?' ✅':'')+'</span>'
+      +(done?'<span class="st-ok">今日达标 🎉</span>':'<button class="st-ck" onclick="studyTaskCheckin(\''+t.id+'\')">✅ 打卡</button>')
+      +'</div></div>';
+  }).join('');
+}
+function studyTaskCheckin(id){
+  const t=(state.studyTasks||[]).find(x=>x.id===id);if(!t)return;
+  t.log=t.log||{};const today=todayStr();
+  t.log[today]=(t.log[today]||0)+1;
+  const goal=studyTaskGoal(t);
+  saveSilent();studyTaskRender();
+  if(t.log[today]>=goal){toast('「'+t.name+'」今日达标，太棒了！🎉');burstFW();}
+  else toast('已打卡：'+t.name+' '+t.log[today]+'/'+goal);
+  if(typeof updateProgress==='function')updateProgress('m6');
+}
+function studyTaskDel(i){state.studyTasks.splice(i,1);saveSilent();studyTaskRender();if(typeof updateProgress==='function')updateProgress('m6');}
 
 /* ================= 财务管理·自动记账 + 汇总升级 ================= */
 const WX_BILLS=[{m:'微信支付·蜜雪冰城',item:'珍珠奶茶',amt:12,cat:'餐饮'},{m:'美团外卖',item:'黄焖鸡米饭',amt:32,cat:'餐饮'},{m:'永辉超市',item:'水果蔬菜',amt:45,cat:'日用品'},{m:'滴滴出行',item:'打车到公司',amt:23,cat:'交通'}];
