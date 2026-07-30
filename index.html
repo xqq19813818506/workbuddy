@@ -3950,20 +3950,27 @@ function m1zIsAbstract(q){
   return (wh&&food)||(adj&&food);
 }
 function m1zRecommend(q){
-  const soups=RECIPES.filter(r=>r.cat==='汤');
-  const soupCards=soups.map(r=>{
+  const hasSoup=/汤/.test(q);
+  const hasCongee=/粥/.test(q);
+  const hasStaple=/面|粉|饭|主食|餐/.test(q);
+  let label='菜',icon='🥘',builtInCats=['快手','家常','素菜','荤菜'],quickPicks=['红烧排骨','水煮牛肉','京酱肉丝','口水鸡','香煎带鱼','蚝油生菜','干锅花菜','蚂蚁上树'];
+  if(hasSoup){label='汤';icon='🥣';builtInCats=['汤'];quickPicks=['冬瓜排骨汤','银耳莲子汤','山药排骨汤','莲藕排骨汤','红枣桂圆汤','西湖牛肉羹','鸡丝豆腐汤','平菇蛋花汤'];}
+  else if(hasCongee){label='粥';icon='🥣';builtInCats=[];quickPicks=['皮蛋瘦肉粥','南瓜小米粥','红枣银耳粥','山药枸杞粥','八宝粥','桂圆红枣粥','小米南瓜粥','蔬菜瘦肉粥'];}
+  else if(hasStaple){label='主食';icon='🍜';builtInCats=['主食'];quickPicks=['阳春面','葱油拌面','担担面','兰州牛肉面','韩式拌饭','扬州炒饭','虾仁炒面','榨菜肉丝面'];}
+  const builtIns=RECIPES.filter(r=>builtInCats.includes(r.cat));
+  const picked=builtIns.slice(0,8);
+  const soupCards=picked.map(r=>{
     const idx=RECIPES.indexOf(r);
     return '<div class="m1w-card" onclick="m1ZijiOpen('+idx+')"><div class="m1w-ic">'+r.ic+'</div><div class="m1w-n">'+esc(r.n)+'</div><div class="m1w-meta"><span class="m1w-tag" style="background:#e6f9e8;color:#3a8a4a">内置真实配方</span><span>⏱ '+r.t+'</span></div><div class="m1w-kcal">'+r.k+'</div></div>';
   }).join('');
-  const quickPicks=['冬瓜排骨汤','银耳莲子汤','山药排骨汤','莲藕排骨汤','红枣桂圆汤','西湖牛肉羹','鸡丝豆腐汤','平菇蛋花汤'];
-  const genCards=quickPicks.map(n=>'<div class="m1w-card m1z-gen" onclick="m1ZijiOpenGen(\''+esc(n).replace(/'/g,'')+'\')"><div class="m1w-ic">🥣</div><div class="m1w-n">'+esc(n)+'</div><div class="m1w-meta"><span class="m1w-tag">智能生成</span><span>点击看做法</span></div><div class="m1w-kcal">~150大卡</div></div>').join('');
-  return '<div class="m1z-reco-h">🤔 你在问 <b>"'+esc(q)+'"</b>？下面这些汤随便挑，点哪张看完整做法：</div>'
-    +'<div class="m1z-reco-sub">🥣 内置真实配方（'+soups.length+' 道 · 做法已写好）</div>'
-    +'<div class="m1w-grid">'+soupCards+'</div>'
-    +'<div class="m1z-reco-sub">🤖 热门汤智能生成（按菜名合成步骤）</div>'
-    +'<div class="m1w-grid">'+genCards+'</div>'
-    +'<div class="m1z-reco-tip">想搜具体某一道菜？直接输入菜名（如「番茄蛋花汤」「冬瓜虾仁」），按回车或输入即搜。</div>'
+  const genCards=quickPicks.map(n=>'<div class="m1w-card m1z-gen" onclick="m1ZijiOpenGen(\''+esc(n).replace(/'/g,'')+'\')"><div class="m1w-ic">'+icon+'</div><div class="m1w-n">'+esc(n)+'</div><div class="m1w-meta"><span class="m1w-tag">智能生成</span><span>点击看做法</span></div><div class="m1w-kcal">~'+(label==='汤'?'150':label==='粥'?'180':'300')+'大卡</div></div>').join('');
+  let html='<div class="m1z-reco-h">🤔 你在问 <b>"'+esc(q)+'"</b>？下面这些'+label+'随便挑，点哪张看完整做法：</div>';
+  if(picked.length){html+='<div class="m1z-reco-sub">🥘 内置真实配方（'+picked.length+' 道 · 做法已写好）</div><div class="m1w-grid">'+soupCards+'</div>';}
+  const ex=(label==='汤')?'如「番茄蛋花汤」「冬瓜排骨汤」':(label==='粥')?'如「皮蛋瘦肉粥」「南瓜小米粥」':(label==='主食')?'如「番茄牛肉面」「蛋炒饭」':'如「番茄炒蛋」「红烧排骨」';
+  html+='<div class="m1z-reco-sub">🤖 热门'+label+'智能生成（按菜名合成步骤）</div><div class="m1w-grid">'+genCards+'</div>'
+    +'<div class="m1z-reco-tip">想搜具体某一道菜？直接输入菜名（'+ex+'），按回车或输入即搜。</div>'
     +'<div class="m1z-reco-qp">⚡ 快速搜：'+quickPicks.map(n=>'<span class="m1z-hist" onclick="m1zQ=\''+esc(n).replace(/'/g,'')+'\';var i=document.getElementById(\'m1z-input\');if(i)i.value=\''+esc(n).replace(/'/g,'')+'\';m1ZijiRender()">'+esc(n)+'</span>').join('')+'</div>';
+  return html;
 }
 function m1zMatch(r,q){
   if(!q)return true;
@@ -4124,7 +4131,7 @@ function m1ZijiOpenGen(q){
   else if(has('煎')||has('炸')||has('烤')){tech={time:'20分钟',diff:'中等',steps:['主料腌渍后吸干水分','热油中小火煎/炸至两面金黄','翻面煎熟，撒盐/椒盐','出锅装盘']};}
   let suit='一般人群均可，搭配蔬菜更均衡',avoid='',tips='',menFlag='';
   const ingAdd=[],stepAdd=[];
-  if(has('辣')||has('麻辣')||has('干锅')||has('川')){ingAdd.push('干辣椒/小米辣 适量','花椒 1小撮');stepAdd.unshift('下干辣椒、花椒爆出辣香');avoid+=' 经期、胃溃疡、上火者少食辛辣';menFlag='⚠️ 经期适量：含辛辣调味，少量解馋即可';}
+  if(has('辣')||has('麻辣')||has('干锅')||has('川')||has('水煮')){ingAdd.push('干辣椒/小米辣 适量','花椒 1小撮');stepAdd.unshift('下干辣椒、花椒爆出辣香');avoid+=' 经期、胃溃疡、上火者少食辛辣';menFlag='⚠️ 经期适量：含辛辣调味，少量解馋即可';}
   if(has('糖醋')){ingAdd.push('白糖 1勺','香醋 1勺');tips='糖醋味偏甜，减脂期注意控糖';}
   else if(has('可乐')||has('蜜')||has('拔丝')||has('甜')||has('糖')){if(has('可乐')){ingAdd.push('可乐 1罐（代糖上色，自然甜）');tips='可乐自带糖分，减脂期少放、少喝汤';}else{ingAdd.push('白糖 1勺','香醋 1勺');tips='偏甜口味，减脂期注意控糖';}}
   if(has('麻')){ingAdd.push('花椒 1小把');stepAdd.push('出锅前淋花椒油增香');}
