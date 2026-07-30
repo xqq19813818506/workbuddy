@@ -834,6 +834,11 @@
 .m1z-class{background:linear-gradient(135deg,#fff6ea,#ffeede);border:1.5px solid #ffdcc4;border-radius:16px;padding:10px 12px;margin-bottom:12px}
 .m1z-class-h{font-size:11.5px;font-weight:900;color:#e0702a;margin-bottom:5px}
 .m1z-class-b{font-size:10.5px;line-height:1.7;color:#8a6a4a}
+.m1z-reco-wrap{display:block}
+.m1z-reco-h{background:linear-gradient(135deg,#fff6ea,#ffeede);border:1.5px solid #ffdcc4;border-radius:14px;padding:10px 14px;margin-bottom:10px;font-size:13px;line-height:1.55;color:#5a3a1a;text-align:left}
+.m1z-reco-sub{margin:10px 0 6px;font-size:11.5px;font-weight:900;color:#c0875a;letter-spacing:.5px;text-align:left}
+.m1z-reco-tip{margin-top:10px;font-size:10.5px;color:#a07a5a;text-align:center;line-height:1.5}
+.m1z-reco-qp{margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
 .m1z-nut-sec{border-left:4px solid #8fd19e}
 .m1z-nut{font-size:11.5px;line-height:1.6;color:#3f7d52;background:#f1f9f2;border-radius:11px;padding:8px 10px;font-weight:600}
 .m1z-total{text-align:center;font-size:11px;color:#a98f7c;margin:10px 0 4px}
@@ -3926,7 +3931,7 @@ let m1zQ='',m1zCat='全部',m1zMens=false,m1zSort='默认';
 function m1ZijiBody(){
   const tags=M1Z_TAGS.map(t=>'<span class="m1z-tag'+(m1zQ===t?' on':'')+'" onclick="m1zQ=\''+esc(t)+'\';var i=document.getElementById(\'m1z-input\');if(i)i.value=\''+esc(t)+'\';m1ZijiRender()">'+t+'</span>').join('');
   return '<div class="sec-sub" style="margin-left:0;text-align:left">内置 30 道家常菜 · 多维搜索(菜名/食材/口味/功效) · 点开看食材·步骤·营养·宜忌 · 一键生成今日菜谱</div>'
-  +'<div class="m1w-search"><span class="ic">🔍</span><input id="m1z-input" placeholder="想做点什么？菜名/食材/口味/功效：番茄、牛肉、补蛋白、快手、辣椒炒肉…" oninput="m1zQ=this.value;m1ZijiRender()"><span class="m1w-clear" onclick="m1zClear()">×</span></div>'
+  +'<div class="m1w-search"><span class="ic">🔍</span><input id="m1z-input" placeholder="想做点什么？菜名/食材/口味/功效：番茄、牛肉、补蛋白、快手、辣椒炒肉…" value="'+(m1zQ?esc(m1zQ):'')+'" oninput="m1zQ=this.value;m1ZijiRender()"><span class="m1w-clear" onclick="m1zClear()">×</span></div>'
   +'<div class="m1w-cats" id="m1z-cats">'+M1W_CATS.map(c=>'<span class="m1w-cat'+(c===m1zCat?' on':'')+'" data-cat="'+c+'" onclick="m1zCat=this.dataset.cat;document.querySelectorAll(\'#m1z-cats .m1w-cat\').forEach(x=>x.classList.toggle(\'on\',x.dataset.cat===m1zCat));m1ZijiRender()">'+c+'</span>').join('')+'</div>'
   +'<div class="m1z-tags">'+tags+'</div>'
   +'<div class="m1z-sort"><span class="m1z-sort-h">↕️ 排序：</span>'+['默认','热量低→高','热量高→低','难易简→难'].map(s=>'<span class="m1z-sort-c'+(m1zSort===s?' on':'')+'" onclick="m1zSort=\''+s+'\';document.querySelectorAll(\'.m1z-sort-c\').forEach(x=>x.classList.toggle(\'on\',x.textContent===m1zSort));m1ZijiRender()">'+s+'</span>').join('')+'</div>'
@@ -3936,6 +3941,29 @@ function m1ZijiBody(){
   +'<div class="m1z-auto"><button class="btn-primary" onclick="m1ZijiAuto(false)">🤖 自动生成今日菜谱</button><button class="btn-ghost" onclick="m1ZijiAuto(true)">🩸 经期暖身版</button></div>'
   +'<div class="m1z-class"><div class="m1z-class-h">🥗 营养价值小课堂</div><div class="m1z-class-b">🥚 鸡蛋＝最易吸收的优质蛋白 ｜ 🐟 鱼肉＝DHA护脑 ｜ 🥬 深绿菜＝补铁补叶酸 ｜ 🍅 番茄＝番茄红素抗氧化 ｜ 🌽 粗粮＝膳食纤维稳血糖 ｜ 🍖 红肉＝补铁主力(经期友好)</div></div>'
   +'<div class="m1w-custom-wrap"><div class="m1w-custom-title">—— 我的拿手菜（可存完整菜谱） ——</div><div id="m1z-custom-list"></div><button class="add-btn" onclick="m1ZijiAdd()">➕ 新增拿手菜</button></div>';
+}
+function m1zIsAbstract(q){
+  if(!q||q.length<2)return false;
+  const food=/汤|菜|饭|粥|餐|吃|喝|做/.test(q);
+  const wh=/什么|哪些|哪|怎么|如何|求|推荐|有没有|挑|选/.test(q);
+  const adj=/好喝|好吃|营养|清淡|养胃|减脂|补血|补气|排毒|祛湿|暖胃|温补|适合|搭配|功效|简单|快手|家常|热门|简单易做/.test(q);
+  return (wh&&food)||(adj&&food);
+}
+function m1zRecommend(q){
+  const soups=RECIPES.filter(r=>r.cat==='汤');
+  const soupCards=soups.map(r=>{
+    const idx=RECIPES.indexOf(r);
+    return '<div class="m1w-card" onclick="m1ZijiOpen('+idx+')"><div class="m1w-ic">'+r.ic+'</div><div class="m1w-n">'+esc(r.n)+'</div><div class="m1w-meta"><span class="m1w-tag" style="background:#e6f9e8;color:#3a8a4a">内置真实配方</span><span>⏱ '+r.t+'</span></div><div class="m1w-kcal">'+r.k+'</div></div>';
+  }).join('');
+  const quickPicks=['冬瓜排骨汤','银耳莲子汤','山药排骨汤','莲藕排骨汤','红枣桂圆汤','西湖牛肉羹','鸡丝豆腐汤','平菇蛋花汤'];
+  const genCards=quickPicks.map(n=>'<div class="m1w-card m1z-gen" onclick="m1ZijiOpenGen(\''+esc(n).replace(/'/g,'')+'\')"><div class="m1w-ic">🥣</div><div class="m1w-n">'+esc(n)+'</div><div class="m1w-meta"><span class="m1w-tag">智能生成</span><span>点击看做法</span></div><div class="m1w-kcal">~150大卡</div></div>').join('');
+  return '<div class="m1z-reco-h">🤔 你在问 <b>"'+esc(q)+'"</b>？下面这些汤随便挑，点哪张看完整做法：</div>'
+    +'<div class="m1z-reco-sub">🥣 内置真实配方（'+soups.length+' 道 · 做法已写好）</div>'
+    +'<div class="m1w-grid">'+soupCards+'</div>'
+    +'<div class="m1z-reco-sub">🤖 热门汤智能生成（按菜名合成步骤）</div>'
+    +'<div class="m1w-grid">'+genCards+'</div>'
+    +'<div class="m1z-reco-tip">想搜具体某一道菜？直接输入菜名（如「番茄蛋花汤」「冬瓜虾仁」），按回车或输入即搜。</div>'
+    +'<div class="m1z-reco-qp">⚡ 快速搜：'+quickPicks.map(n=>'<span class="m1z-hist" onclick="m1zQ=\''+esc(n).replace(/'/g,'')+'\';var i=document.getElementById(\'m1z-input\');if(i)i.value=\''+esc(n).replace(/'/g,'')+'\';m1ZijiRender()">'+esc(n)+'</span>').join('')+'</div>';
 }
 function m1zMatch(r,q){
   if(!q)return true;
@@ -3966,15 +3994,21 @@ function m1ZijiRender(){
   else if(m1zSort==='热量高→低')pool=pool.slice().sort((a,b)=>kcal(b)-kcal(a));
   else if(m1zSort==='难易简→难'){const dm={简单:1,中等:2,进阶:3};pool=pool.slice().sort((a,b)=>(dm[(RINFO[a.n]||{}).diff]||9)-(dm[(RINFO[b.n]||{}).diff]||9));}
   const grid=document.getElementById('m1z-grid');if(!grid)return;
+  grid.className='m1w-grid';
   if(q)pushZijiHist(q);
   if(!pool.length){
     if(q){
-      grid.innerHTML='<div class="m1w-card m1z-gen" onclick="m1ZijiOpenGen(\''+esc(q).replace(/'/g,'')+'\')">'
-        +'<div class="m1w-ic">🤖</div>'
-        +'<div class="m1w-n">'+esc(q)+' · 一键生成菜谱</div>'
-        +'<div class="m1w-meta"><span class="m1w-tag">AI 合成</span><span>含食材+步骤</span></div>'
-        +'<div class="m1w-kcal">智能</div></div>'
-        +'<div class="dl-nores" style="padding-top:4px">没在内置库里，已按菜名智能生成一份做法，点上面卡片查看 👆</div>';
+      if(m1zIsAbstract(q)){
+        grid.className='m1z-reco-wrap';
+        grid.innerHTML=m1zRecommend(q);
+      }else{
+        grid.innerHTML='<div class="m1w-card m1z-gen" onclick="m1ZijiOpenGen(\''+esc(q).replace(/'/g,'')+'\')">'
+          +'<div class="m1w-ic">🤖</div>'
+          +'<div class="m1w-n">'+esc(q)+' · 一键生成菜谱</div>'
+          +'<div class="m1w-meta"><span class="m1w-tag">AI 合成</span><span>含食材+步骤</span></div>'
+          +'<div class="m1w-kcal">智能</div></div>'
+          +'<div class="dl-nores" style="padding-top:4px">没在内置库里，已按菜名智能生成一份做法，点上面卡片查看 👆</div>';
+      }
     }else{
       grid.innerHTML='<div class="dl-nores">这个分类下还没有菜，换个分类或搜索试试～</div>';
     }
@@ -4063,6 +4097,12 @@ function m1ZijiOpenGen(q){
     if(has('虾')||has('虾仁')||has('蟹')){main={ic:'🦐',cat:'荤菜',pro:20,carb:2,fat:3,gi:'低',ing:['鲜虾/蟹 250g（去虾线/处理）','姜 2片','蒜 3瓣','葱 1根','料酒 1勺','食用油 1勺']};}
     else{main={ic:'🐟',cat:'荤菜',pro:22,carb:2,fat:8,gi:'低',ing:['鱼 1条（约400g，处理干净）','姜 4片','葱 2根','蒸鱼豉油 2勺','料酒 1勺']};}
   }
+  else if(has('银耳')){main={ic:'🥣',cat:'汤',pro:2,carb:30,fat:0,gi:'低',ing:['银耳 1朵（提前泡发撕小朵）','莲子/红枣 适量','冰糖 适量','清水 适量']};}
+  else if(has('莲藕')||has('莲子')){main={ic:'🥣',cat:'汤',pro:3,carb:25,fat:2,gi:'中',ing:['莲藕 1节（切块）或莲子 1把','排骨/瘦肉 200g','姜 3片','盐 适量']};}
+  else if(has('冬瓜')){main={ic:'🥣',cat:'汤',pro:2,carb:5,fat:1,gi:'低',ing:['冬瓜 500g（去皮切块）','排骨/虾仁 适量','姜 2片','盐 适量']};}
+  else if(has('山药')){main={ic:'🥣',cat:'汤',pro:3,carb:20,fat:1,gi:'中',ing:['山药 1根（去皮切段）','排骨 200g','胡萝卜 1根','姜 3片','盐 适量']};}
+  else if(has('桂圆')||has('红枣')){main={ic:'🥣',cat:'汤',pro:2,carb:25,fat:0,gi:'中',ing:['红枣 6颗（去核）','桂圆肉 1小把','冰糖 适量','清水 适量']};}
+  else if(has('西湖')||has('羹')){main={ic:'🥣',cat:'汤',pro:12,carb:8,fat:6,gi:'低',ing:['牛肉末 100g','豆腐 半盒','香菇 3朵','鸡蛋 1个','生粉 1勺','盐 适量']};}
   else if(has('豆腐')||has('豆')||has('腐竹')||has('香干')){main={ic:'🧈',cat:'素菜',pro:10,carb:4,fat:6,gi:'低',ing:['嫩豆腐 1盒','葱 1根','蒜 2瓣','生抽 1勺','蚝油 半勺','食用油 1勺']};}
   else if(has('蛋')||has('鸡蛋')||has('皮蛋')){main={ic:'🥚',cat:'荤菜',pro:14,carb:3,fat:12,gi:'中',ing:['鸡蛋 3个','葱 1根','盐 适量','食用油 1勺']};}
   else if(has('土豆')||has('马铃薯')||has('薯')){main={ic:'🥔',cat:'素菜',pro:3,carb:25,fat:6,gi:'中',ing:['土豆 2个（切丝/块）','蒜 2瓣','葱 1根','食用油 1勺','盐 适量','辣椒面（可选）']};}
@@ -4118,7 +4158,6 @@ function m1ZijiOpenGen(q){
 }
 function m1ZijiShow(){
   m1zMens=(state.m1Custom&&state.m1Custom.mens)||false;
-  m1zQ='';m1zCat='全部';
   document.getElementById('modalCard').innerHTML='<h3>🍳 自己做饭 · 菜谱搜索+自动生成</h3>'+m1ZijiBody();
   document.getElementById('modalMask').classList.add('show');
   m1ZijiRender();
@@ -4337,7 +4376,7 @@ function m1Menstruation(){
 function openM1Detail(type){
   state.m1Custom=state.m1Custom||{};
   if(type==='waimai'){m1WaimaiShow();return;}
-  if(type==='ziji'){m1ZijiShow();return;}
+  if(type==='ziji'){m1zQ='';m1zCat='全部';m1zSort='默认';m1ZijiShow();return;}
   if(type==='menstruation'){m1Menstruation();return;}
   state.m1Custom=state.m1Custom||{};
   let body='';
