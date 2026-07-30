@@ -872,6 +872,19 @@
 .m1z-actions button:active{transform:scale(.97)}
 #modalCard textarea{width:100%;border:2px solid #ffd9c2;border-radius:12px;padding:8px 10px;font-size:12px;font-family:inherit;color:#6a4a32;font-weight:600;resize:vertical;outline:none;box-sizing:border-box;background:#fff8ef}
 #modalCard textarea:focus{border-color:#ff9a5a}
+/* ===== m1 今日菜单 / 自己做饭排序 / 经期主开关 ===== */
+.m1-plan-list{display:flex;flex-direction:column;gap:7px;margin-bottom:8px}
+.m1-plan-item{display:flex;align-items:center;gap:9px;background:linear-gradient(160deg,#fffaf4,#fff1e6);border:1.5px solid #ffe2d1;border-radius:14px;padding:9px 12px;box-shadow:0 1px 3px rgba(255,154,90,.08)}
+.m1-plan-ic{font-size:19px;line-height:1}
+.m1-plan-n{flex:1;font-size:12.5px;font-weight:800;color:#5a3d2a}
+.m1z-sort{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.m1z-sort-h{font-size:10px;color:#b09a88;font-weight:800}
+.m1z-sort-c{background:#fff3e9;border:1.5px solid #f2dccb;border-radius:11px;padding:4px 9px;font-size:10px;font-weight:800;color:#b08a6a;cursor:pointer;transition:all .15s}
+.m1z-sort-c.on{background:linear-gradient(135deg,#ffd166,#f5b820);color:#5a3d12;border-color:transparent}
+.mens-mast{display:flex;align-items:center;gap:8px;margin:2px 0 10px;flex-wrap:wrap}
+.mens-mast-toggle{background:#fff0f3;border:1.5px solid #ffc6d4;color:#c24a6e;border-radius:13px;padding:6px 12px;font-size:11px;font-weight:800;cursor:pointer;user-select:none}
+.mens-mast-toggle.on{background:linear-gradient(135deg,#ff9ab2,#f25c8a);color:#fff;border-color:transparent}
+.mens-mast-tip{font-size:10px;color:#a98f9a;font-weight:600}
 
 /* ===== 来月经·饮食宜忌 ===== */
 .mens-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0}
@@ -1013,6 +1026,9 @@
       <div class="bar-wrap"><div class="bar" id="bar-m1" style="width:0%"></div></div>
     </div>
   </div>
+  <div class="sec-title">🍽️ 今日菜单</div>
+  <div class="sec-sub">点过的「加入今日菜谱」会自动汇总到这里</div>
+  <div id="m1-plan-box"></div>
   <div class="card" onclick="openM1Detail('jianjue')"><div class="ic" style="background:#ffe2d1">🎲</div><div class="info"><div class="t">懒得纠结</div><div class="d">点我进详情·查看菜名+配套题</div></div><div class="check-btn" data-id="m1-1" onclick="event.stopPropagation();toggleCard(this.parentElement,'m1')"><span class="mini">早餐</span></div></div>
   <div class="card" onclick="openM1Detail('tangshi')"><div class="ic" style="background:#ffe2d1">🏠</div><div class="info"><div class="t">线下堂食</div><div class="d">点我进详情·收藏店铺+避雷</div></div><div class="check-btn" data-id="m1-2" onclick="event.stopPropagation();toggleCard(this.parentElement,'m1')"><span class="mini">午餐</span></div></div>
   <div class="card" onclick="openM1Detail('waimai')"><div class="ic" style="background:#ffe2d1">🛵</div><div class="info"><div class="t">点外卖</div><div class="d">点我进详情·常点套餐+热量</div></div><div class="check-btn" data-id="m1-3" onclick="event.stopPropagation();toggleCard(this.parentElement,'m1')"><span class="mini">晚餐</span></div></div>
@@ -1505,6 +1521,7 @@ function switchModule(id,btn){
   document.getElementById(id).classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
+  if(id==='m1'){m1PlanRender();}
   if(id==='m4')renderQuiz();
   if(id==='m6'){renderFlip('m6');renderM6Ext();}
   if(id==='m9')renderFlip('m9');
@@ -3372,6 +3389,7 @@ function init(){
 
   MODULES.forEach(m=>renderCal(m));
   renderList('m2');renderList('m5');renderList('m6');
+  m1PlanRender();
   renderInspire();renderQuiz();
   m6DailyCards();renderFlip('m6');renderFlip('m9');
   trRenderHome();
@@ -3805,12 +3823,7 @@ function m1WaimaiGPS(){
     ()=>{toast('定位失败，可手动输入地址');m1WaimaiLocEdit();}
   );
 }
-function m1wMensToggle(){
-  m1wMens=!m1wMens;state.m1Custom=state.m1Custom||{};state.m1Custom.mens=m1wMens;saveSilent();
-  const el=document.querySelector('.m1w-mens-toggle');if(el)el.classList.toggle('on',m1wMens);
-  if(m1wOpenId)m1WaimaiOpen(m1wOpenId);
-  toast(m1wMens?'已开启经期模式：生冷辛辣会提醒 🩸':'已关闭经期模式');
-}
+function m1wMensToggle(){m1MensToggleGlobal();}
 function m1WaimaiRandom(){
   const pool=getMalls();if(!pool.length)return;
   m1WaimaiOpen(pool[Math.floor(Math.random()*pool.length)].id);
@@ -3909,13 +3922,14 @@ const RINFO={
  '土豆炖鸡':{tags:['炖菜','蛋白','碳水','暖身','鸡','土豆'],diff:'中等',pro:24,carb:28,fat:16,gi:'中',tips:'鸡块焯水去腥；土豆后放防烂',suit:'蛋白碳水均衡暖身',avoid:'油脂偏高撇浮油',mens:'ok'}
 };
 const M1Z_TAGS=['快手','下饭','补蛋白','补铁','低脂减脂','暖身','辣','清淡','汤','主食','凉菜','抗氧化','炖煮'];
-let m1zQ='',m1zCat='全部',m1zMens=false;
+let m1zQ='',m1zCat='全部',m1zMens=false,m1zSort='默认';
 function m1ZijiBody(){
   const tags=M1Z_TAGS.map(t=>'<span class="m1z-tag'+(m1zQ===t?' on':'')+'" onclick="m1zQ=\''+esc(t)+'\';var i=document.getElementById(\'m1z-input\');if(i)i.value=\''+esc(t)+'\';m1ZijiRender()">'+t+'</span>').join('');
   return '<div class="sec-sub" style="margin-left:0;text-align:left">内置 30 道家常菜 · 多维搜索(菜名/食材/口味/功效) · 点开看食材·步骤·营养·宜忌 · 一键生成今日菜谱</div>'
   +'<div class="m1w-search"><span class="ic">🔍</span><input id="m1z-input" placeholder="想做点什么？菜名/食材/口味/功效：番茄、牛肉、补蛋白、快手、汤…" oninput="m1zQ=this.value;m1ZijiRender()"><span class="m1w-clear" onclick="m1zClear()">×</span></div>'
   +'<div class="m1w-cats" id="m1z-cats">'+M1W_CATS.map(c=>'<span class="m1w-cat'+(c===m1zCat?' on':'')+'" data-cat="'+c+'" onclick="m1zCat=this.dataset.cat;document.querySelectorAll(\'#m1z-cats .m1w-cat\').forEach(x=>x.classList.toggle(\'on\',x.dataset.cat===m1zCat));m1ZijiRender()">'+c+'</span>').join('')+'</div>'
   +'<div class="m1z-tags">'+tags+'</div>'
+  +'<div class="m1z-sort"><span class="m1z-sort-h">↕️ 排序：</span>'+['默认','热量低→高','热量高→低','难易简→难'].map(s=>'<span class="m1z-sort-c'+(m1zSort===s?' on':'')+'" onclick="m1zSort=\''+s+'\';document.querySelectorAll(\'.m1z-sort-c\').forEach(x=>x.classList.toggle(\'on\',x.textContent===m1zSort));m1ZijiRender()">'+s+'</span>').join('')+'</div>'
   +'<div id="m1z-hist" class="m1z-hist-wrap"></div>'
   +'<div class="m1z-mens-row"><span class="m1w-mens-toggle'+(m1zMens?' on':'')+'" onclick="m1zMensToggle()">🩸 我最近在经期</span><span class="m1z-mens-tip">开启后生冷凉拌菜会标红提醒</span></div>'
   +'<div id="m1z-grid" class="m1w-grid"></div>'
@@ -3947,6 +3961,10 @@ function m1ZijiRender(){
   let pool=RECIPES.slice();
   if(m1zCat&&m1zCat!=='全部')pool=pool.filter(r=>r.cat===m1zCat);
   if(q)pool=pool.filter(r=>m1zMatch(r,q));
+  const kcal=r=>parseInt((r.k||'0').replace(/\D/g,''))||0;
+  if(m1zSort==='热量低→高')pool=pool.slice().sort((a,b)=>kcal(a)-kcal(b));
+  else if(m1zSort==='热量高→低')pool=pool.slice().sort((a,b)=>kcal(b)-kcal(a));
+  else if(m1zSort==='难易简→难'){const dm={简单:1,中等:2,进阶:3};pool=pool.slice().sort((a,b)=>(dm[(RINFO[a.n]||{}).diff]||9)-(dm[(RINFO[b.n]||{}).diff]||9));}
   const grid=document.getElementById('m1z-grid');if(!grid)return;
   if(q)pushZijiHist(q);
   if(!pool.length){
@@ -4066,9 +4084,23 @@ function m1ZijiAdd(){
 function m1ZijiDel(i){state.m1Custom.ziji.splice(i,1);saveSilent();m1ZijiRenderCustom();}
 function m1ZijiAddPlan(n,ic){
   state.m1zPlan=state.m1zPlan||[];
-  if(state.m1zPlan.some(x=>x.n===n)){toast('「'+n+'」已在今日菜谱里啦');return;}
-  state.m1zPlan.push({n:n,ic:ic});saveSilent();
-  toast('已加入今日菜谱：'+n+' 🍽️');
+  const today=todayStr();
+  if(state.m1zPlan.some(x=>x.n===n&&x.date===today)){toast('「'+n+'」已在今日菜单里啦');return;}
+  state.m1zPlan.push({n:n,ic:ic,date:today});saveSilent();
+  m1PlanRender();
+  toast('已加入今日菜单：'+n+' 🍽️');
+}
+function m1ZijiDelPlan(i){state.m1zPlan.splice(i,1);saveSilent();m1PlanRender();}
+function m1PlanRender(){
+  const box=document.getElementById('m1-plan-box');if(!box)return;
+  const arr=state.m1zPlan||[];
+  const today=todayStr();
+  const todays=arr.map((x,idx)=>({x,idx})).filter(o=>o.x.date===today);
+  if(!todays.length){box.innerHTML='<div class="dl-nores" style="padding:10px">今日菜单为空，去「自己做饭」或详情里点「🍽️ 加入今日菜谱」就会汇总到这里～</div>';return;}
+  box.innerHTML='<div class="m1-plan-list">'+todays.map(o=>{
+    const x=o.x;
+    return '<div class="m1-plan-item"><span class="m1-plan-ic">'+(x.ic||'🍽️')+'</span><span class="m1-plan-n">'+esc(x.n)+'</span><button class="del" onclick="event.stopPropagation();m1ZijiDelPlan('+o.idx+')">×</button></div>';
+  }).join('')+'</div>';
 }
 function m1ZijiFav(n,ic){
   state.m1zFav=state.m1zFav||[];
@@ -4087,12 +4119,21 @@ function m1ZijiLogDiet(i){
   if(typeof renderCal==='function')renderCal('m5');
   toast('已记录饮食：'+r.n+' '+kcal+'kcal 📝');
 }
-function m1zMensToggle(){
-  m1zMens=!m1zMens;state.m1Custom=state.m1Custom||{};state.m1Custom.mens=m1zMens;saveSilent();
-  const el=document.querySelector('.m1z-mens-row .m1w-mens-toggle');if(el)el.classList.toggle('on',m1zMens);
-  m1ZijiRender();
-  toast(m1zMens?'已开启经期模式：生冷凉拌会标红 🩸':'已关闭经期模式');
+function m1MensToggleGlobal(){
+  const cur=!!(state.m1Custom&&state.m1Custom.mens);
+  state.m1Custom=state.m1Custom||{};state.m1Custom.mens=!cur;saveSilent();
+  const on=!cur;
+  if(typeof m1zMens!=='undefined')m1zMens=on;
+  if(typeof m1wMens!=='undefined')m1wMens=on;
+  const zijiEl=document.querySelector('.m1z-mens-row .m1w-mens-toggle');if(zijiEl)zijiEl.classList.toggle('on',on);
+  const mensEl=document.querySelector('#modalCard .mens-mast-toggle');if(mensEl)mensEl.classList.toggle('on',on);
+  const wEl=document.querySelector('.m1w-mens-toggle');if(wEl)wEl.classList.toggle('on',on);
+  if(document.getElementById('m1z-grid')){if(typeof m1ZijiRender==='function')m1ZijiRender();}
+  if(typeof m1wOpenId!=='undefined'&&m1wOpenId){m1WaimaiOpen(m1wOpenId);}
+  toast(on?'已开启经期模式：生冷凉拌会标红 🩸':'已关闭经期模式');
 }
+function m1zMensToggle(){m1MensToggleGlobal();}
+function m1wMensToggle(){m1MensToggleGlobal();}
 function m1zClear(){m1zQ='';const i=document.getElementById('m1z-input');if(i)i.value='';m1ZijiRender();}
 
 /* ===== 来月经 · 饮食宜忌 ===== */
@@ -4201,7 +4242,8 @@ function m1Menstruation(){
   const can=MENS.can.map(x=>'<div class="mens-item"><span class="mens-ic">✅</span><div><b>'+esc(x[0])+'</b><small>'+esc(x[1])+'</small></div></div>').join('');
   const cant=MENS.cant.map(x=>'<div class="mens-item"><span class="mens-ic">⛔</span><div><b>'+esc(x[0])+'</b><small>'+esc(x[1])+'</small></div></div>').join('');
   openCustom('🩸 来月经 · 饮食宜忌',
-   '<div class="sec-sub" style="margin-left:0;text-align:left">特殊时期吃对更舒服：温补、补铁、暖身为主，避开生冷辛辣。👇先搜一下你最想吃的，告诉你能不能吃 + 吃多了会怎样。</div>'
+   '<div class="mens-mast"><span class="mens-mast-toggle'+(state.m1Custom.mens?' on':'')+'" onclick="m1MensToggleGlobal()">🩸 我最近在经期（主开关）</span><span class="mens-mast-tip">开启后，点外卖/做菜里的冷菜凉拌会同步标红提醒</span></div>'
+   +'<div class="sec-sub" style="margin-left:0;text-align:left">特殊时期吃对更舒服：温补、补铁、暖身为主，避开生冷辛辣。👇先搜一下你最想吃的，告诉你能不能吃 + 吃多了会怎样。</div>'
    +'<div class="mens-search"><span class="ic">🔍</span><input id="mens-q" placeholder="搜食物/饮品：冰、咖、糖、肉、巧克、酒…" oninput="m1MensSearch(this.value)"></div>'
    +'<div id="mens-result" class="mens-result"></div>'
    +'<div class="mens-divider">—— 通用宜忌一览 ——</div>'
