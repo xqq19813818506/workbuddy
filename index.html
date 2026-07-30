@@ -866,6 +866,16 @@
 .m1w-actions .btn-ghost{background:#fff;border:1.5px solid #ffc6a0;color:#c0651a}
 .m1w-actions .btn-primary{background:linear-gradient(135deg,#ffb07a,#ff8a5a);color:#fff}
 
+/* ===== 备份/恢复 ===== */
+.bk-box{display:flex;flex-direction:column;gap:10px;margin:6px 0 2px}
+.bk-row{display:flex;align-items:center;gap:10px;background:#fff8ef;border:1.5px solid #ffe2d1;border-radius:14px;padding:10px 12px}
+.bk-row b{font-size:12px;color:#5a3d2a;min-width:72px}
+.bk-row small{font-size:10px;color:#a0938a;flex:1;line-height:1.4}
+.bk-row button{padding:8px 14px;border-radius:12px;border:none;font-size:11.5px;font-weight:900;cursor:pointer;white-space:nowrap}
+.bk-row .btn-primary{background:linear-gradient(135deg,#ffb07a,#ff8a5a);color:#fff}
+.bk-row .btn-ghost{background:#fff;border:1.5px solid #ffc6a0;color:#c0651a}
+.bk-row button:active{transform:scale(.96)}
+
 </style>
 </head>
 <body>
@@ -893,6 +903,7 @@
       <div class="title">Work Buddy 工作台<small>卡通陪伴式 · 一站式生活学习管理</small></div>
       <div class="badge"><span class="dot"></span><span id="today-done">0</span>/<span id="today-total"></span> 完成</div>
       <button class="toolbar-btn alert" id="sms-btn" onclick="openSMS()">📨 短信<span class="ping" id="sms-ping" style="display:none"></span></button>
+      <button class="toolbar-btn" onclick="openBackup()">💾 备份</button>
       <button class="toolbar-btn" onclick="confirmReset()">↺</button>
     </div>
     <div class="content-wrap" id="cw">
@@ -1347,6 +1358,7 @@
 <div class="modal-mask" id="camMask" onclick="if(event.target===this)closeCam()"><div class="modal-card" id="camCard"></div></div>
 
 <canvas id="fx"></canvas>
+<input type="file" id="backupFile" accept="application/json,.json" style="display:none" onchange="backupDoImport(this)">
 </body>
 <script>
 
@@ -2351,6 +2363,41 @@ function confirmReset(){
   showModal('确定要重置全部数据吗？',[{type:'html',html:'<div style="font-size:11px;color:#a0938a;padding:6px 0">会清空所有打卡、记账、月历记录，且无法恢复哦。配色和内容编辑也会重置。</div>'}],()=>{
     localStorage.removeItem(KEY);state=defaultState();location.reload();
   });
+}
+
+/* ===== 一键备份 / 恢复（换手机迁移数据） ===== */
+function openBackup(){
+  openCustom('💾 数据备份 / 恢复',
+   '<div class="sec-sub" style="margin-left:0;text-align:left">数据默认只存在当前手机浏览器里。换手机前先「导出备份」存到微信/备忘录，到新手机打开本页再「导入备份」，所有记录就搬过去了。</div>'
+   +'<div class="bk-box"><div class="bk-row"><b>📤 导出备份</b><small>把全部数据存成一个 JSON 文件</small><button class="btn-primary" onclick="backupExport()">导出</button></div>'
+   +'<div class="bk-row"><b>📥 导入备份</b><small>从备份文件恢复（会覆盖当前数据）</small><button class="btn-ghost" onclick="backupImport()">导入</button></div></div>',
+   '<div class="modal-actions"><button class="btn-primary" onclick="closeModal()">关闭</button></div>');
+}
+function backupExport(){
+  try{
+    const data=JSON.stringify(state,null,2);
+    const d=new Date();const name='workbuddy_backup_'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'.json';
+    const blob=new Blob([data],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+    toast('已导出备份：'+name+' 💾');
+  }catch(e){toast('导出失败：'+e.message);}
+}
+function backupImport(){const el=document.getElementById('backupFile');if(el)el.click();}
+function backupDoImport(input){
+  const f=input.files&&input.files[0];if(!f){return;}
+  const reader=new FileReader();
+  reader.onload=function(){
+    try{
+      const o=JSON.parse(reader.result);
+      if(!o||typeof o!=='object')throw new Error('文件格式不对');
+      localStorage.setItem(KEY,JSON.stringify(o));
+      toast('导入成功，正在恢复… 🔄');
+      setTimeout(()=>location.reload(),500);
+    }catch(e){alert('导入失败：'+e.message+'（请确保选择的是本应用导出的备份文件）');}
+    finally{input.value='';}
+  };
+  reader.readAsText(f);
 }
 
 /* ===== 初始化 ===== */
