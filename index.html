@@ -3968,7 +3968,16 @@ function m1ZijiRender(){
   const grid=document.getElementById('m1z-grid');if(!grid)return;
   if(q)pushZijiHist(q);
   if(!pool.length){
-    grid.innerHTML='<div class="dl-nores">没找到「'+esc(q)+'」相关菜谱 🤔<br>试试 番茄 / 牛肉 / 辣椒 / 青椒 / 土豆丝 / 补蛋白 / 快手 / 汤 这类关键词，或点上面的分类/标签，也可点 × 清空</div>';
+    if(q){
+      grid.innerHTML='<div class="m1w-card m1z-gen" onclick="m1ZijiOpenGen(\''+esc(q).replace(/'/g,'')+'\')">'
+        +'<div class="m1w-ic">🤖</div>'
+        +'<div class="m1w-n">'+esc(q)+' · 一键生成菜谱</div>'
+        +'<div class="m1w-meta"><span class="m1w-tag">AI 合成</span><span>含食材+步骤</span></div>'
+        +'<div class="m1w-kcal">智能</div></div>'
+        +'<div class="dl-nores" style="padding-top:4px">没在内置库里，已按菜名智能生成一份做法，点上面卡片查看 👆</div>';
+    }else{
+      grid.innerHTML='<div class="dl-nores">这个分类下还没有菜，换个分类或搜索试试～</div>';
+    }
   }else{
     grid.innerHTML=pool.map(r=>{
       const ri=RINFO[r.n]||{};
@@ -4032,6 +4041,80 @@ function m1ZijiOpenCustom(i){
     +(it.nut?'<div class="m1w-sec m1z-nut-sec"><div class="m1w-sec-h">💡 营养/小窍门</div><div class="m1z-nut">'+esc(it.nut)+'</div></div>':'')
     +'<div class="m1z-actions"><button class="btn-ghost" onclick="m1ZijiAddPlan(\''+esc(it.n).replace(/'/g,'')+'\',\'🍽️\')">🍽️ 加入今日菜谱</button><button class="btn-ghost" onclick="m1ZijiFav(\''+esc(it.n).replace(/'/g,'')+'\',\'🍽️\')">⭐ 收藏</button></div>'
     +'<div class="modal-actions"><button class="btn-ghost" onclick="m1ZijiShow()">← 返回</button><button class="btn-primary" onclick="m1ZijiDel('+i+')">🗑 删除</button></div>';
+}
+function m1ZijiLogDietName(name,kcal,emoji){
+  kcal=kcal||200;
+  const rec={id:uid(),name:name,emoji:emoji||'🤖',unit:'份',weight:1,kcal:kcal,sugar:Math.round(kcal*0.08),addSugar:Math.round(kcal*0.08),protein:Math.round(kcal*0.18),fat:Math.round(kcal*0.3),gi:0,friendly:false,time:nowHM(),meal:'午餐'};
+  state.diet=state.diet||{};state.diet.records=state.diet.records||[];
+  state.diet.records.push(rec);saveSilent();
+  if(typeof dietRecordsRender==='function')dietRecordsRender();
+  const t=todayStr();state.checkins[t]=state.checkins[t]||{};state.checkins[t].diet='ok';refreshCheckin(t);
+  if(typeof renderCal==='function')renderCal('m5');
+  toast('已记录饮食：'+name+' '+kcal+'kcal 📝');
+}
+function m1ZijiOpenGen(q){
+  q=(q||'').trim()||'家常菜';
+  const has=k=>q.indexOf(k)>=0;
+  let main={ic:'🍲',cat:'家常菜',pro:15,carb:15,fat:10,gi:'中',ing:['主料 300g','姜 2片','蒜 2瓣','葱 1根','食用油 1勺','生抽 1勺','盐 适量']};
+  if(has('鸡翅')||has('鸡腿')||has('鸡肉')||has('鸡')){main={ic:'🍗',cat:'荤菜',pro:25,carb:5,fat:12,gi:'低',ing:['鸡肉/鸡翅 300g（切块）','姜 3片','蒜 2瓣','葱 1根','料酒 1勺','生抽 1勺','食用油 1勺']};}
+  else if(has('牛')||has('牛肉')||has('牛腩')){main={ic:'🥩',cat:'荤菜',pro:26,carb:4,fat:15,gi:'低',ing:['牛肉 250g（逆纹切片）','洋葱 半个','姜 2片','蒜 2瓣','黑胡椒 少许','生抽 1勺','食用油 1勺']};}
+  else if(has('排骨')||has('五花')||has('里脊')||has('猪肉')||has('瘦肉')||has('猪蹄')||has('猪')){main={ic:'🥓',cat:'荤菜',pro:20,carb:4,fat:18,gi:'中',ing:['猪瘦肉/排骨 300g','姜 3片','葱 1根','蒜 2瓣','料酒 1勺','生抽 1勺','食用油 1勺']};}
+  else if(has('虾')||has('虾仁')||has('蟹')||has('鱼')||has('鲈')||has('带鱼')){
+    if(has('虾')||has('虾仁')||has('蟹')){main={ic:'🦐',cat:'荤菜',pro:20,carb:2,fat:3,gi:'低',ing:['鲜虾/蟹 250g（去虾线/处理）','姜 2片','蒜 3瓣','葱 1根','料酒 1勺','食用油 1勺']};}
+    else{main={ic:'🐟',cat:'荤菜',pro:22,carb:2,fat:8,gi:'低',ing:['鱼 1条（约400g，处理干净）','姜 4片','葱 2根','蒸鱼豉油 2勺','料酒 1勺']};}
+  }
+  else if(has('豆腐')||has('豆')||has('腐竹')||has('香干')){main={ic:'🧈',cat:'素菜',pro:10,carb:4,fat:6,gi:'低',ing:['嫩豆腐 1盒','葱 1根','蒜 2瓣','生抽 1勺','蚝油 半勺','食用油 1勺']};}
+  else if(has('蛋')||has('鸡蛋')||has('皮蛋')){main={ic:'🥚',cat:'荤菜',pro:14,carb:3,fat:12,gi:'中',ing:['鸡蛋 3个','葱 1根','盐 适量','食用油 1勺']};}
+  else if(has('土豆')||has('马铃薯')||has('薯')){main={ic:'🥔',cat:'素菜',pro:3,carb:25,fat:6,gi:'中',ing:['土豆 2个（切丝/块）','蒜 2瓣','葱 1根','食用油 1勺','盐 适量','辣椒面（可选）']};}
+  else if(has('番茄')||has('西红柿')){main={ic:'🍅',cat:'素菜',pro:4,carb:10,fat:8,gi:'中',ing:['番茄 2个（切块）','鸡蛋 2个','葱 1根','糖 半勺','盐 适量','食用油 1勺']};}
+  else if(has('青椒')||has('辣椒')||has('辣')||has('小米椒')){main={ic:'🌶️',cat:'素菜',pro:2,carb:8,fat:7,gi:'中',ing:['青椒/辣椒 2个','蒜 2瓣','葱 1根','食用油 1勺','生抽 1勺','盐 适量']};}
+  else if(has('茄子')){main={ic:'🍆',cat:'素菜',pro:2,carb:9,fat:12,gi:'中',ing:['茄子 2根','蒜 3瓣','葱 1根','生抽 1勺','蚝油 半勺','食用油 适量']};}
+  else if(has('菇')||has('菌')||has('蘑')){main={ic:'🍄',cat:'素菜',pro:4,carb:6,fat:4,gi:'低',ing:['香菇/蘑菇 200g','蒜 2瓣','葱 1根','生抽 1勺','食用油 1勺']};}
+  else if(has('白菜')||has('菠菜')||has('生菜')||has('青菜')||has('芹菜')||has('西兰花')||has('菜')){main={ic:'🥬',cat:'素菜',pro:3,carb:5,fat:5,gi:'低',ing:['青菜 300g','蒜 2瓣','盐 适量','食用油 1勺']};}
+  else if(has('饭')||has('炒饭')||has('米饭')){main={ic:'🍚',cat:'主食',pro:6,carb:45,fat:8,gi:'高',ing:['米饭 1碗','鸡蛋 1个','葱 1根','酱油 1勺','食用油 1勺']};}
+  else if(has('面')||has('粉')){main={ic:'🍜',cat:'主食',pro:10,carb:50,fat:8,gi:'高',ing:['面条 1人份','青菜 几棵','鸡蛋 1个','生抽 1勺','香油 几滴']};}
+  else if(has('粥')||has('汤')){main={ic:'🥣',cat:'汤',pro:6,carb:20,fat:5,gi:'中',ing:['大米 1杯','清水 适量','姜 2片','盐 适量','(主料) 适量']};}
+  let tech={time:'15分钟',diff:'简单',steps:['食材洗净切配好','热锅凉油，下姜蒜爆香','下主料翻炒至熟','调入生抽、盐，翻炒均匀出锅']};
+  if(has('红烧')){tech={time:'35分钟',diff:'中等',steps:['主料焯水/煎至两面金黄','炒糖色后下主料上色','加生抽老抽、热水没过','小火烧20分钟，大火收汁']};}
+  else if(has('糖醋')){tech={time:'20分钟',diff:'中等',steps:['主料裹淀粉炸/煎至金黄','调糖醋汁（糖:醋≈1:1 加生抽）','下主料快速翻匀裹汁','撒白芝麻出锅']};}
+  else if(has('炖')||has('焖')||has('煮')||has('煲')||has('粥')){tech={time:'45分钟',diff:'中等',steps:['主料冷水下锅焯水去血沫，捞出洗净','锅中放油下姜葱爆香，下主料翻炒','加足量热水没过食材，大火烧开转小火','炖煮30-40分钟至软烂，加盐调味收汁']};}
+  else if(has('汤')||has('羹')){tech={time:'50分钟',diff:'简单',steps:['主料焯水后与姜、清水同入锅','大火烧开撇去浮沫','转小火慢炖40-60分钟','出锅前加盐、撒葱花']};}
+  else if(has('蒸')){tech={time:'15分钟',diff:'简单',steps:['主料加料酒、姜片腌10分钟','盘中铺姜丝，放上主料','水开后上锅蒸8-12分钟','淋蒸鱼豉油，撒葱花，泼热油']};}
+  else if(has('凉拌')||has('拌')){tech={time:'10分钟',diff:'简单',steps:['主料焯水/煮熟后过凉水','沥干切好装盘','调汁：生抽+醋+蒜末+辣椒油','淋汁拌匀静置入味']};}
+  else if(has('煎')||has('炸')||has('烤')){tech={time:'20分钟',diff:'中等',steps:['主料腌渍后吸干水分','热油中小火煎/炸至两面金黄','翻面煎熟，撒盐/椒盐','出锅装盘']};}
+  let suit='一般人群均可，搭配蔬菜更均衡',avoid='',tips='',menFlag='';
+  const ingAdd=[],stepAdd=[];
+  if(has('辣')||has('麻辣')||has('干锅')||has('川')){ingAdd.push('干辣椒/小米辣 适量','花椒 1小撮');stepAdd.unshift('下干辣椒、花椒爆出辣香');avoid+=' 经期、胃溃疡、上火者少食辛辣';menFlag='⚠️ 经期适量：含辛辣调味，少量解馋即可';}
+  if(has('糖醋')){ingAdd.push('白糖 1勺','香醋 1勺');tips='糖醋味偏甜，减脂期注意控糖';}
+  else if(has('可乐')||has('蜜')||has('拔丝')||has('甜')||has('糖')){if(has('可乐')){ingAdd.push('可乐 1罐（代糖上色，自然甜）');tips='可乐自带糖分，减脂期少放、少喝汤';}else{ingAdd.push('白糖 1勺','香醋 1勺');tips='偏甜口味，减脂期注意控糖';}}
+  if(has('麻')){ingAdd.push('花椒 1小把');stepAdd.push('出锅前淋花椒油增香');}
+  if(has('酸')){ingAdd.push('醋 1勺');}
+  if(has('清淡')||has('清蒸')||has('素')){suit='老人、病后、减脂期友好，少油少盐';tips=(tips?tips+'；':'')+'清淡少油更健康';}
+  if(tech.steps.join().indexOf('焯水/煮熟后过凉')>=0){avoid+=' 经期及脾胃虚寒者少食生冷';menFlag='🩸 经期建议少食：凉拌生冷，经期尽量避开';}
+  const finalIng=main.ing.concat(ingAdd);
+  let finalSteps=tech.steps.slice();
+  if(stepAdd.length)finalSteps=stepAdd.concat(finalSteps);
+  const estKcal=Math.round(main.pro*4+main.carb*4+main.fat*9);
+  const ingLi=finalIng.map(x=>'<li>'+esc(x)+'</li>').join('');
+  const stepsLi=finalSteps.map((s,idx)=>'<li><span class="m1w-step-n">'+(idx+1)+'</span><span>'+esc(s)+'</span></li>').join('');
+  const nut='按常见做法估算，约 '+estKcal+' 大卡/份；蛋白质约 '+main.pro+'g、碳水 '+main.carb+'g、脂肪 '+main.fat+'g。同为估算，实际因食材分量与用油而异。';
+  const nrow='<div class="m1z-nut-grid"><div><b>'+main.pro+'g</b><span>蛋白质</span></div><div><b>'+main.carb+'g</b><span>碳水</span></div><div><b>'+main.fat+'g</b><span>脂肪</span></div><div><b>'+main.gi+'</b><span>升糖</span></div></div>';
+  const warn=(m1zMens&&menFlag)?'<div class="m1w-warn">'+menFlag+'</div>':'';
+  const suitRow=suit?'<div class="m1z-adv-row ok"><b>✅ 适宜：</b>'+esc(suit)+'</div>':'';
+  const avoidRow=avoid?'<div class="m1z-adv-row no"><b>🚫 注意：</b>'+esc(avoid.trim())+'</div>':'';
+  const tipsRow=tips?'<div class="m1z-tips">💡 '+esc(tips)+'</div>':'';
+  const diffTag='<span class="m1w-tag" style="background:#e6f0ff;color:#3a6ac0">'+tech.diff+'</span>';
+  const qe=esc(q).replace(/'/g,'');
+  document.getElementById('modalCard').innerHTML=
+    '<h3>🤖 '+esc(q)+' <span style="font-size:12px;color:#e0702a">（智能生成 · 仅供参考）</span></h3>'
+    +'<div class="m1w-detail"><div class="m1w-detail-head"><span class="m1w-ic-big">'+main.ic+'</span><div><div class="m1w-detail-n">'+esc(q)+' <span class="m1w-tag">'+main.cat+'</span> '+diffTag+'</div><div class="m1w-detail-meta">⏱ '+tech.time+' · 🔥 约'+estKcal+'大卡 · 👥 2人份</div></div></div>'
+    +warn
+    +'<div class="m1w-sec"><div class="m1w-sec-h">🛒 食材清单</div><ul class="m1w-ing">'+ingLi+'</ul></div>'
+    +'<div class="m1w-sec"><div class="m1w-sec-h">👨‍🍳 详细做法步骤</div><ol class="m1w-steps">'+stepsLi+'</ol></div>'
+    +'<div class="m1w-sec m1z-nut-sec"><div class="m1w-sec-h">💡 营养说明</div>'+nrow+'<div class="m1z-nut">'+nut+'</div></div>'
+    +'<div class="m1w-sec"><div class="m1w-sec-h">🥗 饮食宜忌 & 小贴士</div>'+suitRow+avoidRow+tipsRow+'</div>'
+    +'<div class="m1z-actions"><button class="btn-ghost" onclick="m1ZijiAddPlan(\''+qe+'\',\'🤖\')">🍽️ 加入今日菜谱</button><button class="btn-ghost" onclick="m1ZijiFav(\''+qe+'\',\'🤖\')">⭐ 收藏</button><button class="btn-primary" onclick="m1ZijiLogDietName(\''+qe+'\','+estKcal+',\'🤖\')">📝 记录饮食</button></div>'
+    +'<div class="modal-actions"><button class="btn-ghost" onclick="m1ZijiShow()">← 返回菜谱</button><button class="btn-primary" onclick="closeModal()">关闭</button></div>';
 }
 function m1ZijiShow(){
   m1zMens=(state.m1Custom&&state.m1Custom.mens)||false;
