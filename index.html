@@ -805,6 +805,29 @@
 .mens-item b{font-size:11.5px;color:#5a4a3a;display:block}
 .mens-item small{font-size:9.5px;color:#9a8a7a;line-height:1.4}
 
+/* ===== 月经·食物搜索 ===== */
+.mens-search{display:flex;align-items:center;gap:7px;background:#fff8ef;border:2px solid #ffd9c2;border-radius:16px;padding:9px 12px;margin:4px 0 10px;box-shadow:0 2px 8px rgba(255,154,90,.12)}
+.mens-search .ic{font-size:15px;opacity:.7}
+#mens-q{flex:1;border:none;background:transparent;outline:none;font-size:13px;color:#6a4a32;font-weight:600}
+#mens-q::placeholder{color:#c9aa93;font-weight:500}
+.mens-result{display:flex;flex-direction:column;gap:7px;margin-bottom:10px;max-height:280px;overflow-y:auto;padding-right:3px}
+.mens-empty{font-size:11px;color:#9a8fb0;background:#faf6f0;border-radius:12px;padding:11px;text-align:center;line-height:1.5}
+.mens-fcard{background:#fffaf4;border:1.5px solid #ffe2d1;border-radius:14px;padding:9px 11px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.mens-fcard-ok{border-left:4px solid #6fc07a;background:linear-gradient(135deg,#fbfff7,#f4faf0)}
+.mens-fcard-mod{border-left:4px solid #f5b820;background:linear-gradient(135deg,#fffbea,#fff5dc)}
+.mens-fcard-no{border-left:4px solid #d8554a;background:linear-gradient(135deg,#fff5f4,#ffe9e6)}
+.mens-fhead{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.mens-f-ic{font-size:18px}
+.mens-fhead b{flex:1;font-size:13px;color:#4a3a2a;font-weight:900}
+.mens-badge{font-size:10px;font-weight:800;border-radius:9px;padding:3px 9px;white-space:nowrap}
+.mens-badge-ok{background:#e6f5e0;color:#3a8a48}
+.mens-badge-mod{background:#fff0d0;color:#b67d2a}
+.mens-badge-no{background:#ffe0dc;color:#b0392a}
+.mens-fwhy{font-size:10.5px;color:#6a5a4a;line-height:1.5;margin-bottom:4px}
+.mens-fover{font-size:10.5px;color:#8a4a3a;background:#fff8f6;border-left:3px solid #f0a098;padding:5px 8px;border-radius:8px;line-height:1.55}
+.mens-fover-h{font-weight:900;color:#c0392b;margin-right:3px}
+.mens-divider{text-align:center;font-size:10.5px;color:#b9a8a0;font-weight:800;margin:10px 0 8px;letter-spacing:1px}
+
 </style>
 </head>
 <body>
@@ -3560,13 +3583,96 @@ const MENS={
   ['油炸甜腻','加重炎症与不适']
  ]
 };
+const FOOD_MENS=[
+ {n:'冰激凌',ic:'🍦',st:'no',why:'性寒生冷，使子宫受凉',over:'血管收缩→经血变少/发黑→痛经加剧+宫寒，可能数月才调回来'},
+ {n:'冰水',ic:'🧊',st:'no',why:'温度过低刺激子宫收缩',over:'大量饮用让经血凝滞、排出不畅，加重痛经与腰酸'},
+ {n:'冰咖啡',ic:'🧋',st:'no',why:'冰+咖啡因双重刺激',over:'强烈收缩血管+神经兴奋，心悸、失眠、痛经加剧'},
+ {n:'西瓜',ic:'🍉',st:'no',why:'性寒、糖分高',over:'寒性入体让宫寒加重，且高糖易腹胀+加重炎症'},
+ {n:'螃蟹',ic:'🦀',st:'no',why:'性寒海鲜、易致过敏',over:'经期抵抗力下降，吃多易腹痛腹泻+诱发过敏、痛经加剧'},
+ {n:'生鱼片',ic:'🍣',st:'no',why:'生冷+寄生虫风险',over:'宫寒+肠胃不适+感染风险，经期免疫力低尤要避'},
+ {n:'麻辣火锅',ic:'🍲',st:'no',why:'辛辣刺激盆腔充血',over:'过度刺激让经血增多、经期延长，还易上火长痘'},
+ {n:'炸鸡',ic:'🍗',st:'no',why:'油炸高脂难消化',over:'加重肠胃负担+促炎，让经期腹胀、爆痘、情绪烦躁'},
+ {n:'烧烤',ic:'🍢',st:'no',why:'高温烤制燥热上火',over:'加重内热与便秘，可能让经血颜色更深、有血块'},
+ {n:'酒',ic:'🍺',st:'no',why:'扩张血管+伤肝',over:'让经期出血量明显增多、经期延长，醉酒恢复也更慢'},
+ {n:'可乐',ic:'🥤',st:'no',why:'咖啡因+高糖+磷酸',over:'钙流失+血糖波动→情绪起伏大、易疲倦、经痛加重'},
+ {n:'浓茶',ic:'🍵',st:'no',why:'鞣酸阻碍铁吸收+咖啡因',over:'本就在失血，阻碍铁吸收→加重贫血、心悸失眠'},
+ {n:'柿子',ic:'🍅',st:'no',why:'性寒+鞣酸易结石',over:'与高蛋白食物相遇易胃结石，且性寒加剧宫寒'},
+ {n:'苦瓜',ic:'🥬',st:'no',why:'性寒+刺激宫缩',over:'大量吃会让经血变少、腹泻、手脚冰凉加重'},
+ {n:'腌菜',ic:'🥒',st:'no',why:'高盐+亚硝酸盐',over:'加重水肿+血压波动，亚硝酸盐对经期代谢负担大'},
+ {n:'薯片',ic:'🥔',st:'no',why:'高盐高油+添加剂',over:'水肿加重+情绪波动+催熟痘痘，整个经期建议别碰'},
+ {n:'咖啡',ic:'☕',st:'mod',why:'适量咖啡因提神',over:'超过2杯/天会让心悸、失眠、加重乳房胀痛'},
+ {n:'巧克力',ic:'🍫',st:'mod',why:'黑巧缓解PMS与情绪',over:'糖脂过高会爆痘+腹胀，黑巧1-2小格/天OK'},
+ {n:'辣椒',ic:'🌶️',st:'mod',why:'温中散寒少量OK',over:'大量吃会让盆腔过度充血、经血暴增、痔疮发作'},
+ {n:'芒果',ic:'🥭',st:'mod',why:'维C+胡萝卜素丰富',over:'糖分高且部分人过敏，过量易上火+腹胀+皮肤痒'},
+ {n:'菠萝',ic:'🍍',st:'mod',why:'菠萝蛋白酶助消化',over:'酸性刺激胃黏膜，过量易反酸+口腔+经期胃不适'},
+ {n:'火龙果',ic:'🐉',st:'mod',why:'膳食纤维防便秘',over:'性偏凉，过量易腹泻+经血排出过多'},
+ {n:'猕猴桃',ic:'🥝',st:'mod',why:'维C+叶酸丰富',over:'酸性较强，过量易胃部不适+牙齿酸软'},
+ {n:'榴莲',ic:'🍈',st:'mod',why:'温补高热量',over:'热量炸弹+糖脂高，过量上火、长痘、血糖飙升'},
+ {n:'虾',ic:'🦐',st:'mod',why:'优质蛋白+不饱和脂肪',over:'过敏体质者可能诱发瘙痒，过量嘌呤让经期关节不适'},
+ {n:'坚果',ic:'🥜',st:'mod',why:'健康脂肪+维E',over:'热量密集，过量易上火、爆痘；每天一小把即可'},
+ {n:'蜂蜜',ic:'🍯',st:'mod',why:'补气润燥',over:'糖分高，过量血糖波动+经期体寒者不宜多'},
+ {n:'红豆',ic:'🫘',st:'mod',why:'补铁+利水',over:'过多易腹胀、放屁多；适量煮粥/豆浆OK'},
+ {n:'黑豆',ic:'🫘',st:'mod',why:'补肾养血',over:'适量1小把/天OK，过量易胀气'},
+ {n:'牛奶',ic:'🥛',st:'ok',why:'补钙+色氨酸助眠',over:'1-2杯/天OK，过量易上火+长痘(湿热体质)'},
+ {n:'酸奶',ic:'🥛',st:'ok',why:'益生菌+钙助消化',over:'冷藏偏凉，建议放至常温再喝，每天1杯'},
+ {n:'豆浆',ic:'🥛',st:'ok',why:'植物蛋白+大豆异黄酮',over:'1杯/天OK，过量易胀气、男酮偏高者注意'},
+ {n:'鸡蛋',ic:'🥚',st:'ok',why:'最易吸收的优质蛋白',over:'1-2个/天OK，过量胆固醇负担、加重肝肾'},
+ {n:'鱼',ic:'🐟',st:'ok',why:'优质蛋白+Omega3抗炎',over:'深海鱼适量2-3次/周，过量嘌呤+重金属累积'},
+ {n:'鸡胸肉',ic:'🍗',st:'ok',why:'高蛋白低脂肪',over:'清淡做法每天适量OK，过量红烧/油炸会变高脂'},
+ {n:'牛肉',ic:'🥩',st:'ok',why:'补铁补血主力(经期首选)',over:'每周2-3次OK，过量红肉增加消化负担'},
+ {n:'猪肉',ic:'🥓',st:'ok',why:'补铁+B族维生素',over:'肥肉部分别吃太多，纯瘦肉每天80-150gOK'},
+ {n:'豆腐',ic:'🌶️',st:'ok',why:'植物蛋白+钙',over:'每天1盒OK，过量易腹胀、肾负担'},
+ {n:'菠菜',ic:'🥬',st:'ok',why:'叶酸+铁补血',over:'焯水去草酸，每天1把OK；过量草酸影响钙吸收'},
+ {n:'西兰花',ic:'🥦',st:'ok',why:'维C+叶酸+抗氧化物',over:'适量每天小1颗OK，过量易胀气'},
+ {n:'胡萝卜',ic:'🥕',st:'ok',why:'β-胡萝卜素+维A',over:'适量每天半根OK，过量皮肤可能染黄'},
+ {n:'番茄',ic:'🍅',st:'ok',why:'番茄红素+维C促铁吸收',over:'每天1-2个OK，过量酸性可能胃反酸'},
+ {n:'黄瓜',ic:'🥒',st:'ok',why:'补水低卡',over:'生吃偏凉，建议常温或拌温吃，每天1根'},
+ {n:'南瓜',ic:'🎃',st:'ok',why:'β-胡萝卜素+膳食纤维',over:'适量每天100gOK，过量糖分堆积'},
+ {n:'红薯',ic:'🍠',st:'ok',why:'暖胃+复合碳水',over:'蒸/烤每天1小个OK，过量胀气+反酸'},
+ {n:'土豆',ic:'🥔',st:'ok',why:'碳水+钾',over:'蒸煮每天中等1个OK，过量淀粉堆积'},
+ {n:'米饭',ic:'🍚',st:'ok',why:'碳水主食',over:'每餐1拳OK，过量易胖+血糖波动'},
+ {n:'面条',ic:'🍜',st:'ok',why:'碳水主食',over:'汤面温热更好，每餐1碗OK，过量碳水堆积'},
+ {n:'粥',ic:'🥣',st:'ok',why:'暖胃易消化',over:'经期首选！红枣/桂圆/瘦肉粥尤佳，每天1-2碗'},
+ {n:'燕麦',ic:'🌾',st:'ok',why:'膳食纤维稳血糖',over:'每天1碗OK，过量可能腹胀'},
+ {n:'玉米',ic:'🌽',st:'ok',why:'纤维+叶黄素',over:'每天半根OK，过量糖分+胀气'},
+ {n:'核桃',ic:'🌰',st:'ok',why:'补脑+不饱和脂肪',over:'每天2-3颗OK，过量上火+热量高'},
+ {n:'花生',ic:'🥜',st:'ok',why:'植物蛋白+维E',over:'每天一小把OK，过量油腻难消化'},
+ {n:'芝麻',ic:'⚪',st:'ok',why:'钙+铁丰富',over:'磨粉撒粥/面，每天1勺OK，过量油脂高'},
+ {n:'红糖',ic:'🧉',st:'ok',why:'温经活血+补铁',over:'每天1杯红糖姜茶OK，过量上火+经期提前/出血过多'},
+ {n:'姜',ic:'🫚',st:'ok',why:'温中散寒+止呕',over:'红糖姜茶/姜丝肉每天OK，过量可能上火'},
+ {n:'红枣',ic:'🟤',st:'ok',why:'补铁补气血',over:'每天3-5颗OK，过量糖分高+腹胀'},
+ {n:'桂圆',ic:'🟤',st:'ok',why:'温补心脾+安神',over:'每天5-8颗OK，过量上火+经血过多'},
+ {n:'枸杞',ic:'🔴',st:'ok',why:'滋补肝肾+明目',over:'每天10-15粒泡水OK，过量上火'},
+ {n:'温开水',ic:'💧',st:'ok',why:'促进循环+暖宫',over:'每天1500-2000ml少量多次；过冷过热都避免'},
+ {n:'苹果',ic:'🍎',st:'ok',why:'果胶+维C均衡',over:'每天1个OK，过量糖分+凉性'},
+ {n:'葡萄',ic:'🍇',st:'ok',why:'铁+花青素',over:'每天一小串OK，过量糖分+凉性'},
+ {n:'桃',ic:'🍑',st:'ok',why:'铁+维C',over:'每天1个OK，过量糖分+可能上火'}
+];
+function m1MensSearch(q){
+  const box=document.getElementById('mens-result');if(!box)return;
+  q=(q||'').trim();
+  if(!q){box.innerHTML='<div class="mens-empty">输入想吃的食物/饮品，告诉你能不能吃、吃多了会怎样～</div>';return;}
+  const list=FOOD_MENS.filter(f=>f.n.indexOf(q)>=0);
+  if(!list.length){box.innerHTML='<div class="mens-empty">没收录「'+esc(q)+'」——可参考下方宜忌列表，或试试更短关键词（冰、咖、糖、肉…）</div>';return;}
+  const badgeText={ok:'✅ 能吃',mod:'⚠️ 适量吃',no:'⛔ 别吃'};
+  const badgeCls={ok:'ok',mod:'mod',no:'no'};
+  box.innerHTML=list.map(f=>'<div class="mens-fcard mens-fcard-'+f.st+'">'
+    +'<div class="mens-fhead"><span class="mens-f-ic">'+f.ic+'</span><b>'+esc(f.n)+'</b><span class="mens-badge mens-badge-'+badgeCls[f.st]+'">'+badgeText[f.st]+'</span></div>'
+    +'<div class="mens-fwhy">📖 '+esc(f.why)+'</div>'
+    +'<div class="mens-fover"><span class="mens-fover-h">⚠️ 吃多了会：</span>'+esc(f.over)+'</div>'
+    +'</div>').join('');
+}
 function m1Menstruation(){
   const can=MENS.can.map(x=>'<div class="mens-item"><span class="mens-ic">✅</span><div><b>'+esc(x[0])+'</b><small>'+esc(x[1])+'</small></div></div>').join('');
   const cant=MENS.cant.map(x=>'<div class="mens-item"><span class="mens-ic">⛔</span><div><b>'+esc(x[0])+'</b><small>'+esc(x[1])+'</small></div></div>').join('');
   openCustom('🩸 来月经 · 饮食宜忌',
-   '<div class="sec-sub" style="margin-left:0;text-align:left">特殊时期吃对更舒服：温补、补铁、暖身为主，避开生冷辛辣。点下方可一键生成暖身三餐。</div>'
+   '<div class="sec-sub" style="margin-left:0;text-align:left">特殊时期吃对更舒服：温补、补铁、暖身为主，避开生冷辛辣。👇先搜一下你最想吃的，告诉你能不能吃 + 吃多了会怎样。</div>'
+   +'<div class="mens-search"><span class="ic">🔍</span><input id="mens-q" placeholder="搜食物/饮品：冰、咖、糖、肉、巧克、酒…" oninput="m1MensSearch(this.value)"></div>'
+   +'<div id="mens-result" class="mens-result"></div>'
+   +'<div class="mens-divider">—— 通用宜忌一览 ——</div>'
    +'<div class="mens-grid"><div class="mens-col mens-can"><div class="mens-h">✅ 能吃的（温补暖身）</div>'+can+'</div><div class="mens-col mens-cant"><div class="mens-h">⛔ 少吃的（生冷刺激）</div>'+cant+'</div></div>',
    '<div class="modal-actions"><button class="btn-primary" onclick="m1ZijiAuto(true)">🍳 一键生成暖身菜谱</button><button class="btn-ghost" onclick="closeModal()">关闭</button></div>');
+  setTimeout(()=>m1MensSearch(''),50);
 }
 function openM1Detail(type){
   state.m1Custom=state.m1Custom||{};
