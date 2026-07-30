@@ -3432,7 +3432,7 @@ const M1W_CATS=['全部','快手','家常','汤','主食','凉菜'];
 /* ===== m1 点外卖·附近美食（内置城市商户库 + 任意地点生成） ===== */
 const MALLS_CITIES=['武汉江夏','北京','成都','上海','广州'];
 const M1W_FILTERS=[{k:'new',t:'只看新店'},{k:'free',t:'免配送费'},{k:'fem',t:'适合经期'},{k:'low',t:'低卡减脂'},{k:'fast',t:'20分钟内'}];
-let m1wLoc='武汉江夏',m1wFilters={},m1wMens=false;
+let m1wLoc='武汉江夏',m1wFilters={},m1wMens=false,m1wOpenId=null;
 const MALLS={
  '武汉江夏':[
   {id:'w1',name:'纸坊老火锅',ic:'🍲',cuisine:'火锅',eta:35,dist:2.5,min:50,fee:6,star:4.4,tags:['辣','重辣'],menu:[{n:'牛油锅底套餐',kcal:600},{n:'毛肚拼盘',kcal:220}]},
@@ -3542,7 +3542,7 @@ function m1WaimaiRenderCustom(){
   box.innerHTML=items.map((it,i)=>'<div class="item" style="border-left-color:#ff9a5a"><div class="t"><b>'+esc(it.n)+'</b>'+(it.d?'<small>'+esc(it.d)+'</small>':'')+'</div><button class="del" onclick="event.stopPropagation();m1WaimaiDel('+i+')">×</button></div>').join('');
 }
 function m1WaimaiOpen(id){
-  const m=getMalls().find(x=>x.id===id);if(!m)return;
+  const m=getMalls().find(x=>x.id===id);if(!m)return;m1wOpenId=m.id;
   const menu=(m.menu||[]).map(d=>'<div class="m1w-mitem"><span>'+esc(d.n)+'</span><span class="m1w-mkcal">'+d.kcal+'kcal</span></div>').join('');
   const hot=(m.tags||[]).filter(t=>['冰饮','重辣','辣'].indexOf(t)>=0);
   const warn=(m1wMens&&hot.length)?'<div class="m1w-warn">🩸 温馨提示：你当前处于生理期，'+hot.join('、')+'类食物建议少点哦～</div>':'';
@@ -3556,7 +3556,7 @@ function m1WaimaiOpen(id){
     +'<div class="modal-actions"><button class="btn-ghost" onclick="m1WaimaiShow()">← 返回列表</button><button class="btn-primary" onclick="closeModal()">关闭</button></div>';
 }
 function m1WaimaiShow(){
-  m1wMens=(state.m1Custom&&state.m1Custom.mens)||false;m1wQ='';m1wFilters={};
+  m1wMens=(state.m1Custom&&state.m1Custom.mens)||false;m1wQ='';m1wFilters={};m1wOpenId=null;
   document.getElementById('modalCard').innerHTML='<h3>🛵 外卖 · 附近美食</h3>'+m1WaimaiBody();
   document.getElementById('modalMask').classList.add('show');
   m1WaimaiRender();
@@ -3591,6 +3591,7 @@ function m1WaimaiGPS(){
 function m1wMensToggle(){
   m1wMens=!m1wMens;state.m1Custom=state.m1Custom||{};state.m1Custom.mens=m1wMens;saveSilent();
   const el=document.querySelector('.m1w-mens-toggle');if(el)el.classList.toggle('on',m1wMens);
+  if(m1wOpenId)m1WaimaiOpen(m1wOpenId);
   toast(m1wMens?'已开启经期模式：生冷辛辣会提醒 🩸':'已关闭经期模式');
 }
 function m1WaimaiRandom(){
