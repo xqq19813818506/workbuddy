@@ -793,6 +793,40 @@
 .m1z-nut{font-size:11.5px;line-height:1.6;color:#3f7d52;background:#f1f9f2;border-radius:11px;padding:8px 10px;font-weight:600}
 .m1z-total{text-align:center;font-size:11px;color:#a98f7c;margin:10px 0 4px}
 .m1z-total b{color:#e0702a;font-size:14px}
+/* ===== m1 自己做饭·升级(多维搜索/标签/历史/经期/详情) ===== */
+.m1w-clear{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:#ffe3d3;color:#c0651a;font-size:15px;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;line-height:1}
+.m1w-clear:active{transform:scale(.9)}
+.m1z-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.m1z-tag{background:#fff3e9;border:1.5px solid #f2dccb;border-radius:11px;padding:4px 10px;font-size:10.5px;font-weight:800;color:#b08a6a;cursor:pointer;transition:all .15s}
+.m1z-tag.on{background:linear-gradient(135deg,#ffd166,#f5b820);color:#5a3d12;border-color:transparent}
+.m1z-hist-wrap{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px;min-height:0}
+.m1z-hist-h{font-size:10px;color:#b09a88;font-weight:800}
+.m1z-hist{background:#f3ecff;border:1.5px solid #e3d6ff;color:#7a52c0;border-radius:11px;padding:3px 9px;font-size:10px;font-weight:800;cursor:pointer}
+.m1z-hist:active{transform:scale(.95)}
+.m1z-mens-row{display:flex;align-items:center;gap:8px;margin:4px 0 10px;flex-wrap:wrap}
+.m1z-mens-tip{font-size:10px;color:#b09a88;font-weight:600}
+.m1z-flag{position:absolute;top:9px;left:9px;font-size:9px;font-weight:900;padding:2px 7px;border-radius:8px;z-index:2}
+.m1z-flag.no{background:#ffd6d6;color:#c0392b}
+.m1z-flag.mod{background:#fff0d0;color:#b67d2a}
+.m1z-ctags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.m1z-ctag{background:#f1ecf7;color:#8a6ab0;border-radius:7px;padding:1px 6px;font-size:8.5px;font-weight:800}
+.m1z-adv-row{font-size:11px;line-height:1.6;padding:6px 9px;border-radius:11px;margin-bottom:6px;font-weight:600}
+.m1z-adv-row b{font-weight:900}
+.m1z-adv-row.ok{background:#eefaf0;color:#3f7d52}
+.m1z-adv-row.no{background:#fff5f4;color:#b05a4a;border-left:3px solid #f0a098}
+.m1z-tips{font-size:11px;line-height:1.6;color:#7a5a3a;background:#fff8ef;border-left:3px solid #ffb07a;border-radius:9px;padding:6px 9px;font-weight:600}
+.m1z-nut-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:9px}
+.m1z-nut-grid>div{background:#f1f9f2;border:1.5px solid #dcefe0;border-radius:12px;padding:7px 2px;text-align:center}
+.m1z-nut-grid b{display:block;font-size:14px;font-weight:900;color:#3f7d52}
+.m1z-nut-grid span{font-size:9px;color:#7a9a82;font-weight:700}
+.m1z-empty{color:#b9a8a0;font-style:italic}
+.m1z-actions{display:flex;gap:7px;margin:4px 0 10px}
+.m1z-actions button{flex:1;padding:10px 4px;border-radius:14px;border:none;font-size:11.5px;font-weight:900;cursor:pointer}
+.m1z-actions .btn-ghost{background:#fff;border:1.5px solid #ffc6a0;color:#c0651a}
+.m1z-actions .btn-primary{background:linear-gradient(135deg,#ffb07a,#ff8a5a);color:#fff}
+.m1z-actions button:active{transform:scale(.97)}
+#modalCard textarea{width:100%;border:2px solid #ffd9c2;border-radius:12px;padding:8px 10px;font-size:12px;font-family:inherit;color:#6a4a32;font-weight:600;resize:vertical;outline:none;box-sizing:border-box;background:#fff8ef}
+#modalCard textarea:focus{border-color:#ff9a5a}
 
 /* ===== 来月经·饮食宜忌 ===== */
 .mens-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0}
@@ -1608,6 +1642,7 @@ function showModal(title,fields,cb,readonly){
     if(f.type==='html'){html+=f.html;return;}
     html+='<div class="field"><label>'+f.label+'</label>';
     if(f.type==='text')html+='<input id="mf-'+f.id+'" placeholder="'+(f.ph||'')+'">';
+    else if(f.type==='textarea')html+='<textarea id="mf-'+f.id+'" placeholder="'+(f.ph||'')+'" rows="'+(f.rows||3)+'"></textarea>';
     else if(f.type==='time')html+='<input type="time" id="mf-'+f.id+'">';
     else if(f.type==='select')html+='<select id="mf-'+f.id+'">'+f.opts.map(o=>'<option>'+o+'</option>').join('')+'</select>';
     else if(f.type==='seg')html+='<div class="segs">'+f.opts.map(o=>'<div class="seg'+(o===f.def?' active':'')+'" onclick="segPick(this)">'+o+'</div>').join('')+'</div>';
@@ -3710,46 +3745,149 @@ const NUT={
  '蒸蛋':'极易消化优质蛋白，暖食佳品(推荐)',
  '土豆炖鸡':'鸡蛋白+土豆碳水，均衡暖身'
 };
-let m1zQ='',m1zCat='全部';
+/* 自己做饭·菜品多维元数据：口味/功效标签、营养数据、宜忌、小贴士、经期适宜度(mens: ok可吃/mod适量/no少食) */
+const RINFO={
+ '番茄炒蛋':{tags:['快手','下饭','补蛋白','番茄红素','抗氧化','番茄','家常'],diff:'简单',pro:12,carb:9,fat:14,gi:'中',tips:'蛋液加少许温水更嫩；番茄去皮口感更顺滑',suit:'老少皆宜，经期也友好',avoid:'蛋黄胆固醇偏高者适量',mens:'ok'},
+ '麻婆豆腐':{tags:['下饭','补蛋白','补钙','辣','川味','豆腐','植物蛋白'],diff:'中等',pro:14,carb:8,fat:18,gi:'中',tips:'嫩豆腐先焯水不易碎；花椒粉最后撒更香',suit:'补钙补蛋白，素食友好',avoid:'辣度偏高，胃热/经期适量',mens:'mod'},
+ '宫保鸡丁':{tags:['下饭','补蛋白','花生','辣','微甜','鸡胸','川味'],diff:'中等',pro:24,carb:12,fat:22,gi:'中',tips:'鸡丁用蛋清生粉抓匀更嫩；最后撒花生保脆',suit:'补蛋白，增肌友好',avoid:'花生过敏者、油炸热量高适量',mens:'mod'},
+ '红烧肉':{tags:['硬菜','补能量','高脂','五花肉','宴客','甜咸'],diff:'进阶',pro:22,carb:18,fat:42,gi:'高',tips:'炒糖色小火防苦；炖足时间肥而不腻',suit:'补充能量，体力消耗大时',avoid:'高脂，经期/三高人群宜少',mens:'mod'},
+ '可乐鸡翅':{tags:['甜口','补蛋白','鸡翅','孩子爱','宴客'],diff:'简单',pro:18,carb:20,fat:16,gi:'高',tips:'煎至金黄再倒可乐更入味；收汁要大火',suit:'补蛋白，孩子喜欢',avoid:'糖油偏高，浅尝即可',mens:'mod'},
+ '糖醋里脊':{tags:['酸甜','油炸','宴客','里脊','孩子爱'],diff:'中等',pro:20,carb:24,fat:22,gi:'高',tips:'复炸更酥；糖醋汁比例约1:1:1(醋糖番茄酱)',suit:'开胃，偶尔解馋',avoid:'油炸能量高，控体重少吃',mens:'mod'},
+ '鱼香肉丝':{tags:['下饭','补蛋白','补铁','木耳','胡萝卜','川味'],diff:'中等',pro:18,carb:10,fat:14,gi:'中',tips:'鱼香汁提前调好；肉丝滑散再下配菜',suit:'补铁补维A，家常均衡',avoid:'泡椒偏辣，胃弱者适量',mens:'ok'},
+ '西红柿牛腩':{tags:['补铁','补蛋白','番茄','炖煮','牛腩','牛肉','暖身'],diff:'进阶',pro:28,carb:14,fat:20,gi:'中',tips:'牛腩先焯去血沫；番茄炒出汁再炖',suit:'补铁暖身，经期推荐',avoid:'嘌呤偏高，痛风少食',mens:'ok'},
+ '青椒土豆丝':{tags:['快手','维C','钾','饱腹','素菜','土豆'],diff:'简单',pro:4,carb:24,fat:8,gi:'高',tips:'土豆丝泡水去淀粉更脆；大火快炒',suit:'维生素C+钾，清爽饱腹',avoid:'碳水偏高，减脂控量',mens:'ok'},
+ '蒜蓉西兰花':{tags:['快手','抗氧化','膳食纤维','维C','减脂','素菜'],diff:'简单',pro:5,carb:9,fat:7,gi:'低',tips:'焯水30秒保翠绿；蒜末小火炒香',suit:'抗氧化减脂首选',avoid:'甲状腺异常者不宜过量',mens:'ok'},
+ '干煸豆角':{tags:['家常','膳食纤维','植物蛋白','豆角'],diff:'中等',pro:6,carb:14,fat:16,gi:'中',tips:'豆角务必煸熟防中毒；多油煸至起皱',suit:'补纤维与植物蛋白',avoid:'难熟，务必做透',mens:'ok'},
+ '地三鲜':{tags:['家常','茄子','土豆','青椒','素菜'],diff:'中等',pro:4,carb:26,fat:18,gi:'高',tips:'茄子裹薄粉少吸油；先炸后炒',suit:'蔬菜搭配，下饭',avoid:'油炸吸油多，少油版更佳',mens:'ok'},
+ '蛋炒饭':{tags:['主食','碳水','快捷','剩饭','蛋'],diff:'简单',pro:10,carb:55,fat:12,gi:'高',tips:'隔夜饭更干爽；大火让蛋裹住米粒',suit:'快速饱腹主食',avoid:'油盐偏高，减脂少油',mens:'ok'},
+ '葱油拌面':{tags:['主食','碳水','葱香','面','酱香'],diff:'简单',pro:8,carb:58,fat:14,gi:'高',tips:'葱白小火炸至焦黄；酱汁别煮久发苦',suit:'快捷主食',avoid:'纯碳水，配蛋白蔬菜更佳',mens:'ok'},
+ '番茄牛肉面':{tags:['主食','补铁','番茄','牛肉','面','暖身'],diff:'中等',pro:26,carb:50,fat:14,gi:'中',tips:'牛肉滑熟别久煮老；番茄熬出沙',suit:'补铁暖身，经期推荐',avoid:'面条碳水高，控量',mens:'ok'},
+ '紫菜蛋花汤':{tags:['汤','低卡','补碘','暖胃','快手'],diff:'简单',pro:6,carb:3,fat:4,gi:'低',tips:'蛋液细流淋入成花；关火后淋香油',suit:'低卡暖胃，开胃',avoid:'甲亢限碘者慎食',mens:'ok'},
+ '番茄蛋花汤':{tags:['汤','清淡','暖身','维C','快手'],diff:'简单',pro:6,carb:5,fat:5,gi:'低',tips:'番茄炒出汁再加水；蛋花要关火淋',suit:'清淡暖身，经期友好',avoid:'胃酸多者适量',mens:'ok'},
+ '酸辣汤':{tags:['汤','开胃','辣','酸','豆腐'],diff:'简单',pro:6,carb:8,fat:6,gi:'低',tips:'胡椒粉最后放；勾薄芡更顺滑',suit:'开胃促食欲',avoid:'辣酸刺激，胃病适量',mens:'mod'},
+ '玉米排骨汤':{tags:['汤','补钙','暖身','玉米','排骨'],diff:'进阶',pro:20,carb:16,fat:18,gi:'中',tips:'排骨焯水去沫；玉米后放保甜',suit:'暖身补钙，全家宜',avoid:'油脂偏高，撇去浮油',mens:'ok'},
+ '凉拌黄瓜':{tags:['凉菜','低卡','清爽','生冷','黄瓜'],diff:'简单',pro:2,carb:4,fat:2,gi:'低',tips:'拍碎更入味；冷藏更爽口',suit:'低卡补水解腻',avoid:'生冷，经期/脾胃虚寒少吃',mens:'no'},
+ '凉拌木耳':{tags:['凉菜','补铁','润燥','凉性','木耳'],diff:'简单',pro:3,carb:8,fat:1,gi:'低',tips:'泡发后焯熟；料汁现调',suit:'补铁润燥',avoid:'性凉，经期少；泡发忌过夜',mens:'no'},
+ '凉拌皮蛋':{tags:['凉菜','蛋白','凉性','皮蛋','豆腐'],diff:'简单',pro:9,carb:4,fat:8,gi:'低',tips:'皮蛋切瓣摆盘；热油激香更出味',suit:'补蛋白下酒',avoid:'凉性钠高，经期/高血压适量',mens:'no'},
+ '清蒸鲈鱼':{tags:['清蒸','补蛋白','DHA','低脂','鱼','宴客'],diff:'中等',pro:26,carb:1,fat:6,gi:'低',tips:'水开再上锅；蒸8分钟焖2分钟',suit:'优质蛋白易吸收，推荐',avoid:'海鲜过敏者忌',mens:'ok'},
+ '红烧带鱼':{tags:['红烧','不饱和脂肪','DHA','鱼','蛋白'],diff:'中等',pro:22,carb:10,fat:16,gi:'中',tips:'煎鱼别急着翻；中小火炖入味',suit:'补EPA/DHA护心脑',avoid:'油炸偏腻，适量',mens:'ok'},
+ '蚂蚁上树':{tags:['下饭','粉丝','肉末','川味','豆瓣'],diff:'简单',pro:10,carb:30,fat:14,gi:'高',tips:'粉丝泡软剪短；豆瓣炒出红油',suit:'下饭家常',avoid:'粉丝纯碳水，控量',mens:'mod'},
+ '红烧茄子':{tags:['家常','花青素','素菜','茄子','吸油'],diff:'中等',pro:3,carb:14,fat:16,gi:'中',tips:'茄子盐腌挤水少吸油；少油版更轻',suit:'花青素抗氧化',avoid:'吸油多，少油烹饪',mens:'ok'},
+ '青椒炒肉':{tags:['下饭','补蛋白','青椒','维C','肉'],diff:'简单',pro:18,carb:8,fat:16,gi:'中',tips:'肉片滑散盛出再炒椒；大火翻匀',suit:'蛋白+维C均衡',avoid:'五花偏肥选瘦肉',mens:'ok'},
+ '蒜薹炒肉':{tags:['家常','维C','蛋白','蒜薹','肉'],diff:'简单',pro:16,carb:10,fat:14,gi:'中',tips:'蒜薹大火快炒保脆嫩；五花煸出油',suit:'维C纤维+蛋白',avoid:'偏咸，控盐',mens:'ok'},
+ '蒸蛋':{tags:['蒸菜','易消化蛋白','暖食','蛋','快手'],diff:'简单',pro:12,carb:2,fat:9,gi:'低',tips:'温水1:1.5过筛；盖膜防蜂窝',suit:'极易消化，暖食佳品',avoid:'胆固醇高者少蛋黄',mens:'ok'},
+ '土豆炖鸡':{tags:['炖菜','蛋白','碳水','暖身','鸡','土豆'],diff:'中等',pro:24,carb:28,fat:16,gi:'中',tips:'鸡块焯水去腥；土豆后放防烂',suit:'蛋白碳水均衡暖身',avoid:'油脂偏高撇浮油',mens:'ok'}
+};
+const M1Z_TAGS=['快手','下饭','补蛋白','补铁','低脂减脂','暖身','辣','清淡','汤','主食','凉菜','抗氧化','炖煮'];
+let m1zQ='',m1zCat='全部',m1zMens=false;
 function m1ZijiBody(){
-  return '<div class="sec-sub" style="margin-left:0;text-align:left">内置 30 道家常菜 · 搜菜名/切分类 · 点开看食材·步骤·营养价值 · 还能一键自动生成今日菜谱</div>'
-  +'<div class="m1w-search"><span class="ic">🔍</span><input id="m1z-input" placeholder="想做点什么？例如 番茄炒蛋 / 红烧肉 / 紫菜蛋花汤" oninput="m1zQ=this.value;m1ZijiRender()"></div>'
-  +'<div class="m1w-cats" id="m1z-cats">'+M1W_CATS.map(c=>'<span class="m1w-cat'+(c==='全部'?' on':'')+'" data-cat="'+c+'" onclick="m1zCat=this.dataset.cat;document.querySelectorAll(\'#m1z-cats .m1w-cat\').forEach(x=>x.classList.toggle(\'on\',x.dataset.cat===m1zCat));m1ZijiRender()">'+c+'</span>').join('')+'</div>'
+  const tags=M1Z_TAGS.map(t=>'<span class="m1z-tag'+(m1zQ===t?' on':'')+'" onclick="m1zQ=\''+esc(t)+'\';var i=document.getElementById(\'m1z-input\');if(i)i.value=\''+esc(t)+'\';m1ZijiRender()">'+t+'</span>').join('');
+  return '<div class="sec-sub" style="margin-left:0;text-align:left">内置 30 道家常菜 · 多维搜索(菜名/食材/口味/功效) · 点开看食材·步骤·营养·宜忌 · 一键生成今日菜谱</div>'
+  +'<div class="m1w-search"><span class="ic">🔍</span><input id="m1z-input" placeholder="想做点什么？菜名/食材/口味/功效：番茄、牛肉、补蛋白、快手、汤…" oninput="m1zQ=this.value;m1ZijiRender()"><span class="m1w-clear" onclick="m1zClear()">×</span></div>'
+  +'<div class="m1w-cats" id="m1z-cats">'+M1W_CATS.map(c=>'<span class="m1w-cat'+(c===m1zCat?' on':'')+'" data-cat="'+c+'" onclick="m1zCat=this.dataset.cat;document.querySelectorAll(\'#m1z-cats .m1w-cat\').forEach(x=>x.classList.toggle(\'on\',x.dataset.cat===m1zCat));m1ZijiRender()">'+c+'</span>').join('')+'</div>'
+  +'<div class="m1z-tags">'+tags+'</div>'
+  +'<div id="m1z-hist" class="m1z-hist-wrap"></div>'
+  +'<div class="m1z-mens-row"><span class="m1w-mens-toggle'+(m1zMens?' on':'')+'" onclick="m1zMensToggle()">🩸 我最近在经期</span><span class="m1z-mens-tip">开启后生冷凉拌菜会标红提醒</span></div>'
   +'<div id="m1z-grid" class="m1w-grid"></div>'
   +'<div class="m1z-auto"><button class="btn-primary" onclick="m1ZijiAuto(false)">🤖 自动生成今日菜谱</button><button class="btn-ghost" onclick="m1ZijiAuto(true)">🩸 经期暖身版</button></div>'
   +'<div class="m1z-class"><div class="m1z-class-h">🥗 营养价值小课堂</div><div class="m1z-class-b">🥚 鸡蛋＝最易吸收的优质蛋白 ｜ 🐟 鱼肉＝DHA护脑 ｜ 🥬 深绿菜＝补铁补叶酸 ｜ 🍅 番茄＝番茄红素抗氧化 ｜ 🌽 粗粮＝膳食纤维稳血糖 ｜ 🍖 红肉＝补铁主力(经期友好)</div></div>'
-  +'<div class="m1w-custom-wrap"><div class="m1w-custom-title">—— 我的拿手菜 ——</div><div id="m1z-custom-list"></div><button class="add-btn" onclick="m1ZijiAdd()">➕ 新增拿手菜</button></div>';
+  +'<div class="m1w-custom-wrap"><div class="m1w-custom-title">—— 我的拿手菜（可存完整菜谱） ——</div><div id="m1z-custom-list"></div><button class="add-btn" onclick="m1ZijiAdd()">➕ 新增拿手菜</button></div>';
+}
+function m1zMatch(r,q){
+  if(!q)return true;
+  q=q.toLowerCase();
+  const ri=RINFO[r.n]||{};
+  const hay=[r.n,r.cat,(ri.tags||[]).join(' '),r.ing.join(' '),(ri.suit||''),(ri.avoid||''),(ri.tips||'')].join(' ').toLowerCase();
+  return hay.indexOf(q)>=0;
+}
+function pushZijiHist(q){
+  state.m1Custom=state.m1Custom||{};
+  let h=state.m1Custom.zijiHist||[];
+  h=h.filter(x=>x!==q);h.unshift(q);h=h.slice(0,5);
+  state.m1Custom.zijiHist=h;saveSilent();
+}
+function m1ZijiRenderHist(){
+  const box=document.getElementById('m1z-hist');if(!box)return;
+  const h=(state.m1Custom&&state.m1Custom.zijiHist)||[];
+  if(!h.length){box.innerHTML='';return;}
+  box.innerHTML='<span class="m1z-hist-h">🔁 最近搜：</span>'+h.map(x=>'<span class="m1z-hist" onclick="m1zQ=\''+esc(x)+'\';var i=document.getElementById(\'m1z-input\');if(i)i.value=\''+esc(x)+'\';m1ZijiRender()">'+esc(x)+'</span>').join('');
 }
 function m1ZijiRender(){
   const q=(m1zQ||'').trim();
-  let pool=RECIPES;
+  let pool=RECIPES.slice();
   if(m1zCat&&m1zCat!=='全部')pool=pool.filter(r=>r.cat===m1zCat);
-  if(q)pool=pool.filter(r=>r.n.indexOf(q)>=0||r.cat.indexOf(q)>=0);
+  if(q)pool=pool.filter(r=>m1zMatch(r,q));
   const grid=document.getElementById('m1z-grid');if(!grid)return;
-  if(!pool.length){grid.innerHTML='<div class="dl-nores">没找到「'+esc(q)+'」相关菜谱，换个词试试～</div>';}
-  else{grid.innerHTML=pool.map(r=>'<div class="m1w-card" onclick="m1ZijiOpen('+RECIPES.indexOf(r)+')"><div class="m1w-ic">'+r.ic+'</div><div class="m1w-n">'+esc(r.n)+'</div><div class="m1w-meta"><span class="m1w-tag">'+r.cat+'</span><span>⏱ '+r.t+'</span></div><div class="m1w-kcal">'+r.k+'</div></div>').join('');}
+  if(q)pushZijiHist(q);
+  if(!pool.length){
+    grid.innerHTML='<div class="dl-nores">没找到「'+esc(q)+'」相关菜谱 🤔<br>试试 番茄 / 牛肉 / 补蛋白 / 快手 / 汤 这类关键词，或点上面的分类/标签，也可点 × 清空</div>';
+  }else{
+    grid.innerHTML=pool.map(r=>{
+      const ri=RINFO[r.n]||{};
+      let flag='';
+      if(m1zMens&&ri.mens==='no')flag='<span class="m1z-flag no">🩸经期少食</span>';
+      else if(m1zMens&&ri.mens==='mod')flag='<span class="m1z-flag mod">⚠️适量</span>';
+      const tags=(ri.tags||[]).slice(0,3).map(t=>'<span class="m1z-ctag">'+t+'</span>').join('');
+      return '<div class="m1w-card" onclick="m1ZijiOpen('+RECIPES.indexOf(r)+')">'
+        +(flag?flag:'')
+        +'<div class="m1w-ic">'+r.ic+'</div>'
+        +'<div class="m1w-n">'+esc(r.n)+'</div>'
+        +(tags?'<div class="m1z-ctags">'+tags+'</div>':'')
+        +'<div class="m1w-meta"><span class="m1w-tag">'+r.cat+'</span><span>⏱ '+r.t+'</span></div>'
+        +'<div class="m1w-kcal">'+r.k+'</div></div>';
+    }).join('');
+  }
   m1ZijiRenderCustom();
+  m1ZijiRenderHist();
 }
 function m1ZijiRenderCustom(){
   const box=document.getElementById('m1z-custom-list');if(!box)return;
   const items=(state.m1Custom&&state.m1Custom.ziji)||[];
-  if(!items.length){box.innerHTML='<div class="dl-nores" style="padding:6px">还没有拿手菜，点下面"新增"加一个～</div>';return;}
-  box.innerHTML=items.map((it,i)=>'<div class="item" style="border-left-color:#ff9a5a"><div class="t"><b>'+esc(it.n)+'</b>'+(it.d?'<small>'+esc(it.d)+'</small>':'')+'</div><button class="del" onclick="event.stopPropagation();m1ZijiDel('+i+')">×</button></div>').join('');
+  if(!items.length){box.innerHTML='<div class="dl-nores" style="padding:6px">还没有拿手菜，点下面"新增"加一个（可存完整食材+步骤）～</div>';return;}
+  box.innerHTML=items.map((it,i)=>'<div class="item" style="border-left-color:#ff9a5a;cursor:pointer" onclick="m1ZijiOpenCustom('+i+')"><div class="t"><b>'+esc(it.n)+'</b>'+(it.k?'<small>'+esc(it.k)+'</small>':'')+(it.nut?'<small>'+esc(it.nut)+'</small>':'')+'</div><button class="del" onclick="event.stopPropagation();m1ZijiDel('+i+')">×</button></div>').join('');
 }
 function m1ZijiOpen(i){
   const r=RECIPES[i];if(!r)return;
+  const ri=RINFO[r.n]||{};
   const ing=r.ing.map(x=>'<li>'+esc(x)+'</li>').join('');
   const steps=r.steps.map((s,idx)=>'<li><span class="m1w-step-n">'+(idx+1)+'</span><span>'+esc(s)+'</span></li>').join('');
   const nut=NUT[r.n]||'均衡营养，搭配蔬菜更健康';
+  let menFlag='';
+  if(ri.mens==='no')menFlag='🩸 经期建议少食：'+(ri.avoid||'生冷或高脂，经期尽量避开');
+  else if(ri.mens==='mod')menFlag='⚠️ 经期适量：'+(ri.avoid||'少量解馋即可');
+  const warn=(m1zMens&&menFlag)?'<div class="m1w-warn">'+menFlag+'</div>':'';
+  const suitRow=ri.suit?'<div class="m1z-adv-row ok"><b>✅ 适宜：</b>'+esc(ri.suit)+'</div>':'';
+  const avoidRow=ri.avoid?'<div class="m1z-adv-row no"><b>🚫 注意：</b>'+esc(ri.avoid)+'</div>':'';
+  const tipsRow=ri.tips?'<div class="m1z-tips">💡 '+esc(ri.tips)+'</div>':'';
+  const nrow=(ri.pro!==undefined)?'<div class="m1z-nut-grid"><div><b>'+ri.pro+'g</b><span>蛋白质</span></div><div><b>'+ri.carb+'g</b><span>碳水</span></div><div><b>'+ri.fat+'g</b><span>脂肪</span></div><div><b>'+ri.gi+'</b><span>升糖</span></div></div>':'';
+  const diffTag=ri.diff?'<span class="m1w-tag" style="background:#e6f0ff;color:#3a6ac0">'+ri.diff+'</span>':'';
   document.getElementById('modalCard').innerHTML=
     '<h3>📖 '+esc(r.n)+'</h3>'
-    +'<div class="m1w-detail"><div class="m1w-detail-head"><span class="m1w-ic-big">'+r.ic+'</span><div><div class="m1w-detail-n">'+esc(r.n)+' <span class="m1w-tag">'+r.cat+'</span></div><div class="m1w-detail-meta">⏱ '+r.t+' · 🔥 '+r.k+' · 👥 '+r.s+'</div></div></div>'
+    +'<div class="m1w-detail"><div class="m1w-detail-head"><span class="m1w-ic-big">'+r.ic+'</span><div><div class="m1w-detail-n">'+esc(r.n)+' <span class="m1w-tag">'+r.cat+'</span> '+diffTag+'</div><div class="m1w-detail-meta">⏱ '+r.t+' · 🔥 '+r.k+' · 👥 '+r.s+'</div></div></div>'
+    +warn
     +'<div class="m1w-sec"><div class="m1w-sec-h">🛒 食材清单</div><ul class="m1w-ing">'+ing+'</ul></div>'
-    +'<div class="m1w-sec"><div class="m1w-sec-h">👨‍🍳 做法步骤</div><ol class="m1w-steps">'+steps+'</ol></div>'
-    +'<div class="m1w-sec m1z-nut-sec"><div class="m1w-sec-h">💡 营养价值</div><div class="m1z-nut">'+esc(nut)+'</div></div>'
+    +'<div class="m1w-sec"><div class="m1w-sec-h">👨‍🍳 详细做法步骤</div><ol class="m1w-steps">'+steps+'</ol></div>'
+    +'<div class="m1w-sec m1z-nut-sec"><div class="m1w-sec-h">💡 营养说明</div>'+nrow+'<div class="m1z-nut">'+esc(nut)+'</div></div>'
+    +'<div class="m1w-sec"><div class="m1w-sec-h">🥗 饮食宜忌 & 小贴士</div>'+suitRow+avoidRow+tipsRow+'</div>'
+    +'<div class="m1z-actions"><button class="btn-ghost" onclick="m1ZijiAddPlan(\''+esc(r.n).replace(/'/g,'')+'\',\''+r.ic+'\')">🍽️ 加入今日菜谱</button><button class="btn-ghost" onclick="m1ZijiFav(\''+esc(r.n).replace(/'/g,'')+'\',\''+r.ic+'\')">⭐ 收藏</button><button class="btn-primary" onclick="m1ZijiLogDiet('+i+')">📝 记录饮食</button></div>'
     +'<div class="modal-actions"><button class="btn-ghost" onclick="m1ZijiShow()">← 返回菜谱</button><button class="btn-primary" onclick="closeModal()">关闭</button></div>';
 }
+function m1ZijiOpenCustom(i){
+  const it=(state.m1Custom.ziji||[])[i];if(!it)return;
+  const ing=(it.ing||[]).map(x=>'<li>'+esc(x)+'</li>').join('')||'<li class="m1z-empty">未填写食材</li>';
+  const steps=(it.steps||[]).map((s,idx)=>'<li><span class="m1w-step-n">'+(idx+1)+'</span><span>'+esc(s)+'</span></li>').join('')||'<li class="m1z-empty">未填写步骤</li>';
+  document.getElementById('modalCard').innerHTML=
+    '<h3>🍳 '+esc(it.n)+' <span style="font-size:12px;color:#e0702a">（我的拿手菜）</span></h3>'
+    +'<div class="m1w-detail"><div class="m1w-detail-head"><span class="m1w-ic-big">🍽️</span><div><div class="m1w-detail-n">'+esc(it.n)+'</div><div class="m1w-detail-meta">'+(it.k||'')+'</div></div></div>'
+    +'<div class="m1w-sec"><div class="m1w-sec-h">🛒 食材清单</div><ul class="m1w-ing">'+ing+'</ul></div>'
+    +'<div class="m1w-sec"><div class="m1w-sec-h">👨‍🍳 做法步骤</div><ol class="m1w-steps">'+steps+'</ol></div>'
+    +(it.nut?'<div class="m1w-sec m1z-nut-sec"><div class="m1w-sec-h">💡 营养/小窍门</div><div class="m1z-nut">'+esc(it.nut)+'</div></div>':'')
+    +'<div class="m1z-actions"><button class="btn-ghost" onclick="m1ZijiAddPlan(\''+esc(it.n).replace(/'/g,'')+'\',\'🍽️\')">🍽️ 加入今日菜谱</button><button class="btn-ghost" onclick="m1ZijiFav(\''+esc(it.n).replace(/'/g,'')+'\',\'🍽️\')">⭐ 收藏</button></div>'
+    +'<div class="modal-actions"><button class="btn-ghost" onclick="m1ZijiShow()">← 返回</button><button class="btn-primary" onclick="m1ZijiDel('+i+')">🗑 删除</button></div>';
+}
 function m1ZijiShow(){
+  m1zMens=(state.m1Custom&&state.m1Custom.mens)||false;
+  m1zQ='';m1zCat='全部';
   document.getElementById('modalCard').innerHTML='<h3>🍳 自己做饭 · 菜谱搜索+自动生成</h3>'+m1ZijiBody();
   document.getElementById('modalMask').classList.add('show');
   m1ZijiRender();
@@ -3780,17 +3918,52 @@ function m1ZijiAuto(warm){
     +'<div class="modal-actions"><button class="btn-ghost" onclick="m1ZijiShow()">← 返回</button><button class="btn-primary" onclick="m1ZijiAuto('+warm+')">🔄 换一餐</button></div>';
 }
 function m1ZijiAdd(){
-  showModal('➕ 新增拿手菜',[
+  showModal('➕ 新增拿手菜（完整菜谱）',[
     {label:'菜名',type:'text',id:'n',ph:'例如 红烧排骨'},
-    {label:'备注/小窍门',type:'text',id:'d',ph:'例如 少油、多焖一会'}
+    {label:'食材（每行一个，如 排骨 500g）',type:'textarea',id:'ing',ph:'排骨 500g\n姜 3片\n葱 1根\n...',rows:3},
+    {label:'步骤（每行一步）',type:'textarea',id:'st',ph:'排骨冷水下锅焯去血沫\n热锅炒糖色\n下排骨上色\n加水炖40分钟收汁',rows:3},
+    {label:'热量（约多少大卡）',type:'text',id:'k',ph:'例如 450'},
+    {label:'营养/小窍门',type:'text',id:'nut',ph:'例如 补钙、少油更清爽'}
   ],v=>{
+    const ing=(v.ing||'').split('\n').map(s=>s.trim()).filter(Boolean);
+    const steps=(v.st||'').split('\n').map(s=>s.trim()).filter(Boolean);
     state.m1Custom=state.m1Custom||{};
     state.m1Custom.ziji=state.m1Custom.ziji||[];
-    state.m1Custom.ziji.push({n:v.n||'(未命名)',d:v.d||''});
+    state.m1Custom.ziji.push({n:v.n||'(未命名)',ing:ing,steps:steps,k:(v.k||'约0大卡'),nut:v.nut||'',d:''});
     saveSilent();m1ZijiShow();
   });
 }
 function m1ZijiDel(i){state.m1Custom.ziji.splice(i,1);saveSilent();m1ZijiRenderCustom();}
+function m1ZijiAddPlan(n,ic){
+  state.m1zPlan=state.m1zPlan||[];
+  if(state.m1zPlan.some(x=>x.n===n)){toast('「'+n+'」已在今日菜谱里啦');return;}
+  state.m1zPlan.push({n:n,ic:ic});saveSilent();
+  toast('已加入今日菜谱：'+n+' 🍽️');
+}
+function m1ZijiFav(n,ic){
+  state.m1zFav=state.m1zFav||[];
+  if(state.m1zFav.some(x=>x.n===n)){toast('「'+n+'」已收藏过 ⭐');return;}
+  state.m1zFav.push({n:n,ic:ic});saveSilent();
+  toast('已收藏：'+n+' ⭐');
+}
+function m1ZijiLogDiet(i){
+  const r=RECIPES[i];if(!r)return;
+  const kcal=parseInt((r.k||'0').replace(/\D/g,''))||200;
+  const rec={id:uid(),name:r.n,emoji:r.ic,unit:'份',weight:1,kcal:kcal,sugar:Math.round(kcal*0.08),addSugar:Math.round(kcal*0.08),protein:Math.round(kcal*0.18),fat:Math.round(kcal*0.3),gi:0,friendly:false,time:nowHM(),meal:'午餐'};
+  state.diet=state.diet||{};state.diet.records=state.diet.records||[];
+  state.diet.records.push(rec);saveSilent();
+  if(typeof dietRecordsRender==='function')dietRecordsRender();
+  const t=todayStr();state.checkins[t]=state.checkins[t]||{};state.checkins[t].diet='ok';refreshCheckin(t);
+  if(typeof renderCal==='function')renderCal('m5');
+  toast('已记录饮食：'+r.n+' '+kcal+'kcal 📝');
+}
+function m1zMensToggle(){
+  m1zMens=!m1zMens;state.m1Custom=state.m1Custom||{};state.m1Custom.mens=m1zMens;saveSilent();
+  const el=document.querySelector('.m1z-mens-row .m1w-mens-toggle');if(el)el.classList.toggle('on',m1zMens);
+  m1ZijiRender();
+  toast(m1zMens?'已开启经期模式：生冷凉拌会标红 🩸':'已关闭经期模式');
+}
+function m1zClear(){m1zQ='';const i=document.getElementById('m1z-input');if(i)i.value='';m1ZijiRender();}
 
 /* ===== 来月经 · 饮食宜忌 ===== */
 const MENS={
