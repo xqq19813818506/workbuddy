@@ -743,6 +743,8 @@
 .dl-foot{margin-top:6px;display:flex;justify-content:flex-end}
 .dl-more{font-size:10.5px;font-weight:800;color:#9270d8;background:#efe6fb;border-radius:9px;padding:3px 9px}
 .flip-hint{margin-top:7px;font-size:9px;color:#9270d8;font-weight:800;opacity:.9}
+.flip-toggle{position:absolute;bottom:6px;right:7px;background:linear-gradient(135deg,#b79bf0,#9270d8);color:#fff;border:none;border-radius:10px;padding:3px 9px;font-size:9.5px;font-weight:800;cursor:pointer;box-shadow:0 1px 4px rgba(120,100,200,.35);z-index:2}
+.flip-toggle:active{transform:scale(.94)}
 
 </style>
 </head>
@@ -1759,9 +1761,13 @@ function renderFlip(mod){
   const data=(state.flips[mod]&&state.flips[mod].length)?state.flips[mod]:(mod==='m6'?FLIP6:FLIP9);
   if(!state.flips[mod])state.flips[mod]=data;
   box.innerHTML=data.map((c,i)=>{
-    const back=c.d?diseaseTpl(c.d):(c.b||'').replace(/\n/g,'<br>');
-    const hint=c.d?('<div class="flip-hint">【'+esc(c.d.cat||'')+'】点我看全貌 ↻</div>'):'';
-    return '<div class="flip-card" onclick="this.classList.toggle(\'flipped\')"><div class="flip-inner"><div class="flip-face flip-front"><b>'+(mod==='m9'?'🗣️ ':'📚 ')+esc(c.f)+'</b>'+hint+'<div style="margin-top:6px;font-size:9px;opacity:.7">点我翻面 ↻</div></div><div class="flip-face flip-back">'+back+'<button class="del" onclick="event.stopPropagation();delFlip(\''+mod+'\','+i+')">×</button></div></div></div>';
+    const isDis=!!c.d;
+    const back=isDis?diseaseTpl(c.d):(c.b||'').replace(/\n/g,'<br>');
+    const hint=isDis?('<div class="flip-hint">【'+esc(c.d.cat||'')+'】点我查看详细介绍 ›</div>'):'';
+    const flipBtn='<button class="flip-toggle" onclick="event.stopPropagation();var fc=this.closest(\'.flip-card\');if(fc)fc.classList.toggle(\'flipped\');">↻ 翻面</button>';
+    const cardClick=isDis?('m6DiseaseDetail(\''+esc(c.d.name)+'\')'):('this.classList.toggle(\'flipped\')');
+    const tail=isDis?'':'<div style="margin-top:6px;font-size:9px;opacity:.7">点我翻面 ↻</div>';
+    return '<div class="flip-card" onclick="'+cardClick+'"><div class="flip-inner"><div class="flip-face flip-front"><b>'+(mod==='m9'?'🗣️ ':'📚 ')+esc(c.f)+'</b>'+hint+flipBtn+tail+'</div><div class="flip-face flip-back">'+back+flipBtn+'<button class="del" onclick="event.stopPropagation();delFlip(\''+mod+'\','+i+')">×</button></div></div></div>';
   }).join('');
 }
 function addFlip(){const mod=curMod==='m6'?'m6':'m9';showModal('加一张卡',[{label:'正面标题',type:'text',id:'f',ph:'例如 重点知识'},{label:'背面内容',type:'text',id:'b',ph:'例如 要点说明'}],v=>{state.flips[mod]=state.flips[mod]||[];state.flips[mod].push({f:v.f,b:v.b});renderFlip(mod);saveSilent();});}
