@@ -746,6 +746,41 @@
 .flip-toggle{position:absolute;bottom:6px;right:7px;background:linear-gradient(135deg,#b79bf0,#9270d8);color:#fff;border:none;border-radius:10px;padding:3px 9px;font-size:9.5px;font-weight:800;cursor:pointer;box-shadow:0 1px 4px rgba(120,100,200,.35);z-index:2}
 .flip-toggle:active{transform:scale(.94)}
 
+/* ===== m1 点外卖 · 菜谱搜索（橙味多巴胺） ===== */
+.m1w-search{display:flex;align-items:center;gap:7px;background:#fff8ef;border:2px solid #ffd9c2;border-radius:16px;padding:9px 12px;margin:7px 0 9px;box-shadow:0 2px 8px rgba(255,154,90,.12)}
+.m1w-search .ic{font-size:15px;opacity:.7}
+#m1w-input{flex:1;border:none;background:transparent;outline:none;font-size:13px;color:#6a4a32;font-weight:600}
+#m1w-input::placeholder{color:#c9aa93;font-weight:500}
+.m1w-cats{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.m1w-cat{background:#fff3e9;border:1.5px solid #f2dccb;border-radius:13px;padding:5px 12px;font-size:11px;font-weight:800;color:#b08a6a;cursor:pointer;transition:all .18s}
+.m1w-cat.on{background:linear-gradient(135deg,#ffb07a,#ff8a5a);color:#fff;border-color:transparent;box-shadow:0 2px 7px rgba(255,138,90,.4)}
+.m1w-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:6px}
+.m1w-card{background:linear-gradient(160deg,#fffaf4,#fff1e6);border:1.5px solid #ffe2d1;border-radius:16px;padding:11px 10px 13px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden}
+.m1w-card:active{transform:scale(.97);box-shadow:0 4px 12px rgba(255,138,90,.25)}
+.m1w-card::after{content:"";position:absolute;right:-12px;bottom:-12px;width:42px;height:42px;background:radial-gradient(circle,#ffe3d0,transparent 70%);opacity:.6}
+.m1w-ic{font-size:23px;line-height:1}
+.m1w-n{font-size:13px;font-weight:900;color:#5a3d2a;margin-top:5px;line-height:1.2}
+.m1w-meta{display:flex;align-items:center;gap:7px;margin-top:5px;font-size:9.5px;color:#a98f7c;font-weight:600}
+.m1w-tag{background:#ffe9d6;color:#c0651a;border-radius:7px;padding:1px 7px;font-weight:800}
+.m1w-kcal{position:absolute;top:9px;right:9px;font-size:9px;font-weight:800;color:#e0702a;background:#fff2e4;border-radius:8px;padding:2px 6px}
+.m1w-custom-wrap{margin-top:12px;padding-top:11px;border-top:1.5px dashed #f0dccb}
+.m1w-custom-title{text-align:center;font-size:11px;font-weight:900;color:#c0875a;margin-bottom:9px;letter-spacing:1px}
+.m1w-detail{margin-top:2px}
+.m1w-detail-head{display:flex;align-items:center;gap:11px;background:linear-gradient(135deg,#fff3e6,#ffe7d6);border-radius:16px;padding:12px;margin-bottom:12px}
+.m1w-ic-big{font-size:38px;line-height:1}
+.m1w-detail-n{font-size:16px;font-weight:900;color:#5a3d2a}
+.m1w-detail-n .m1w-tag{margin-left:5px;vertical-align:middle}
+.m1w-detail-meta{font-size:10.5px;color:#a98f7c;margin-top:4px;font-weight:600}
+.m1w-sec{background:#fffaf4;border:1.5px solid #ffe7d6;border-radius:16px;padding:11px 13px;margin-bottom:10px}
+.m1w-sec-h{font-size:12px;font-weight:900;color:#e0702a;margin-bottom:8px}
+.m1w-ing{list-style:none;margin:0;padding:0}
+.m1w-ing li{font-size:11.5px;color:#6a4a32;padding:5px 0 5px 0;border-bottom:1px dashed #f2e3d6;line-height:1.5}
+.m1w-ing li:last-child{border-bottom:none}
+.m1w-steps{list-style:none;margin:0;padding:0;counter-reset:st}
+.m1w-steps li{display:flex;gap:10px;align-items:flex-start;font-size:11.5px;color:#5a4a3a;line-height:1.6;padding:7px 0;border-bottom:1px dashed #f2e3d6}
+.m1w-steps li:last-child{border-bottom:none}
+.m1w-step-n{flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#ffb07a,#ff8a5a);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:1px;box-shadow:0 1px 4px rgba(255,138,90,.4)}
+
 </style>
 </head>
 <body>
@@ -3273,7 +3308,97 @@ function openCustom(title, bodyHTML, actions){
 
 /* ===== m1 今天吃什么 · 4张卡片详情(可编辑模板) ===== */
 const M1_LABELS={jianjue:'🎲 懒得纠结 · 菜名池',tangshi:'🏠 堂食 · 店铺收藏',waimai:'🛵 外卖 · 套餐清单',ziji:'🍳 自己做饭 · 菜谱'};
+/* ===== m1 点外卖·菜谱搜索（内置30道家常菜，可搜可看做法） ===== */
+const RECIPES=[
+ {n:'番茄炒蛋',cat:'快手',ic:'🍳',t:'10分钟',k:'约180大卡',s:'1-2人',ing:['番茄 2个','鸡蛋 3个','葱花 少许','盐 适量','糖 半勺(中和酸味)'],steps:['番茄划十字,开水烫30秒去皮切块','鸡蛋打散加少许盐','热锅冷油,油热下蛋液,凝固后划散盛出','锅内余油炒番茄出汁,加糖和盐','倒回鸡蛋翻匀,撒葱花起锅']},
+ {n:'麻婆豆腐',cat:'家常',ic:'🌶️',t:'15分钟',k:'约320大卡',s:'2人',ing:['嫩豆腐 1盒','猪肉末 80g','郫县豆瓣酱 2勺','花椒粉 1小勺','葱姜蒜末'],steps:['豆腐切丁焯水备用','热油爆香葱姜蒜和肉末','加豆瓣酱炒出红油','加少量水烧开,下豆腐煮5分钟','勾水淀粉,撒花椒粉起锅']},
+ {n:'宫保鸡丁',cat:'家常',ic:'🌶️',t:'15分钟',k:'约380大卡',s:'2人',ing:['鸡胸肉 200g','花生米 50g','干辣椒 8个','葱白段','醋糖酱油生粉'],steps:['鸡丁用蛋清盐生粉抓匀','调汁:醋糖酱油生粉水','热油爆干辣椒花椒','下鸡丁炒至变色','加葱白和汁翻匀,最后撒花生米']},
+ {n:'红烧肉',cat:'家常',ic:'🍖',t:'60分钟',k:'约520大卡',s:'3人',ing:['五花肉 500g','冰糖 30g','八角 2个','生抽老抽','料酒'],steps:['五花肉切块冷水下锅焯去血沫','热锅冷油下冰糖小火炒至枣红色','下肉块翻炒上色','加生抽老抽料酒八角,加水没过肉','大火烧开转小火炖50分钟,大火收汁']},
+ {n:'可乐鸡翅',cat:'家常',ic:'🍗',t:'25分钟',k:'约350大卡',s:'2人',ing:['鸡翅中 8个','可乐 1罐','生抽 2勺','姜 3片','料酒 1勺'],steps:['鸡翅两面划两刀,冷水下锅焯水','热锅冷油下姜片,下鸡翅煎至两面金黄','加生抽料酒翻炒上色','倒入可乐没过鸡翅','大火烧开转中火炖15分钟大火收汁']},
+ {n:'糖醋里脊',cat:'家常',ic:'🍖',t:'20分钟',k:'约400大卡',s:'2人',ing:['里脊肉 300g','番茄酱 3勺','醋 2勺','糖 3勺','鸡蛋 1个生粉'],steps:['里脊切条用蛋生粉盐抓匀上浆','油温六成热下肉条炸至金黄捞出','油温回升再复炸30秒更酥','调糖醋番茄酱生粉水成汁','锅内留底油倒入汁煮开,下肉条翻匀']},
+ {n:'鱼香肉丝',cat:'家常',ic:'🌶️',t:'15分钟',k:'约360大卡',s:'2人',ing:['里脊肉 150g','木耳 30g','胡萝卜 半根','泡椒葱姜蒜','糖醋酱油'],steps:['肉丝用盐蛋清生粉抓匀,木耳胡萝卜切丝','调鱼香汁:糖醋酱油生粉水','热油爆泡椒葱姜蒜','下肉丝炒散,加配菜翻炒','淋入鱼香汁翻匀起锅']},
+ {n:'西红柿牛腩',cat:'家常',ic:'🍲',t:'90分钟',k:'约450大卡',s:'3人',ing:['牛腩 500g','番茄 3个','洋葱 半个','番茄酱 2勺','姜片八角'],steps:['牛腩切块冷水下锅焯去血沫','番茄划十字烫去皮切块,洋葱切块','热油炒香姜八角洋葱,下番茄炒出汁','下牛腩和番茄酱翻炒,加水没过','大火烧开转小火炖80分钟,加盐调味']},
+ {n:'青椒土豆丝',cat:'快手',ic:'🥔',t:'10分钟',k:'约200大卡',s:'2人',ing:['土豆 2个','青椒 1个','干辣椒 2个','醋 1勺','盐蒜末'],steps:['土豆去皮切细丝泡水洗去淀粉','青椒切丝,干辣椒切段','热油爆干辣椒蒜末','下土豆丝大火快炒','加青椒丝,烹醋,加盐翻匀出锅']},
+ {n:'蒜蓉西兰花',cat:'快手',ic:'🥦',t:'8分钟',k:'约150大卡',s:'2人',ing:['西兰花 1颗','蒜 半头','蚝油 1勺','盐','生粉水'],steps:['西兰花掰小朵盐水泡10分钟洗净','开水加少许油盐焯1分钟过凉水','热油小火炒香蒜末','下西兰花大火快炒','加蚝油盐,勾薄芡出锅']},
+ {n:'干煸豆角',cat:'家常',ic:'🌶️',t:'15分钟',k:'约280大卡',s:'2人',ing:['豆角 300g','肉末 50g','干辣椒花椒','葱姜蒜','生抽'],steps:['豆角掰段沥干','热锅多油下豆角小火煸至表皮起皱盛出','余油爆香干辣椒花椒葱姜蒜肉末','倒回豆角,加生抽盐糖大火翻匀']},
+ {n:'地三鲜',cat:'家常',ic:'🍆',t:'15分钟',k:'约300大卡',s:'2人',ing:['茄子 1根','土豆 2个','青椒 1个','蒜末','生抽糖醋'],steps:['茄子土豆切滚刀块,青椒切片','茄子撒盐稍腌出水,裹薄生粉','土豆和茄子分别炸至金黄','锅内留底油炒香蒜末,加青椒','倒回土豆茄子,加生抽糖醋翻匀']},
+ {n:'蛋炒饭',cat:'主食',ic:'🍚',t:'10分钟',k:'约450大卡',s:'1人',ing:['隔夜米饭 1碗','鸡蛋 2个','葱花','盐','生抽'],steps:['鸡蛋打散,米饭提前用勺子拨散','热油大火,油热下蛋液快速划散','立刻下米饭大火翻炒,让蛋裹住米粒','加盐生抽,持续大火炒到米粒干爽','撒葱花翻匀出锅']},
+ {n:'葱油拌面',cat:'主食',ic:'🍜',t:'10分钟',k:'约420大卡',s:'1人',ing:['细面条 1人份','小葱 1把','生抽 2勺','糖 半勺','油'],steps:['葱白葱绿分开,葱白切段葱绿切碎','煮面至八成熟捞出过凉水沥干','锅中多油小火炸葱白至焦黄捞出','葱油中加生抽糖,小火加热成酱汁','面盛入碗,浇上葱油酱汁撒葱绿拌匀']},
+ {n:'番茄牛肉面',cat:'主食',ic:'🍜',t:'30分钟',k:'约480大卡',s:'1人',ing:['牛肉 150g','番茄 2个','面条 1人份','葱姜','番茄酱'],steps:['牛肉切片用盐生粉生抽抓匀,番茄去皮切块','热油炒香葱姜,下番茄炒出汁加番茄酱','加适量水烧开,滑入牛肉片煮熟','另起锅煮面捞入碗中','浇上番茄牛肉汤,撒葱花']},
+ {n:'紫菜蛋花汤',cat:'汤',ic:'🥣',t:'5分钟',k:'约80大卡',s:'2人',ing:['紫菜 1小片','鸡蛋 1个','虾皮 少许','葱花','盐香油'],steps:['鸡蛋打散备用','锅中水烧开,下紫菜和虾皮煮1分钟','淋入蛋液成蛋花,加盐调味','关火淋少许香油,撒葱花']},
+ {n:'番茄蛋花汤',cat:'汤',ic:'🥣',t:'8分钟',k:'约100大卡',s:'2人',ing:['番茄 1个','鸡蛋 1个','葱花','盐','番茄酱'],steps:['番茄去皮切小块','热油炒番茄出汁,加番茄酱和适量水烧开','加盐调味','淋入蛋液成蛋花','撒葱花起锅']},
+ {n:'酸辣汤',cat:'汤',ic:'🌶️',t:'10分钟',k:'约120大卡',s:'2人',ing:['豆腐 半块','木耳鸡蛋','香菇','醋 2勺','胡椒粉生粉'],steps:['豆腐木耳香菇切丝,鸡蛋打散','锅中水烧开,下豆腐木耳香菇煮2分钟','加醋生抽盐胡椒粉调味','淋入蛋液,勾薄芡','起锅淋少许香油']},
+ {n:'玉米排骨汤',cat:'汤',ic:'🥣',t:'60分钟',k:'约220大卡',s:'3人',ing:['排骨 400g','玉米 1根','胡萝卜 1根','姜 3片','盐'],steps:['排骨冷水下锅焯去血沫','玉米胡萝卜切块','排骨姜片加水大火烧开转小火炖40分钟','加玉米胡萝卜继续炖20分钟','加盐调味']},
+ {n:'凉拌黄瓜',cat:'凉菜',ic:'🥒',t:'8分钟',k:'约60大卡',s:'2人',ing:['黄瓜 2根','蒜 3瓣','生抽醋糖','辣椒油','香菜'],steps:['黄瓜拍碎切段撒盐腌5分钟出水','蒜末+生抽+醋+糖+辣椒油调成汁','倒掉黄瓜出的水,浇上料汁拌匀','撒香菜,冰箱冷藏10分钟更入味']},
+ {n:'凉拌木耳',cat:'凉菜',ic:'🥗',t:'10分钟',k:'约70大卡',s:'2人',ing:['干木耳 20g','蒜末','葱花','生抽醋糖','辣椒油'],steps:['木耳温水泡发摘洗干净,沸水焯3分钟过凉水沥干','蒜末+生抽+醋+糖+辣椒油调成料汁','木耳与料汁拌匀','撒葱花白芝麻']},
+ {n:'凉拌皮蛋',cat:'凉菜',ic:'🥚',t:'10分钟',k:'约150大卡',s:'2人',ing:['皮蛋 3个','内酯豆腐 1盒','葱姜蒜','生抽醋糖'],steps:['皮蛋去壳切瓣,豆腐切块摆盘','姜蒜末+生抽+醋+糖+辣椒油调汁','浇在皮蛋豆腐上','撒葱花,淋少许热油激香']},
+ {n:'清蒸鲈鱼',cat:'家常',ic:'🐟',t:'20分钟',k:'约200大卡',s:'2人',ing:['鲈鱼 1条','葱姜','蒸鱼豉油','料酒'],steps:['鲈鱼处理干净,背上划两刀,抹料酒盐腌10分钟','盘底铺葱姜,鱼放上面,表面再放葱姜','水开上锅大火蒸8分钟,关火焖2分钟','倒掉盘内汤汁,铺新葱丝','淋蒸鱼豉油,浇一勺热油激香']},
+ {n:'红烧带鱼',cat:'家常',ic:'🐟',t:'25分钟',k:'约300大卡',s:'2人',ing:['带鱼 2段','葱姜蒜','八角','生抽老抽','醋糖'],steps:['带鱼切段,用盐料酒腌10分钟','热锅多油,下带鱼中小火煎至两面金黄盛出','余油炒香葱姜蒜八角','加生抽老抽醋糖和少量水烧开','放回带鱼中小火炖10分钟大火收汁']},
+ {n:'蚂蚁上树',cat:'家常',ic:'🌶️',t:'20分钟',k:'约350大卡',s:'2人',ing:['粉丝 1把','猪肉末 100g','郫县豆瓣酱 1勺','葱姜蒜','生抽'],steps:['粉丝温水泡软剪段','热油爆香葱姜蒜和肉末','加豆瓣酱炒出红油','加生抽糖和少量水烧开','下粉丝煮至汤汁收干,撒葱花']},
+ {n:'红烧茄子',cat:'家常',ic:'🍆',t:'20分钟',k:'约280大卡',s:'2人',ing:['茄子 2根','蒜 半头','生抽老抽糖','葱','生粉'],steps:['茄子切滚刀块撒盐腌10分钟出水挤干,裹薄生粉','热锅多油下茄子煎至软糯盛出','余油炒香蒜末,加生抽老抽糖和少量水','倒回茄子翻匀,大火收汁','撒葱花']},
+ {n:'青椒炒肉',cat:'家常',ic:'🌶️',t:'15分钟',k:'约320大卡',s:'2人',ing:['里脊肉 150g','青椒 3个','蒜','生抽老抽','生粉'],steps:['肉切片用生抽老抽生粉抓匀,青椒掰块','热油大火下肉片快速滑散盛出','余油炒香蒜片,下青椒大火煸至断生','倒回肉片,加盐生抽大火翻匀']},
+ {n:'蒜薹炒肉',cat:'家常',ic:'🥬',t:'12分钟',k:'约300大卡',s:'2人',ing:['蒜薹 1把','五花肉 100g','生抽','盐','料酒'],steps:['蒜薹切段,五花肉切片','热锅下肉片煸出油至微焦','加料酒生抽翻炒上色','下蒜薹大火快炒','加盐翻匀出锅']},
+ {n:'蒸蛋',cat:'汤',ic:'🥚',t:'12分钟',k:'约120大卡',s:'1人',ing:['鸡蛋 2个','温水(蛋液1.5倍)','生抽','葱花','香油'],steps:['鸡蛋打散,加温水(1:1.5)和少许盐搅匀过筛','碗上盖保鲜膜,水开上锅小火蒸10分钟','出锅淋生抽香油,撒葱花']},
+ {n:'土豆炖鸡',cat:'家常',ic:'🍲',t:'45分钟',k:'约400大卡',s:'3人',ing:['鸡腿 2只','土豆 2个','香菇 5朵','葱姜八角','生抽老抽'],steps:['鸡腿切块焯水,土豆切块,香菇泡发','热油炒香葱姜八角,下鸡块翻炒','加生抽老抽料酒上色,加水烧开','下土豆香菇,转小火炖30分钟','加盐大火收汁']}
+];
+let m1wQ='',m1wCat='全部';
+const M1W_CATS=['全部','快手','家常','汤','主食','凉菜'];
+function m1WaimaiBody(){
+  return '<div class="sec-sub" style="margin-left:0;text-align:left">内置 30+ 道家常菜谱 · 搜菜名/切分类 · 点开看食材步骤 · 也能加自己的常点套餐</div>'
+  +'<div class="m1w-search"><span class="ic">🔍</span><input id="m1w-input" placeholder="想吃点什么？例如 番茄炒蛋 / 红烧肉 / 紫菜蛋花汤" oninput="m1wQ=this.value;m1WaimaiRender()"></div>'
+  +'<div class="m1w-cats" id="m1w-cats">'+M1W_CATS.map(c=>'<span class="m1w-cat'+(c==='全部'?' on':'')+'" data-cat="'+c+'" onclick="m1wCat=this.dataset.cat;document.querySelectorAll(\'#m1w-cats .m1w-cat\').forEach(x=>x.classList.toggle(\'on\',x.dataset.cat===m1wCat));m1WaimaiRender()">'+c+'</span>').join('')+'</div>'
+  +'<div id="m1w-grid" class="m1w-grid"></div>'
+  +'<div class="m1w-custom-wrap"><div class="m1w-custom-title">—— 我的常点套餐 ——</div><div id="m1w-custom-list"></div><button class="add-btn" onclick="m1WaimaiAdd()">➕ 新增常点套餐</button></div>';
+}
+function m1WaimaiRender(){
+  const q=(m1wQ||'').trim();
+  let pool=RECIPES;
+  if(m1wCat&&m1wCat!=='全部')pool=pool.filter(r=>r.cat===m1wCat);
+  if(q)pool=pool.filter(r=>r.n.indexOf(q)>=0||r.cat.indexOf(q)>=0);
+  const grid=document.getElementById('m1w-grid');
+  if(!grid)return;
+  if(!pool.length){grid.innerHTML='<div class="dl-nores">没找到「'+esc(q)+'」相关菜谱，换个词试试～</div>';}
+  else{grid.innerHTML=pool.map(r=>'<div class="m1w-card" onclick="m1WaimaiOpen('+RECIPES.indexOf(r)+')"><div class="m1w-ic">'+r.ic+'</div><div class="m1w-n">'+esc(r.n)+'</div><div class="m1w-meta"><span class="m1w-tag">'+r.cat+'</span><span>⏱ '+r.t+'</span></div><div class="m1w-kcal">'+r.k+'</div></div>').join('');}
+  m1WaimaiRenderCustom();
+}
+function m1WaimaiRenderCustom(){
+  const box=document.getElementById('m1w-custom-list');if(!box)return;
+  const items=(state.m1Custom&&state.m1Custom.waimai)||[];
+  if(!items.length){box.innerHTML='<div class="dl-nores" style="padding:6px">还没有常点套餐，点下面"新增"加一个～</div>';return;}
+  box.innerHTML=items.map((it,i)=>'<div class="item" style="border-left-color:#ff9a5a"><div class="t"><b>'+esc(it.n)+'</b>'+(it.d?'<small>'+esc(it.d)+'</small>':'')+'</div><button class="del" onclick="event.stopPropagation();m1WaimaiDel('+i+')">×</button></div>').join('');
+}
+function m1WaimaiOpen(i){
+  const r=RECIPES[i];if(!r)return;
+  const ing=r.ing.map(x=>'<li>'+esc(x)+'</li>').join('');
+  const steps=r.steps.map((s,idx)=>'<li><span class="m1w-step-n">'+(idx+1)+'</span><span>'+esc(s)+'</span></li>').join('');
+  document.getElementById('modalCard').innerHTML=
+    '<h3>📖 '+esc(r.n)+'</h3>'
+    +'<div class="m1w-detail"><div class="m1w-detail-head"><span class="m1w-ic-big">'+r.ic+'</span><div><div class="m1w-detail-n">'+esc(r.n)+' <span class="m1w-tag">'+r.cat+'</span></div><div class="m1w-detail-meta">⏱ '+r.t+' · 🔥 '+r.k+' · 👥 '+r.s+'</div></div></div>'
+    +'<div class="m1w-sec"><div class="m1w-sec-h">🛒 食材清单</div><ul class="m1w-ing">'+ing+'</ul></div>'
+    +'<div class="m1w-sec"><div class="m1w-sec-h">👨‍🍳 做法步骤</div><ol class="m1w-steps">'+steps+'</ol></div>'
+    +'<div class="modal-actions"><button class="btn-ghost" onclick="m1WaimaiShow()">← 返回菜谱</button><button class="btn-primary" onclick="closeModal()">关闭</button></div>';
+}
+function m1WaimaiShow(){
+  document.getElementById('modalCard').innerHTML='<h3>🛵 外卖 · 菜谱搜索</h3>'+m1WaimaiBody();
+  document.getElementById('modalMask').classList.add('show');
+  m1WaimaiRender();
+}
+function m1WaimaiAdd(){
+  showModal('➕ 新增常点套餐',[
+    {label:'套餐名',type:'text',id:'n',ph:'例如 黄焖鸡米饭'},
+    {label:'备注/热量',type:'text',id:'d',ph:'例如 少辣 / 约600大卡'}
+  ],v=>{
+    state.m1Custom=state.m1Custom||{};
+    state.m1Custom.waimai=state.m1Custom.waimai||[];
+    state.m1Custom.waimai.push({n:v.n||'(未命名)',d:v.d||''});
+    saveSilent();
+    m1WaimaiShow();
+  });
+}
+function m1WaimaiDel(i){state.m1Custom.waimai.splice(i,1);saveSilent();m1WaimaiRenderCustom();}
 function openM1Detail(type){
+  state.m1Custom=state.m1Custom||{};
+  if(type==='waimai'){m1WaimaiShow();return;}
   state.m1Custom=state.m1Custom||{};
   let body='';
   if(type==='jianjue'){
