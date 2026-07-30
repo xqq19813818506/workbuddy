@@ -3487,6 +3487,11 @@ const MALLS={
   {id:'g8',name:'沙面糖水铺',ic:'🍮',cuisine:'粤菜',eta:18,dist:0.8,min:12,fee:0,star:4.6,tags:['清淡','免配送费','20分钟内'],menu:[{n:'杨枝甘露',kcal:230}]}
  ]
 };
+function dishPrice(cuisine,kcal){
+  const base={'火锅':58,'麻辣烫':25,'奶茶':16,'甜品':14,'轻食':29,'粥':13,'炸鸡':38,'家常菜':32,'湖北菜':30,'川菜':26,'本帮':34,'粤菜':28,'京味':18,'面食':18,'家常':30,'汤':22}[cuisine]||25;
+  let p=base+Math.round((kcal-300)/20);
+  if(p<8)p=8; if(p>99)p=99; return p;
+}
 function hashStr(s){let h=0;for(let i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0;}return h;}
 function genMall(name){
   const pool=[
@@ -3502,7 +3507,7 @@ function genMall(name){
     {ic:'🍮',cuisine:'甜品',baseEta:18,fee:0,star:4.7,tags:['冰饮','甜品','免配送费','20分钟内'],menu:[{n:'糖水',kcal:230}]}
   ];
   const h=hashStr(name);
-  return pool.map((p,i)=>({id:'g'+i,name:name+'·'+p.cuisine+(i+1),ic:p.ic,cuisine:p.cuisine,eta:Math.max(12,(p.baseEta+(h%(i+3)*3))%60),dist:+(0.6+(h%(i+9))/4).toFixed(1),min:p.fee===0?12:18+p.fee*3,fee:p.fee,star:+(4+(h%(i+5))/10).toFixed(1),tags:p.tags,menu:p.menu}));
+  return pool.map((p,i)=>({id:'g'+i,name:name+'·'+p.cuisine+(i+1),ic:p.ic,cuisine:p.cuisine,eta:Math.max(12,(p.baseEta+(h%(i+3)*3))%60),dist:+(0.6+(h%(i+9))/4).toFixed(1),min:p.fee===0?12:18+p.fee*3,fee:p.fee,star:+(4+(h%(i+5))/10).toFixed(1),tags:p.tags,menu:p.menu.map(d=>({n:d.n,kcal:d.kcal,p:dishPrice(p.cuisine,d.kcal)}))}));
 }
 function getMalls(){return MALLS[m1wLoc]||genMall(m1wLoc);}
 function m1WaimaiBody(){
@@ -3543,7 +3548,7 @@ function m1WaimaiRenderCustom(){
 }
 function m1WaimaiOpen(id){
   const m=getMalls().find(x=>x.id===id);if(!m)return;m1wOpenId=m.id;
-  const menu=(m.menu||[]).map(d=>'<div class="m1w-mitem"><span>'+esc(d.n)+'</span><span class="m1w-mkcal">'+d.kcal+'kcal</span></div>').join('');
+  const menu=(m.menu||[]).map(d=>{const p=d.p||dishPrice(m.cuisine,d.kcal);return '<div class="m1w-mitem"><span>'+esc(d.n)+'</span><span class="m1w-mkcal">￥'+p+' · '+d.kcal+'kcal</span></div>';}).join('');
   const hot=(m.tags||[]).filter(t=>['冰饮','重辣','辣'].indexOf(t)>=0);
   const warn=(m1wMens&&hot.length)?'<div class="m1w-warn">🩸 温馨提示：你当前处于生理期，'+hot.join('、')+'类食物建议少点哦～</div>':'';
   document.getElementById('modalCard').innerHTML=
