@@ -828,6 +828,44 @@
 .mens-fover-h{font-weight:900;color:#c0392b;margin-right:3px}
 .mens-divider{text-align:center;font-size:10.5px;color:#b9a8a0;font-weight:800;margin:10px 0 8px;letter-spacing:1px}
 
+/* ===== m1 点外卖·附近美食 ===== */
+.m1w-locbar{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#fff3e6,#ffe9d6);border:1.5px solid #ffd9c2;border-radius:14px;padding:9px 12px;margin:6px 0 7px;font-size:12.5px;font-weight:800;color:#a85a2a}
+.m1w-loc{color:#e0702a;cursor:pointer;text-decoration:underline dotted}
+.m1w-gps{flex:0 0 auto;margin-left:auto;background:#fff;border:1.5px solid #ffd9c2;color:#c0651a;border-radius:11px;padding:4px 10px;font-size:10.5px;font-weight:800;cursor:pointer}
+.m1w-gps:active{transform:scale(.96)}
+.m1w-locchips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.m1w-loc-chip{background:#fff3e9;border:1.5px solid #f2dccb;border-radius:11px;padding:4px 10px;font-size:10.5px;font-weight:800;color:#b08a6a;cursor:pointer;transition:all .18s}
+.m1w-loc-chip.on{background:linear-gradient(135deg,#ffb07a,#ff8a5a);color:#fff;border-color:transparent;box-shadow:0 2px 6px rgba(255,138,90,.35)}
+.m1w-rand{display:flex;align-items:center;gap:8px;margin:2px 0 9px}
+.m1w-rand .btn-ghost{flex:1;padding:9px 4px;border-radius:14px;font-size:11.5px}
+.m1w-mens-toggle{flex:0 0 auto;background:#fff0f3;border:1.5px solid #ffc6d4;color:#c24a6e;border-radius:13px;padding:6px 11px;font-size:10.5px;font-weight:800;cursor:pointer;user-select:none}
+.m1w-mens-toggle.on{background:linear-gradient(135deg,#ff9ab2,#f25c8a);color:#fff;border-color:transparent}
+.m1w-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.m1w-fbtn{background:#fff3e9;border:1.5px solid #f2dccb;border-radius:11px;padding:4px 10px;font-size:10px;font-weight:800;color:#b08a6a;cursor:pointer;transition:all .18s}
+.m1w-fbtn.on{background:linear-gradient(135deg,#ffd166,#f5b820);color:#5a3d12;border-color:transparent}
+.m1w-mgrid{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+.m1w-mcard{background:linear-gradient(160deg,#fffaf4,#fff1e6);border:1.5px solid #ffe2d1;border-radius:16px;padding:10px 12px;cursor:pointer;transition:all .18s}
+.m1w-mcard:active{transform:scale(.98);box-shadow:0 4px 12px rgba(255,138,90,.2)}
+.m1w-mhead{display:flex;align-items:center;gap:9px}
+.m1w-mic{font-size:22px;line-height:1}
+.m1w-mname{flex:1;font-size:13px;font-weight:900;color:#5a3d2a;line-height:1.2}
+.m1w-mname small{display:block;font-size:9px;color:#b09a88;font-weight:600;margin-top:1px}
+.m1w-mstar{font-size:10.5px;font-weight:800;color:#e0a020;white-space:nowrap}
+.m1w-mmeta{font-size:10px;color:#a98f7c;margin-top:5px;line-height:1.4}
+.m1w-mtags{margin-top:6px;display:flex;gap:5px;flex-wrap:wrap}
+.m1w-mtag{background:#ffe9d6;color:#c0651a;border-radius:8px;padding:2px 8px;font-size:9.5px;font-weight:800}
+.m1w-mtag.hot{background:#ffe0d6;color:#d8453a}
+.m1w-sec2{background:#fffaf4;border:1.5px solid #ffe7d6;border-radius:16px;padding:11px 13px;margin-bottom:10px}
+.m1w-sec2-h{font-size:12px;font-weight:900;color:#e0702a;margin-bottom:7px}
+.m1w-mitem{display:flex;justify-content:space-between;font-size:11.5px;color:#5a4a3a;padding:5px 0;border-bottom:1px dashed #f2e3d6}
+.m1w-mitem:last-child{border-bottom:none}
+.m1w-mkcal{font-weight:800;color:#e0702a}
+.m1w-warn{background:linear-gradient(135deg,#fff0f3,#ffe0e8);border:1.5px solid #ffb3c6;border-radius:14px;padding:9px 12px;margin-bottom:10px;font-size:11px;font-weight:700;color:#c24a6e;line-height:1.5}
+.m1w-actions{display:flex;gap:8px;margin:4px 0 10px}
+.m1w-actions button{flex:1;padding:11px 4px;border-radius:14px;border:none;font-size:12px;font-weight:900;cursor:pointer}
+.m1w-actions .btn-ghost{background:#fff;border:1.5px solid #ffc6a0;color:#c0651a}
+.m1w-actions .btn-primary{background:linear-gradient(135deg,#ffb07a,#ff8a5a);color:#fff}
+
 </style>
 </head>
 <body>
@@ -3391,22 +3429,110 @@ const RECIPES=[
 ];
 let m1wQ='',m1wCat='全部';
 const M1W_CATS=['全部','快手','家常','汤','主食','凉菜'];
+/* ===== m1 点外卖·附近美食（内置城市商户库 + 任意地点生成） ===== */
+const MALLS_CITIES=['武汉江夏','北京','成都','上海','广州'];
+const M1W_FILTERS=[{k:'new',t:'只看新店'},{k:'free',t:'免配送费'},{k:'fem',t:'适合经期'},{k:'low',t:'低卡减脂'},{k:'fast',t:'20分钟内'}];
+let m1wLoc='武汉江夏',m1wFilters={},m1wMens=false;
+const MALLS={
+ '武汉江夏':[
+  {id:'w1',name:'纸坊老火锅',ic:'🍲',cuisine:'火锅',eta:35,dist:2.5,min:50,fee:6,star:4.4,tags:['辣','重辣'],menu:[{n:'牛油锅底套餐',kcal:600},{n:'毛肚拼盘',kcal:220}]},
+  {id:'w2',name:'汤逊湖鱼丸馆',ic:'🐟',cuisine:'湖北菜',eta:30,dist:2.0,min:30,fee:5,star:4.6,tags:['清淡','适合经期'],menu:[{n:'鱼丸汤',kcal:220},{n:'莲藕排骨汤',kcal:180}]},
+  {id:'w3',name:'光谷奶茶铺',ic:'🧋',cuisine:'奶茶',eta:20,dist:0.9,min:20,fee:0,star:4.8,tags:['奶茶','冰饮','甜品','新店'],menu:[{n:'珍珠奶茶',kcal:350},{n:'四季春茶',kcal:120}]},
+  {id:'w4',name:'藏龙岛轻食沙拉',ic:'🥗',cuisine:'轻食',eta:28,dist:1.5,min:25,fee:4,star:4.7,tags:['减脂','清淡','适合经期'],menu:[{n:'鸡胸沙拉',kcal:320},{n:'牛油果碗',kcal:380}]},
+  {id:'w5',name:'江夏麻辣烫',ic:'🌶️',cuisine:'麻辣烫',eta:25,dist:1.2,min:15,fee:3,star:4.5,tags:['辣','重辣'],menu:[{n:'麻辣烫拼盘',kcal:480}]},
+  {id:'w6',name:'梁子湖蒸虾',ic:'🦐',cuisine:'湖北菜',eta:33,dist:2.2,min:40,fee:5,star:4.7,tags:['清淡','适合经期','新店'],menu:[{n:'清蒸小龙虾',kcal:350}]},
+  {id:'w7',name:'江夏粥铺',ic:'🥣',cuisine:'粥',eta:18,dist:0.8,min:12,fee:0,star:4.6,tags:['清淡','适合经期','免配送费','20分钟内'],menu:[{n:'皮蛋瘦肉粥',kcal:180}]},
+  {id:'w8',name:'藏龙减脂餐',ic:'🥦',cuisine:'轻食',eta:22,dist:1.1,min:20,fee:3,star:4.9,tags:['减脂','清淡','适合经期','20分钟内'],menu:[{n:'藜麦鸡胸碗',kcal:300}]},
+  {id:'w9',name:'一点点(江夏店)',ic:'🥤',cuisine:'奶茶',eta:19,dist:0.9,min:18,fee:0,star:4.8,tags:['奶茶','冰饮','免配送费','20分钟内'],menu:[{n:'波霸奶茶',kcal:380}]},
+  {id:'w10',name:'阳光炸鸡',ic:'🍗',cuisine:'炸鸡',eta:24,dist:1.3,min:20,fee:4,star:4.3,tags:['重辣'],menu:[{n:'炸鸡桶',kcal:800}]}
+ ],
+ '北京':[
+  {id:'b1',name:'簋街麻辣小龙虾',ic:'🦐',cuisine:'川菜',eta:32,dist:2.1,min:40,fee:5,star:4.6,tags:['辣','重辣'],menu:[{n:'麻辣小龙虾',kcal:520}]},
+  {id:'b2',name:'南城香涮肉',ic:'🍲',cuisine:'火锅',eta:30,dist:1.8,min:50,fee:6,star:4.5,tags:['辣'],menu:[{n:'铜锅涮肉',kcal:560}]},
+  {id:'b3',name:'轻食沙拉实验室',ic:'🥗',cuisine:'轻食',eta:25,dist:1.2,min:25,fee:4,star:4.8,tags:['减脂','清淡','适合经期'],menu:[{n:'鸡胸藜麦沙拉',kcal:310}]},
+  {id:'b4',name:'蜜雪冰城(中关村)',ic:'🧋',cuisine:'奶茶',eta:18,dist:0.7,min:15,fee:0,star:4.7,tags:['奶茶','冰饮','免配送费','20分钟内'],menu:[{n:'柠檬水',kcal:90}]},
+  {id:'b5',name:'护国寺小吃',ic:'🥟',cuisine:'京味',eta:22,dist:1.0,min:20,fee:3,star:4.6,tags:['清淡','适合经期'],menu:[{n:'驴打滚',kcal:260}]},
+  {id:'b6',name:'望京韩式炸鸡',ic:'🍗',cuisine:'炸鸡',eta:28,dist:1.6,min:30,fee:4,star:4.4,tags:['重辣'],menu:[{n:'半只炸鸡',kcal:760}]},
+  {id:'b7',name:'三里屯轻食碗',ic:'🥦',cuisine:'轻食',eta:20,dist:0.9,min:18,fee:3,star:4.9,tags:['减脂','清淡','适合经期','20分钟内'],menu:[{n:'烤蔬菜碗',kcal:280}]},
+  {id:'b8',name:'豆汁焦圈铺',ic:'🥣',cuisine:'京味',eta:16,dist:0.6,min:10,fee:0,star:4.2,tags:['清淡','免配送费','20分钟内'],menu:[{n:'豆汁焦圈',kcal:200}]}
+ ],
+ '成都':[
+  {id:'c1',name:'玉林串串香',ic:'🌶️',cuisine:'麻辣烫',eta:30,dist:1.9,min:30,fee:5,star:4.7,tags:['辣','重辣'],menu:[{n:'牛肉串串',kcal:500}]},
+  {id:'c2',name:'龙抄手',ic:'🥟',cuisine:'川菜',eta:22,dist:1.1,min:18,fee:3,star:4.6,tags:['清淡','适合经期'],menu:[{n:'红油抄手',kcal:420}]},
+  {id:'c3',name:'青城山轻食',ic:'🥗',cuisine:'轻食',eta:26,dist:1.4,min:25,fee:4,star:4.8,tags:['减脂','清淡','适合经期'],menu:[{n:'鸡丝凉面沙拉',kcal:330}]},
+  {id:'c4',name:'书亦烧仙草',ic:'🧋',cuisine:'奶茶',eta:19,dist:0.8,min:16,fee:0,star:4.8,tags:['奶茶','冰饮','免配送费','20分钟内'],menu:[{n:'烧仙草',kcal:300}]},
+  {id:'c5',name:'蜀大侠火锅',ic:'🍲',cuisine:'火锅',eta:38,dist:2.6,min:60,fee:6,star:4.5,tags:['辣','重辣'],menu:[{n:'牛油锅底',kcal:650}]},
+  {id:'c6',name:'甜水面小铺',ic:'🍜',cuisine:'川菜',eta:21,dist:1.0,min:15,fee:3,star:4.4,tags:['辣'],menu:[{n:'甜水面',kcal:460}]},
+  {id:'c7',name:'宽窄巷子蒸菜',ic:'🥘',cuisine:'川菜',eta:24,dist:1.2,min:20,fee:4,star:4.6,tags:['清淡','适合经期'],menu:[{n:'粉蒸肉',kcal:540}]},
+  {id:'c8',name:'锦江减脂餐',ic:'🥦',cuisine:'轻食',eta:20,dist:0.9,min:18,fee:3,star:4.9,tags:['减脂','清淡','适合经期','20分钟内'],menu:[{n:'杂粮碗',kcal:290}]}
+ ],
+ '上海':[
+  {id:'s1',name:'城隍庙汤包',ic:'🥟',cuisine:'本帮',eta:22,dist:1.1,min:20,fee:3,star:4.6,tags:['清淡','适合经期'],menu:[{n:'蟹粉汤包',kcal:380}]},
+  {id:'s2',name:'静安轻食碗',ic:'🥗',cuisine:'轻食',eta:24,dist:1.3,min:25,fee:4,star:4.8,tags:['减脂','清淡','适合经期'],menu:[{n:'牛油果沙拉',kcal:360}]},
+  {id:'s3',name:'七宝麻辣烫',ic:'🌶️',cuisine:'麻辣烫',eta:26,dist:1.5,min:18,fee:3,star:4.5,tags:['辣','重辣'],menu:[{n:'麻辣烫',kcal:470}]},
+  {id:'s4',name:'阿姨奶茶',ic:'🧋',cuisine:'奶茶',eta:18,dist:0.8,min:15,fee:0,star:4.7,tags:['奶茶','冰饮','免配送费','20分钟内'],menu:[{n:'血糯米奶茶',kcal:360}]},
+  {id:'s5',name:'外滩本帮菜',ic:'🥘',cuisine:'本帮',eta:34,dist:2.3,min:50,fee:6,star:4.5,tags:['清淡','适合经期'],menu:[{n:'红烧肉',kcal:620}]},
+  {id:'s6',name:'陆家嘴减脂餐',ic:'🥦',cuisine:'轻食',eta:20,dist:0.9,min:18,fee:3,star:4.9,tags:['减脂','清淡','适合经期','20分钟内'],menu:[{n:'鸡胸藜麦',kcal:295}]},
+  {id:'s7',name:'吴江路炸鸡',ic:'🍗',cuisine:'炸鸡',eta:27,dist:1.6,min:25,fee:4,star:4.3,tags:['重辣'],menu:[{n:'炸鸡',kcal:780}]},
+  {id:'s8',name:'豫园粥铺',ic:'🥣',cuisine:'粥',eta:17,dist:0.7,min:12,fee:0,star:4.6,tags:['清淡','适合经期','免配送费','20分钟内'],menu:[{n:'艇仔粥',kcal:190}]}
+ ],
+ '广州':[
+  {id:'g1',name:'上下九肠粉',ic:'🥟',cuisine:'粤菜',eta:20,dist:1.0,min:18,fee:3,star:4.7,tags:['清淡','适合经期'],menu:[{n:'鲜虾肠粉',kcal:240}]},
+  {id:'g2',name:'老火靓汤铺',ic:'🥣',cuisine:'粤菜',eta:28,dist:1.4,min:25,fee:4,star:4.8,tags:['清淡','适合经期'],menu:[{n:'椰子鸡汤',kcal:260}]},
+  {id:'g3',name:'天河轻食',ic:'🥗',cuisine:'轻食',eta:24,dist:1.3,min:25,fee:4,star:4.8,tags:['减脂','清淡','适合经期'],menu:[{n:'鸡胸沙拉',kcal:315}]},
+  {id:'g4',name:'黄埔奶茶',ic:'🧋',cuisine:'奶茶',eta:19,dist:0.9,min:15,fee:0,star:4.7,tags:['奶茶','冰饮','免配送费','20分钟内'],menu:[{n:'双拼奶茶',kcal:370}]},
+  {id:'g5',name:'荔湾麻辣烫',ic:'🌶️',cuisine:'麻辣烫',eta:26,dist:1.5,min:18,fee:3,star:4.5,tags:['辣','重辣'],menu:[{n:'麻辣烫',kcal:460}]},
+  {id:'g6',name:'珠江减脂餐',ic:'🥦',cuisine:'轻食',eta:20,dist:0.9,min:18,fee:3,star:4.9,tags:['减脂','清淡','适合经期','20分钟内'],menu:[{n:'杂粮碗',kcal:285}]},
+  {id:'g7',name:'北京路炸鸡',ic:'🍗',cuisine:'炸鸡',eta:27,dist:1.6,min:25,fee:4,star:4.3,tags:['重辣'],menu:[{n:'炸鸡桶',kcal:790}]},
+  {id:'g8',name:'沙面糖水铺',ic:'🍮',cuisine:'粤菜',eta:18,dist:0.8,min:12,fee:0,star:4.6,tags:['清淡','免配送费','20分钟内'],menu:[{n:'杨枝甘露',kcal:230}]}
+ ]
+};
+function hashStr(s){let h=0;for(let i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0;}return h;}
+function genMall(name){
+  const pool=[
+    {ic:'🍲',cuisine:'火锅',baseEta:35,fee:6,star:4.4,tags:['辣','重辣'],menu:[{n:'牛油锅底',kcal:600}]},
+    {ic:'🥗',cuisine:'轻食',baseEta:25,fee:4,star:4.8,tags:['减脂','清淡','适合经期'],menu:[{n:'鸡胸沙拉',kcal:320}]},
+    {ic:'🌶️',cuisine:'麻辣烫',baseEta:26,fee:3,star:4.5,tags:['辣','重辣'],menu:[{n:'麻辣烫',kcal:470}]},
+    {ic:'🧋',cuisine:'奶茶',baseEta:19,fee:0,star:4.7,tags:['奶茶','冰饮','免配送费','20分钟内'],menu:[{n:'招牌奶茶',kcal:350}]},
+    {ic:'🥣',cuisine:'粥',baseEta:18,fee:0,star:4.6,tags:['清淡','适合经期','免配送费','20分钟内'],menu:[{n:'皮蛋瘦肉粥',kcal:180}]},
+    {ic:'🍗',cuisine:'炸鸡',baseEta:27,fee:4,star:4.4,tags:['重辣'],menu:[{n:'炸鸡桶',kcal:780}]},
+    {ic:'🐟',cuisine:'家常菜',baseEta:30,fee:5,star:4.6,tags:['清淡','适合经期'],menu:[{n:'清蒸鱼',kcal:280}]},
+    {ic:'🥦',cuisine:'轻食',baseEta:20,fee:3,star:4.9,tags:['减脂','清淡','适合经期','20分钟内'],menu:[{n:'杂粮碗',kcal:290}]},
+    {ic:'🍜',cuisine:'面食',baseEta:22,fee:3,star:4.5,tags:['辣'],menu:[{n:'招牌面',kcal:440}]},
+    {ic:'🍮',cuisine:'甜品',baseEta:18,fee:0,star:4.7,tags:['冰饮','甜品','免配送费','20分钟内'],menu:[{n:'糖水',kcal:230}]}
+  ];
+  const h=hashStr(name);
+  return pool.map((p,i)=>({id:'g'+i,name:name+'·'+p.cuisine+(i+1),ic:p.ic,cuisine:p.cuisine,eta:Math.max(12,(p.baseEta+(h%(i+3)*3))%60),dist:+(0.6+(h%(i+9))/4).toFixed(1),min:p.fee===0?12:18+p.fee*3,fee:p.fee,star:+(4+(h%(i+5))/10).toFixed(1),tags:p.tags,menu:p.menu}));
+}
+function getMalls(){return MALLS[m1wLoc]||genMall(m1wLoc);}
 function m1WaimaiBody(){
-  return '<div class="sec-sub" style="margin-left:0;text-align:left">内置 30+ 道家常菜谱 · 搜菜名/切分类 · 点开看食材步骤 · 也能加自己的常点套餐</div>'
-  +'<div class="m1w-search"><span class="ic">🔍</span><input id="m1w-input" placeholder="想吃点什么？例如 番茄炒蛋 / 红烧肉 / 紫菜蛋花汤" oninput="m1wQ=this.value;m1WaimaiRender()"></div>'
-  +'<div class="m1w-cats" id="m1w-cats">'+M1W_CATS.map(c=>'<span class="m1w-cat'+(c==='全部'?' on':'')+'" data-cat="'+c+'" onclick="m1wCat=this.dataset.cat;document.querySelectorAll(\'#m1w-cats .m1w-cat\').forEach(x=>x.classList.toggle(\'on\',x.dataset.cat===m1wCat));m1WaimaiRender()">'+c+'</span>').join('')+'</div>'
-  +'<div id="m1w-grid" class="m1w-grid"></div>'
+  const chips=MALLS_CITIES.map(c=>'<span class="m1w-loc-chip'+(c===m1wLoc?' on':'')+'" onclick="m1wSetLoc(\''+c+'\')">'+c+'</span>').join('');
+  const filters=M1W_FILTERS.map(f=>'<span class="m1w-fbtn'+(m1wFilters[f.k]?' on':'')+'" onclick="m1wFilters[\''+f.k+'\']=!m1wFilters[\''+f.k+'\'];this.classList.toggle(\'on\');m1WaimaiRender()">'+f.t+'</span>').join('');
+  return ''
+  +'<div class="m1w-locbar">📍 <span class="m1w-loc" onclick="m1WaimaiLocEdit()">'+esc(m1wLoc)+'</span> <span class="m1w-gps" onclick="m1WaimaiGPS()">🔄 重新定位</span></div>'
+  +'<div class="m1w-locchips">'+chips+'</div>'
+  +'<div class="m1w-search"><span class="ic">🔍</span><input id="m1w-input" placeholder="搜美食/店铺：火锅、麻辣烫、减脂餐、奶茶…" oninput="m1wQ=this.value;m1WaimaiRender()"></div>'
+  +'<div class="m1w-rand"><button class="btn-ghost" onclick="m1WaimaiRandom()">🎲 随机推荐附近美食</button><span class="m1w-mens-toggle'+(m1wMens?' on':'')+'" onclick="m1wMensToggle()">🩸 我最近在经期</span></div>'
+  +'<div class="m1w-filters">'+filters+'</div>'
+  +'<div id="m1w-grid" class="m1w-mgrid"></div>'
   +'<div class="m1w-custom-wrap"><div class="m1w-custom-title">—— 我的常点套餐 ——</div><div id="m1w-custom-list"></div><button class="add-btn" onclick="m1WaimaiAdd()">➕ 新增常点套餐</button></div>';
 }
 function m1WaimaiRender(){
   const q=(m1wQ||'').trim();
-  let pool=RECIPES;
-  if(m1wCat&&m1wCat!=='全部')pool=pool.filter(r=>r.cat===m1wCat);
-  if(q)pool=pool.filter(r=>r.n.indexOf(q)>=0||r.cat.indexOf(q)>=0);
-  const grid=document.getElementById('m1w-grid');
-  if(!grid)return;
-  if(!pool.length){grid.innerHTML='<div class="dl-nores">没找到「'+esc(q)+'」相关菜谱，换个词试试～</div>';}
-  else{grid.innerHTML=pool.map(r=>'<div class="m1w-card" onclick="m1WaimaiOpen('+RECIPES.indexOf(r)+')"><div class="m1w-ic">'+r.ic+'</div><div class="m1w-n">'+esc(r.n)+'</div><div class="m1w-meta"><span class="m1w-tag">'+r.cat+'</span><span>⏱ '+r.t+'</span></div><div class="m1w-kcal">'+r.k+'</div></div>').join('');}
+  let pool=getMalls();
+  if(q)pool=pool.filter(m=>m.name.indexOf(q)>=0||m.cuisine.indexOf(q)>=0||(m.tags||[]).join(',').indexOf(q)>=0);
+  if(m1wFilters.new)pool=pool.filter(m=>(m.tags||[]).indexOf('新店')>=0);
+  if(m1wFilters.free)pool=pool.filter(m=>m.fee===0);
+  if(m1wFilters.fem)pool=pool.filter(m=>(m.tags||[]).indexOf('适合经期')>=0);
+  if(m1wFilters.low)pool=pool.filter(m=>(m.tags||[]).indexOf('减脂')>=0||m.cuisine==='轻食');
+  if(m1wFilters.fast)pool=pool.filter(m=>m.eta<=20);
+  const grid=document.getElementById('m1w-grid');if(!grid)return;
+  if(!pool.length){grid.innerHTML='<div class="dl-nores">附近没有匹配的商家，换个关键词或关掉筛选试试～</div>';}
+  else{grid.innerHTML=pool.map(m=>'<div class="m1w-mcard" onclick="m1WaimaiOpen(\''+m.id+'\')">'
+    +'<div class="m1w-mhead"><span class="m1w-mic">'+m.ic+'</span><div class="m1w-mname">'+esc(m.name)+'<small>'+esc(m.cuisine)+'</small></div><span class="m1w-mstar">⭐'+m.star+'</span></div>'
+    +'<div class="m1w-mmeta">⏱ '+m.eta+'分钟 · 📏'+m.dist+'km · 💰起送'+m.min+'元 · 配送'+m.fee+'元</div>'
+    +'<div class="m1w-mtags">'+m.tags.map(t=>'<span class="m1w-mtag'+(['辣','重辣','冰饮'].indexOf(t)>=0?' hot':'')+'">'+t+'</span>').join('')+'</div>'
+    +'</div>').join('');}
   m1WaimaiRenderCustom();
 }
 function m1WaimaiRenderCustom(){
@@ -3415,19 +3541,23 @@ function m1WaimaiRenderCustom(){
   if(!items.length){box.innerHTML='<div class="dl-nores" style="padding:6px">还没有常点套餐，点下面"新增"加一个～</div>';return;}
   box.innerHTML=items.map((it,i)=>'<div class="item" style="border-left-color:#ff9a5a"><div class="t"><b>'+esc(it.n)+'</b>'+(it.d?'<small>'+esc(it.d)+'</small>':'')+'</div><button class="del" onclick="event.stopPropagation();m1WaimaiDel('+i+')">×</button></div>').join('');
 }
-function m1WaimaiOpen(i){
-  const r=RECIPES[i];if(!r)return;
-  const ing=r.ing.map(x=>'<li>'+esc(x)+'</li>').join('');
-  const steps=r.steps.map((s,idx)=>'<li><span class="m1w-step-n">'+(idx+1)+'</span><span>'+esc(s)+'</span></li>').join('');
+function m1WaimaiOpen(id){
+  const m=getMalls().find(x=>x.id===id);if(!m)return;
+  const menu=(m.menu||[]).map(d=>'<div class="m1w-mitem"><span>'+esc(d.n)+'</span><span class="m1w-mkcal">'+d.kcal+'kcal</span></div>').join('');
+  const hot=(m.tags||[]).filter(t=>['冰饮','重辣','辣'].indexOf(t)>=0);
+  const warn=(m1wMens&&hot.length)?'<div class="m1w-warn">🩸 温馨提示：你当前处于生理期，'+hot.join('、')+'类食物建议少点哦～</div>':'';
   document.getElementById('modalCard').innerHTML=
-    '<h3>📖 '+esc(r.n)+'</h3>'
-    +'<div class="m1w-detail"><div class="m1w-detail-head"><span class="m1w-ic-big">'+r.ic+'</span><div><div class="m1w-detail-n">'+esc(r.n)+' <span class="m1w-tag">'+r.cat+'</span></div><div class="m1w-detail-meta">⏱ '+r.t+' · 🔥 '+r.k+' · 👥 '+r.s+'</div></div></div>'
-    +'<div class="m1w-sec"><div class="m1w-sec-h">🛒 食材清单</div><ul class="m1w-ing">'+ing+'</ul></div>'
-    +'<div class="m1w-sec"><div class="m1w-sec-h">👨‍🍳 做法步骤</div><ol class="m1w-steps">'+steps+'</ol></div>'
-    +'<div class="modal-actions"><button class="btn-ghost" onclick="m1WaimaiShow()">← 返回菜谱</button><button class="btn-primary" onclick="closeModal()">关闭</button></div>';
+    '<h3>'+m.ic+' '+esc(m.name)+'</h3>'
+    +'<div class="m1w-sec2"><div class="m1w-sec2-h">📋 店铺信息</div><div class="m1w-mmeta">🍳 菜系 '+esc(m.cuisine)+' ｜ ⏱ 预估送达 '+m.eta+'分钟 ｜ 📏 距离 '+m.dist+'km<br>⭐ 评分 '+m.star+' ｜ 💰 起送 '+m.min+'元 ｜ 配送费 '+m.fee+'元</div>'
+    +'<div class="m1w-mtags">'+m.tags.map(t=>'<span class="m1w-mtag'+(['辣','重辣','冰饮'].indexOf(t)>=0?' hot':'')+'">'+t+'</span>').join('')+'</div></div>'
+    +warn
+    +'<div class="m1w-sec2"><div class="m1w-sec2-h">🍽️ 招牌/热量参考</div>'+menu+'</div>'
+    +'<div class="m1w-actions"><button class="btn-ghost" onclick="m1WaimaiAddDiet(\''+m.id+'\')">✅ 加入今日饮食记录</button><button class="btn-primary" onclick="m1WaimaiAddBill(\''+m.id+'\')">💰 记一笔消费</button></div>'
+    +'<div class="modal-actions"><button class="btn-ghost" onclick="m1WaimaiShow()">← 返回列表</button><button class="btn-primary" onclick="closeModal()">关闭</button></div>';
 }
 function m1WaimaiShow(){
-  document.getElementById('modalCard').innerHTML='<h3>🛵 外卖 · 菜谱搜索</h3>'+m1WaimaiBody();
+  m1wMens=(state.m1Custom&&state.m1Custom.mens)||false;m1wQ='';m1wFilters={};
+  document.getElementById('modalCard').innerHTML='<h3>🛵 外卖 · 附近美食</h3>'+m1WaimaiBody();
   document.getElementById('modalMask').classList.add('show');
   m1WaimaiRender();
 }
@@ -3444,6 +3574,55 @@ function m1WaimaiAdd(){
   });
 }
 function m1WaimaiDel(i){state.m1Custom.waimai.splice(i,1);saveSilent();m1WaimaiRenderCustom();}
+function m1wSetLoc(c){m1wLoc=c;m1WaimaiShow();toast('已切换到 '+c+'，加载周边美食 🛰️');}
+function m1WaimaiLocEdit(){
+  showModal('📍 修改定位',[
+    {label:'城市/地址（任意地点都能搜周边）',type:'text',id:'loc',ph:'如 武汉江夏 / 三亚 / 公司地址'}
+  ],v=>{ if(v.loc&&v.loc.trim()){m1wLoc=v.loc.trim();m1WaimaiShow();} });
+  setTimeout(()=>{const el=document.getElementById('mf-loc');if(el)el.value=m1wLoc;},50);
+}
+function m1WaimaiGPS(){
+  if(!navigator.geolocation){m1WaimaiLocEdit();return;}
+  navigator.geolocation.getCurrentPosition(
+    pos=>{m1wLoc='📍当前定位('+pos.coords.latitude.toFixed(2)+','+pos.coords.longitude.toFixed(2)+')';m1WaimaiShow();toast('已获取定位，加载附近美食 🛰️');},
+    ()=>{toast('定位失败，可手动输入地址');m1WaimaiLocEdit();}
+  );
+}
+function m1wMensToggle(){
+  m1wMens=!m1wMens;state.m1Custom=state.m1Custom||{};state.m1Custom.mens=m1wMens;saveSilent();
+  const el=document.querySelector('.m1w-mens-toggle');if(el)el.classList.toggle('on',m1wMens);
+  toast(m1wMens?'已开启经期模式：生冷辛辣会提醒 🩸':'已关闭经期模式');
+}
+function m1WaimaiRandom(){
+  const pool=getMalls();if(!pool.length)return;
+  m1WaimaiOpen(pool[Math.floor(Math.random()*pool.length)].id);
+}
+function m1WaimaiAddDiet(id){
+  const m=getMalls().find(x=>x.id===id);if(!m)return;
+  const dish=(m.menu&&m.menu[0])||{n:m.name,kcal:400};
+  const kcal=dish.kcal||400;
+  const r={id:uid(),name:m.name+'·'+dish.n,emoji:m.ic,unit:'份',weight:1,kcal:kcal,sugar:Math.round(kcal*0.08),addSugar:Math.round(kcal*0.08),protein:Math.round(kcal*0.12),fat:Math.round(kcal*0.3),gi:0,friendly:false,time:nowHM(),meal:'晚餐'};
+  state.diet=state.diet||{};state.diet.records=state.diet.records||[];
+  state.diet.records.push(r);saveSilent();
+  if(typeof dietRecordsRender==='function')dietRecordsRender();
+  const t=todayStr();state.checkins[t]=state.checkins[t]||{};state.checkins[t].diet='ok';refreshCheckin(t);
+  if(typeof renderCal==='function')renderCal('m5');
+  toast('已加入今日饮食记录：'+m.name+' '+kcal+'kcal 🍽️');
+}
+function m1WaimaiAddBill(id){
+  const m=getMalls().find(x=>x.id===id);if(!m)return;
+  showModal('💰 记一笔消费',[
+    {label:'商户',type:'text',id:'n',ph:'商户名'},
+    {label:'金额(元)',type:'text',id:'a',ph:'例如 38'},
+    {label:'备注',type:'text',id:'note',ph:'例如 午餐'}
+  ],v=>{
+    const amt=parseFloat(v.a)||0;
+    addFinRecord('out',amt,'餐饮',(v.n||m.name),false,v.n||m.name,'');
+    toast('已记一笔：餐饮 -'+amt+'元 💸');
+    switchModule('m7',document.querySelector('.nav-btn[data-target="m7"]'));
+  },false);
+  setTimeout(()=>{const n=document.getElementById('mf-n'),a=document.getElementById('mf-a');if(n)n.value=m.name;if(a)a.value=m.min||20;},50);
+}
 
 /* ===== m1 自己做饭 · 菜谱搜索+自动生成+营养 ===== */
 const NUT={
