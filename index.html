@@ -4734,12 +4734,34 @@ async function finParseExcelOrZip(f,name){
   const target=cands[0];if(!target)throw new Error('zip 内无表格文件');
   if(/\.csv$/i.test(target.name))return finParseCSV(await target.async('string'));
   if(typeof XLSX==='undefined'){await finLoadScript('https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js');}
-  const wb=XLSX.read(await target.async('arraybuffer'),{type:'array'});
-  return finParseCSV(XLSX.utils.sheet_to_csv(wb.Sheets[wb.SheetNames[0]]));
+  return finXlsxToRows(await target.async('arraybuffer'));
  }
  if(typeof XLSX==='undefined'){await finLoadScript('https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js');}
- const wb=XLSX.read(buf,{type:'array'});
- return finParseCSV(XLSX.utils.sheet_to_csv(wb.Sheets[wb.SheetNames[0]]));
+ return finXlsxToRows(buf);
+}
+async function finXlsxToRows(buf){
+ const wb=XLSX.read(buf,{type:'array',cellDates:true,cellNF:true});
+ const ws=wb.Sheets[wb.SheetNames[0]];
+ const range=XLSX.utils.decode_range(ws['!ref']||'A1');
+ const rows=[];const pad=n=>String(n).padStart(2,'0');
+ for(let R=range.s.r;R<=range.e.r;R++){
+  const row=[];
+  for(let C=range.s.c;C<=range.e.c;C++){
+   const addr=XLSX.utils.encode_cell({r:R,c:C});
+   const cell=ws[addr];
+   if(!cell){row.push('');continue;}
+   let v;
+   if(cell.t==='d'||cell.v instanceof Date){
+    const d=cell.v instanceof Date?cell.v:new Date(cell.v);
+    v=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+   } else {
+    v=cell.w!=null?cell.w:(cell.v==null?'':String(cell.v));
+   }
+   row.push(v);
+  }
+  rows.push(row);
+ }
+ return rows;
 }
 function finMapBillRows(rows,defaultCh){
  const CH={'微信':'wx','支付宝':'ali','电商':'shop','其他':''};
@@ -4805,10 +4827,10 @@ function finImportRows(rows,fname){
  const guess=/微信/.test(fname)?'wx':/支付宝|阿里/.test(fname)?'ali':/淘宝|京东|拼多多|美团/.test(fname)?'shop':'other';
  const map=finMapBillRows(rows,guess);
  if(!map.records.length){
-   const raw=[];for(const r of rows){const t=(r||[]).map(c=>String(c==null?'':c).trim()).join(',');if(t)raw.push(t);if(raw.length>=8)break;}
+   const raw=[];for(const r of rows){const t=(r||[]).map(c=>String(c==null?'':c).trim()).join(',');if(t)raw.push(t);if(raw.length>=25)break;}
    showModal('未能识别账单文件',[
      {type:'html',html:'这份文件没解析出账单明细。请把<b>下方这段文件内容截图发我</b>，我直接帮你定位格式问题：'},
-     {type:'html',html:'<pre class="imp-raw">'+esc(raw.join('\n').slice(0,600))+'</pre>'},
+     {type:'html',html:'<pre class="imp-raw">'+esc(raw.join('\n').slice(0,1500))+'</pre>'},
      {type:'html',html:'常见原因：① 选了压缩包里的"汇总"文件而非"明细"；② 文件其实是图片/截图而非 CSV；③ 这是非微信/支付宝格式的表格。'}
    ]);
    return;
