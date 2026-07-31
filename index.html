@@ -157,6 +157,7 @@
   .imp-am{flex:0 0 56px;font-weight:700;color:#4a3d30}
   .imp-n{color:#6a5d50;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .imp-more{font-size:10px;color:#a89a8c;text-align:center;padding-top:3px}
+  .imp-raw{background:#2a2520;color:#e8dcc8;font-size:9.5px;line-height:1.5;font-family:ui-monospace,Menlo,Consolas,monospace;max-height:160px;overflow:auto;padding:8px 9px;border-radius:10px;white-space:pre-wrap;word-break:break-all;margin:4px 0}
   .card.done{background:#e6f5e0;border-color:#bce0a8}
   .card.done .t{color:#3a7a2a}
   .check-btn{width:27px;height:27px;border-radius:50%;border:2.5px solid #e3d5c5;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto;transition:all .2s;flex-direction:column;align-items:center;justify-content:center}
@@ -4803,7 +4804,15 @@ function finApplyImport(recs,mode){
 function finImportRows(rows,fname){
  const guess=/微信/.test(fname)?'wx':/支付宝|阿里/.test(fname)?'ali':/淘宝|京东|拼多多|美团/.test(fname)?'shop':'other';
  const map=finMapBillRows(rows,guess);
- if(!map.records.length){let hint='';for(const r of rows){const t=(r||[]).filter(c=>String(c).trim()).join(',');if(t.length>4){hint=t.slice(0,60);break;}}toast('未识别到账单数据 ❌ 期望列头含「交易时间/收/支/金额」（首行：'+esc(hint)+'…）');return;}
+ if(!map.records.length){
+   const raw=[];for(const r of rows){const t=(r||[]).map(c=>String(c==null?'':c).trim()).join(',');if(t)raw.push(t);if(raw.length>=8)break;}
+   showModal('未能识别账单文件',[
+     {type:'html',html:'这份文件没解析出账单明细。请把<b>下方这段文件内容截图发我</b>，我直接帮你定位格式问题：'},
+     {type:'html',html:'<pre class="imp-raw">'+esc(raw.join('\n').slice(0,600))+'</pre>'},
+     {type:'html',html:'常见原因：① 选了压缩包里的"汇总"文件而非"明细"；② 文件其实是图片/截图而非 CSV；③ 这是非微信/支付宝格式的表格。'}
+   ]);
+   return;
+ }
  const initCh=guess;
  const chLabel={wx:'微信',ali:'支付宝',shop:'电商',other:'其他'}[guess];
  showModal('导入真实账单文件',[
