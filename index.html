@@ -654,6 +654,84 @@
   .ve-hist-item .hi-meta{font-size:9px;color:#a0938a}
   .ve-hist-item button{border:none;background:#f3ecfb;color:#7a3fb0;font-size:10px;font-weight:800;padding:5px 9px;border-radius:9px;cursor:pointer}
   .ve-empty{text-align:center;color:#b3a3c8;font-size:11px;padding:14px 0}
+  /* ===== m12 文档笔记工坊 · 马卡龙配色 ===== */
+  .nav-btn[data-theme="docfx"].active{background:#ffe6f3;color:#d4498f}
+  .doc-root{position:relative;min-height:100%}
+  .doc-home{display:none}
+  .doc-home.on{display:block}
+  .doc-editor{display:none}
+  .doc-editor.on{display:block}
+  .doc-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .doc-head h2{font-size:18px;color:#c25a94;font-weight:800;margin:0}
+  .doc-search{display:flex;align-items:center;gap:6px;background:#fff;border-radius:99px;padding:8px 12px;border:2px solid #ffd9ee;margin-bottom:10px}
+  .doc-search input{flex:1;border:none;outline:none;font-family:inherit;font-size:13px;background:transparent}
+  .doc-new{width:100%;border:none;border-radius:16px;padding:13px;font-size:14px;font-weight:800;color:#fff;background:linear-gradient(135deg,#ff8ac0,#ff5a8a);box-shadow:0 6px 16px rgba(255,120,170,.35);cursor:pointer;margin-bottom:10px}
+  .doc-new:active{transform:scale(.98)}
+  .doc-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+  .doc-folder{font-size:11px;font-weight:700;padding:5px 11px;border-radius:99px;background:#fff;border:1.5px solid #ffd9ee;color:#b65a94;cursor:pointer}
+  .doc-folder.active{background:linear-gradient(135deg,#ff8ac0,#ff5a8a);color:#fff;border-color:transparent}
+  .doc-folder.add{background:#f3ecfb;color:#7a3fb0;border-style:dashed}
+  .doc-sort{font-size:10.5px;color:#a0938a;text-align:right;margin:2px 2px 8px}
+  .doc-sort b{color:#d4498f;cursor:pointer}
+  .doc-list{display:flex;flex-direction:column;gap:9px}
+  .doc-card{display:flex;align-items:center;gap:10px;background:linear-gradient(160deg,#fffafc,#fff0f7);border:1.5px solid #ffd9ee;border-radius:18px;padding:10px;transition:transform .15s,box-shadow .15s;position:relative}
+  .doc-card:active{transform:scale(.99);box-shadow:0 6px 16px rgba(255,120,170,.2)}
+  .doc-thumb{width:54px;height:54px;flex:0 0 54px;border-radius:14px;background:#ffe6f3;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;color:#e07ab0}
+  .doc-thumb img,.doc-thumb video{width:100%;height:100%;object-fit:cover}
+  .doc-info{flex:1;min-width:0}
+  .doc-title{font-weight:800;font-size:13.5px;color:#5a3a4a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .doc-meta{font-size:10px;color:#a0938a;margin-top:3px;display:flex;gap:6px;flex-wrap:wrap}
+  .doc-tag{background:#fff3da;color:#b07c2a;font-weight:700;border-radius:99px;padding:1px 7px;font-size:9px}
+  .doc-ops{display:flex;flex-direction:column;gap:4px}
+  .doc-op{border:none;background:#fff;border:1.5px solid #ffd9ee;color:#d4498f;font-size:10px;font-weight:700;padding:4px 8px;border-radius:9px;cursor:pointer;white-space:nowrap}
+  .doc-op:active{background:#ffe6f3}
+  .doc-op.del{color:#c0392b;border-color:#f5c6c0}
+  /* 编辑器 */
+  .doc-ebtn{width:100%;border:none;border-radius:16px;padding:11px;font-size:14px;font-weight:800;color:#fff;background:linear-gradient(135deg,#9b6cff,#ff6ec7);box-shadow:0 6px 16px rgba(155,108,255,.3);cursor:pointer;margin-bottom:10px}
+  .doc-toolbar{display:flex;align-items:center;gap:6px;background:#fff;border-radius:14px;padding:7px 8px;margin-bottom:8px;border:1.5px solid #ede2ff;flex-wrap:wrap}
+  .doc-tname{flex:1;min-width:120px;border:none;outline:none;font-family:inherit;font-size:14px;font-weight:800;color:#c25a94;background:transparent}
+  .doc-tb{display:flex;gap:4px;flex-wrap:wrap}
+  .doc-tb button{border:1.5px solid #ede2ff;background:#faf7ff;color:#7a3fb0;border-radius:9px;font-size:12px;font-weight:800;padding:5px 9px;cursor:pointer}
+  .doc-tb button:active{background:#ede2ff}
+  .doc-tb .col{width:24px;height:24px;padding:0;border-radius:50%;border:none;cursor:pointer;vertical-align:middle}
+  .doc-body{background:#fff;border:1.5px solid #ffd9ee;border-radius:16px;padding:10px;min-height:48vh;max-height:62vh;overflow:auto}
+  .doc-block{border:1.5px solid #f0e6f6;border-radius:12px;padding:6px;margin-bottom:8px;position:relative;background:#fff}
+  .doc-block.sel{box-shadow:0 0 0 2px #ff9ed6}
+  .doc-block .dh{display:flex;gap:4px;justify-content:flex-end;margin-bottom:4px}
+  .doc-block .dh button{border:none;background:#f3ecfb;color:#7a3fb0;font-size:9px;font-weight:800;padding:2px 7px;border-radius:7px;cursor:pointer}
+  .doc-block .dh button.del{background:#ffe8e4;color:#c0392b}
+  .doc-text[contenteditable="true"]{outline:none;font-size:13px;line-height:1.7;color:#4a3a4a;min-height:22px;padding:2px}
+  .doc-text h1{font-size:18px;color:#c25a94;margin:2px 0}
+  .doc-text h2{font-size:15px;color:#b05a94;margin:2px 0}
+  .doc-text ul{margin:4px 0;padding-left:20px}
+  .doc-divider{border:none;border-top:2px dashed #ffc9e6;margin:6px 0}
+  .doc-img{width:100%;border-radius:10px;display:block;cursor:move}
+  .doc-img-wrap{position:relative}
+  .doc-cap{width:100%;border:none;border-top:1.5px dashed #ffd9ee;padding:5px;font-size:11px;font-family:inherit;outline:none;text-align:center;color:#a0708a}
+  .doc-scale{display:flex;align-items:center;gap:6px;font-size:10px;color:#a0938a;padding:2px 4px}
+  .doc-scale input{flex:1}
+  .doc-video{width:100%;border-radius:10px;background:#000}
+  .doc-add-pop{position:fixed;left:50%;bottom:74px;transform:translateX(-50%);z-index:60;background:#fff;border-radius:18px;box-shadow:0 12px 34px rgba(155,108,255,.35);padding:12px;display:none;width:min(86%,340px)}
+  .doc-add-pop.on{display:block;animation:docpop .18s ease}
+  @keyframes docpop{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+  .doc-add-pop h4{margin:0 0 8px;font-size:13px;color:#7a3fb0;text-align:center}
+  .doc-add-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .doc-add-item{border:1.5px solid #ede2ff;background:#faf7ff;border-radius:14px;padding:12px;font-size:12px;font-weight:800;color:#7a3fb0;cursor:pointer;text-align:center}
+  .doc-add-item:active{background:#ede2ff}
+  .doc-bottom{position:sticky;bottom:0;display:flex;gap:8px;margin-top:10px;padding-top:8px;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 40%)}
+  .doc-bottom button{flex:1;border:none;border-radius:14px;padding:11px;font-size:13px;font-weight:800;color:#fff;cursor:pointer}
+  .doc-bottom .add{background:linear-gradient(135deg,#ff8ac0,#ff5a8a)}
+  .doc-bottom .paste{background:linear-gradient(135deg,#9b6cff,#7a5cff)}
+  .doc-bottom .save{background:linear-gradient(135deg,#56d6a0,#3ab0c0)}
+  .doc-cat{position:absolute;width:54px;height:54px;left:14px;bottom:60px;z-index:55;pointer-events:none;transition:left .9s cubic-bezier(.3,.7,.3,1),bottom .9s cubic-bezier(.3,.7,.3,1),transform .3s;will-change:left,bottom}
+  .doc-cat.jump{animation:docjump .6s ease}
+  @keyframes docjump{0%{transform:translateY(0)}30%{transform:translateY(-26px) scale(1.1)}60%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+  .doc-cat .bub{position:absolute;left:54px;top:-6px;background:#fff;border:2px solid #ffd0e0;border-radius:12px;padding:4px 9px;font-size:11px;font-weight:800;color:#d4498f;white-space:nowrap;opacity:0;transform:scale(.6);transition:all .3s}
+  .doc-cat.show .bub{opacity:1;transform:scale(1)}
+  .doc-empty{text-align:center;color:#c9a9c0;font-size:12px;padding:30px 10px}
+  .doc-tpl-pop .doc-add-item{margin-bottom:8px}
+  .doc-tab{display:inline-block;font-size:11px;font-weight:800;padding:6px 12px;border-radius:99px;background:#fff;border:1.5px solid #ffd9ee;color:#b65a94;cursor:pointer;margin-right:6px}
+  .doc-tab.active{background:linear-gradient(135deg,#ff8ac0,#ff5a8a);color:#fff;border-color:transparent}
   /* ===== m10 追剧观影馆 · 奶蓝主题 ===== */
   .pc-movie{background:linear-gradient(135deg,#a9d6e5,#7bb8d4);color:#fff}
   .nav-btn[data-theme="movie"].active{background:#d8eefc;color:#2f6f8c}
@@ -1219,6 +1297,7 @@
     <button class="nav-btn" data-target="m9" data-theme="lightpink" onclick="switchModule('m9',this)"><span class="icon-wrap">🎤</span><span class="label">表达能力</span></button>
     <button class="nav-btn" data-target="m10" data-theme="movie" onclick="switchModule('m10',this)"><span class="icon-wrap">🎬</span><span class="label">追剧观影</span></button>
     <button class="nav-btn" data-target="m11" data-theme="videofx" onclick="switchModule('m11',this)"><span class="icon-wrap">🎬</span><span class="label">视频高清增强</span></button>
+    <button class="nav-btn" data-target="m12" data-theme="docfx" onclick="switchModule('m12',this)"><span class="icon-wrap">📒</span><span class="label">文档笔记工坊</span></button>
     <div class="sidebar-egg" id="buddyEgg" onpointerdown="eggDown(event)" onpointerup="eggUp(event)" onpointerleave="eggUp(event)" oncontextmenu="return false">🐱</div>
     <div class="sidebar-egg" onclick="movieEggPop()" title="随机推荐高分正版影片">🎟️</div>
   </aside>
@@ -1714,6 +1793,85 @@
     </div>
   </div>
 </section>
+
+<section class="module" id="m12">
+  <div class="doc-root">
+    <!-- 首页：文档仓库 -->
+    <div class="doc-home on" id="docHome">
+      <div class="doc-head"><h2>📒 文档笔记工坊</h2></div>
+      <div class="doc-search"><span>🔍</span><input id="docSearch" placeholder="搜索文档名称 / 内容…" oninput="docSearch(this.value)"></div>
+      <button class="doc-new" onclick="docNew()">＋ 新建空白文档</button>
+      <div class="doc-filters" id="docFolders"></div>
+      <div class="doc-sort">排序：<b id="docSortLabel" onclick="docCycleSort()">按修改时间 ⇅</b></div>
+      <div class="doc-list" id="docList"></div>
+    </div>
+    <!-- 编辑器 -->
+    <div class="doc-editor" id="docEditor">
+      <div class="doc-toolbar">
+        <button class="doc-op" onclick="docBack()">← 返回</button>
+        <input class="doc-tname" id="docTitle" placeholder="文档标题" oninput="docAutoSave()">
+        <button class="doc-op" onclick="docAutoSave();docSaveOK()">💾 保存</button>
+        <button class="doc-op" onclick="docExport()">📤 导出</button>
+        <button class="doc-op" onclick="docCopyAll()">📋 复制</button>
+      </div>
+      <div class="doc-tb" id="docTB">
+        <button onclick="docFmt('bold')"><b>B</b></button>
+        <button onclick="docFmt('insertUnorderedList')">• 列表</button>
+        <button onclick="docFmtH(1)">H1</button>
+        <button onclick="docFmtH(2)">H2</button>
+        <input type="color" class="col" value="#d4498f" onchange="docFmtColor(this.value)" title="文字颜色">
+        <button onclick="docAddDivider()">➖ 分割线</button>
+        <button onclick="docUndo()">↶</button>
+        <button onclick="docRedo()">↷</button>
+      </div>
+      <div class="doc-body" id="docBody"></div>
+      <div class="doc-bottom">
+        <button class="add" onclick="docShowAdd()">➕ 添加内容</button>
+        <button class="paste" onclick="docPaste()">📎 粘贴</button>
+        <button class="save" onclick="docAutoSave();docSaveOK()">💾 已自动存</button>
+      </div>
+    </div>
+    <!-- 添加内容弹窗 -->
+    <div class="doc-add-pop" id="docAddPop">
+      <h4>添加内容块</h4>
+      <div class="doc-add-grid">
+        <div class="doc-add-item" onclick="docAddText()">📝 文字块</div>
+        <div class="doc-add-item" onclick="docAddImage()">🖼️ 图片</div>
+        <div class="doc-add-item" onclick="docAddVideo()">🎬 视频</div>
+        <div class="doc-add-item" onclick="docAddDivider()">➖ 分割线</div>
+      </div>
+    </div>
+    <!-- 素材来源弹窗 -->
+    <div class="doc-add-pop" id="docMediaPop">
+      <h4 id="docMediaTitle">插入素材</h4>
+      <div class="doc-add-grid">
+        <div class="doc-add-item" onclick="docMediaPick()">📷 相册上传</div>
+        <div class="doc-add-item" onclick="docMediaUrl()">🔗 粘贴链接</div>
+      </div>
+    </div>
+    <!-- 模板选择弹窗 -->
+    <div class="doc-add-pop doc-tpl-pop" id="docTplPop">
+      <h4>选择模板新建</h4>
+      <div class="doc-add-item" onclick="docCreate('blank')">📄 空白文档</div>
+      <div class="doc-add-item" onclick="docCreate('book')">📚 读书笔记模板</div>
+      <div class="doc-add-item" onclick="docCreate('trip')">🧳 行程规划模板</div>
+      <div class="doc-add-item" onclick="docCreate('wrong')">❌ 错题整理模板</div>
+    </div>
+    <!-- 删除确认弹窗（小猫陪你确认） -->
+    <div class="doc-add-pop" id="docConfirmPop">
+      <h4>🐱 小猫确认</h4>
+      <div style="text-align:center;font-size:12px;color:#806050;margin-bottom:8px">确定要删除这篇文档吗？<br>删除后无法恢复哦～</div>
+      <div class="doc-add-grid">
+        <div class="doc-add-item" onclick="docConfirmCancel()">再想想</div>
+        <div class="doc-add-item" style="background:#ffe0db;color:#c0392b" onclick="docConfirmYes()">还是删除</div>
+      </div>
+    </div>
+    <input type="file" id="docImgFile" accept="image/*" style="display:none">
+    <input type="file" id="docVidFile" accept="video/*" style="display:none">
+    <!-- 模块小猫 -->
+    <div class="doc-cat" id="docCat"><span class="bub" id="docCatBub"></span><span class="flip"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><ellipse cx="30" cy="38" rx="17" ry="13" fill="#FFCDA8"/><path d="M20 12 L18 2 L26 10 Z" fill="#FFB677"/><path d="M40 12 L42 2 L34 10 Z" fill="#FFB677"/><circle cx="30" cy="20" r="12" fill="#FFCDA8"/><ellipse cx="25" cy="19" rx="2.6" ry="3.6" fill="#3a2418"/><ellipse cx="35" cy="19" rx="2.6" ry="3.6" fill="#3a2418"/><circle cx="26" cy="17.5" r="1" fill="#fff"/><circle cx="36" cy="17.5" r="1" fill="#fff"/><path d="M30 23 L27.5 25 L32.5 25 Z" fill="#FF9999"/><circle cx="30" cy="31" r="3" fill="#FFD23F" stroke="#E09900" stroke-width="0.8"/></svg></span></div>
+  </div>
+</section>
     </div>
   </div>
 </div>
@@ -1836,8 +1994,8 @@
 <script>
 
 const KEY='workbuddy_v4';
-const MODULES=['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11'];
-const MOD_NAME={m1:'今天吃什么',m2:'每日计划',m3:'每日灵感',m4:'逻辑训练',m5:'身材管理',m6:'学习模块',m7:'财务管理',m8:'旅游攻略',m9:'表达能力',m10:'追剧观影',m11:'视频高清增强'};
+const MODULES=['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11','m12'];
+const MOD_NAME={m1:'今天吃什么',m2:'每日计划',m3:'每日灵感',m4:'逻辑训练',m5:'身材管理',m6:'学习模块',m7:'财务管理',m8:'旅游攻略',m9:'表达能力',m10:'追剧观影',m11:'视频高清增强',m12:'文档笔记工坊'};
 
 let state = defaultState();
 function defaultState(){
@@ -1884,7 +2042,8 @@ function defaultState(){
     movie:{lists:[],tracks:[],notes:[],cal:[],history:[],goal:12,badge:false},
     buddyChat:{free:[],situation:[],retro:[],day:[],dayMeta:{morning:null,evening:null},lastMode:'free',retroDate:''},
     buddyStats:{today:'',count:0},
-    videoEnh:{history:[],templates:[],lastParams:{level:'std',denoise:true,color:true,face:false,stabilize:false}}
+    videoEnh:{history:[],templates:[],lastParams:{level:'std',denoise:true,color:true,face:false,stabilize:false}},
+    docs:{list:[],folders:['学习笔记','旅游资料','日常记录','备考题库'],sort:'modified'}
   };
 }
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -1920,6 +2079,7 @@ function switchModule(id,btn){
   if(id==='m7')renderFinance();
   if(id==='m3')renderInspire();
   if(id==='m10')renderMovie();
+  if(id==='m12')docRenderHome();
   document.getElementById('cw').scrollTop=0;
 }
 
@@ -1934,6 +2094,7 @@ function isDone(mod){
   if(mod==='m8'){const u=state.unlock||{};return ['u1','u2','u3','u4','u5'].every(k=>u[k]);}
   if(mod==='m9')return (state.recCount+state.topicCount)>=1;
   if(mod==='m10'){const h=(state.movie.history||[]).filter(x=>x.date&&x.date.slice(0,7)===todayStr().slice(0,7)).length;return h>=1;}
+  if(mod==='m12')return (state.docs&&state.docs.list&&state.docs.list.length>=1);
   return false;
 }
 
@@ -1950,6 +2111,7 @@ function updateProgress(mod){
     if(n===5){go.classList.add('on');if(note)note.style.display='none';}else{go.classList.remove('on');if(note)note.style.display='';}}
   if(mod==='m9'){const n=state.recCount+state.topicCount;setNum('c-m9-n',n);setBar('bar-m9',Math.min(n/3,1)*100);}
   if(mod==='m11'){const n=state.videoEnh.history.length;const e=document.getElementById('c-m11-n');if(e)e.textContent=n;}
+  if(mod==='m12'){const n=(state.docs&&state.docs.list)?state.docs.list.length:0;const e=document.getElementById('c-m12-n');if(e)e.textContent=n;setBar('bar-m12',Math.min(n/5,1)*100);}
   if(mod==='m10'){const mv=state.movie||{};const done=(mv.history||[]).filter(x=>x.type==='work'&&x.date&&x.date.slice(0,7)===todayStr().slice(0,7)).length;const goal=mv.goal||12;setNum('c-m10-n',done);setNum('c-m10-t',goal);setBar('bar-m10',goal?Math.min(done/goal,1)*100:0);if(done>=goal&&!mv.badge){mv.badge=true;saveSilent();setTimeout(()=>{burstFW();alert('🎬 恭喜解锁「观影达人」徽章！本月已看 '+done+' 部，小猫给你撒星星～');},400);}}
   refreshCheckin(todayStr());
   updateToday();
@@ -2394,6 +2556,150 @@ function m10ToVideoEnhance(){switchModule('m11');toast('粘贴或上传片源，
 })();
 
 function closeTrophy(){document.getElementById('trophy-pop').classList.remove('show');}
+/* ===== m12 文档笔记工坊 ===== */
+const DOC_SORTS=['modified','created','custom'];
+const DOC_SORT_LABEL={modified:'按修改时间 ⇅',created:'按创建时间 ⇅',custom:'自定义排序 ⇅'};
+function docEnsure(){if(!state.docs)state.docs={list:[],folders:['学习笔记','旅游资料','日常记录','备考题库'],sort:'modified'};if(!state.docs.list)state.docs.list=[];if(!state.docs.folders)state.docs.folders=['学习笔记','旅游资料','日常记录','备考题库'];if(!state.docs.sort)state.docs.sort='modified';}
+let docCur=null, docFolderFilter='全部', docSearchKw='', docMediaType=null, docConfirmId=null;
+let _docSaveT=null, _docURL={}, _docPaceT=null;
+function docFind(id){docEnsure();return state.docs.list.find(x=>x.id===id);}
+function docPlain(t){const d=document.createElement('div');d.innerHTML=t||'';return (d.textContent||'').replace(/\s+/g,' ').trim();}
+function docFmtTime(ts){if(!ts)return '—';const d=new Date(ts),p=n=>String(n).padStart(2,'0');return p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());}
+/* 媒体 IndexedDB */
+let _docDB=null;
+function docDB(){return new Promise((res,rej)=>{try{const r=indexedDB.open('wb_doc',1);r.onupgradeneeded=e=>{const db=e.target.result;if(!db.objectStoreNames.contains('media'))db.createObjectStore('media',{keyPath:'id'});};r.onsuccess=e=>{_docDB=e.target.result;res(_docDB);};r.onerror=e=>rej(e);}catch(e){rej(e);}});}
+function docDBput(id,blob){return docDB().then(db=>new Promise((res,rej)=>{const tx=db.transaction('media','readwrite');tx.objectStore('media').put({id,blob});tx.oncomplete=()=>res();tx.onerror=()=>rej();}));}
+function docDBget(id){return docDB().then(db=>new Promise((res,rej)=>{const tx=db.transaction('media','readonly');const rq=tx.objectStore('media').get(id);rq.onsuccess=()=>{const v=rq.result;if(v&&v.blob)res(v.blob);else rej(new Error('nf'));};rq.onerror=()=>rej(new Error('nf'));}));}
+function docURLfor(media){if(_docURL[media])return Promise.resolve(_docURL[media]);return docDBget(media).then(b=>{const u=URL.createObjectURL(b);_docURL[media]=u;return u;}).catch(()=>'');}
+/* 首页 */
+function docRenderHome(){
+  docEnsure();
+  const folders=state.docs.folders;
+  let fh='<div class="doc-folder'+(docFolderFilter==='全部'?' active':'')+'" onclick="docSetFolder(\'全部\')">全部</div>';
+  folders.forEach(f=>{fh+='<div class="doc-folder'+(docFolderFilter===f?' active':'')+'" onclick="docSetFolder('+JSON.stringify(f)+')">'+esc(f)+'</div>';});
+  fh+='<div class="doc-folder add" onclick="docAddFolder()">＋分类</div>';
+  document.getElementById('docFolders').innerHTML=fh;
+  document.getElementById('docSortLabel').textContent=DOC_SORT_LABEL[state.docs.sort]||'按修改时间 ⇅';
+  let list=state.docs.list.slice();
+  if(docFolderFilter!=='全部')list=list.filter(d=>d.folder===docFolderFilter);
+  if(docSearchKw){const k=docSearchKw.toLowerCase();list=list.filter(d=>(d.title||'').toLowerCase().includes(k)||(d.blocks||[]).some(b=>b.type==='text'&&docPlain(b.html).toLowerCase().includes(k)));}
+  if(state.docs.sort==='modified')list.sort((a,b)=>(b.modified||0)-(a.modified||0));
+  else if(state.docs.sort==='created')list.sort((a,b)=>(b.created||0)-(a.created||0));
+  const box=document.getElementById('docList');
+  if(!list.length){box.innerHTML='<div class="doc-empty">还没有文档，点上面「＋ 新建空白文档」开始写第一篇吧～📝</div>';return;}
+  box.innerHTML=list.map(d=>{
+    const tags=(d.tags||[]).map(t=>'<span class="doc-tag">'+esc(t)+'</span>').join('');
+    return '<div class="doc-card" onclick="docOpen('+JSON.stringify(d.id)+')">'+
+      '<div class="doc-thumb">'+docThumb(d)+'</div>'+
+      '<div class="doc-info"><div class="doc-title">'+esc(d.title||'未命名文档')+'</div>'+
+      '<div class="doc-meta"><span>🕒 '+(d.modified?docFmtTime(d.modified):'—')+'</span>'+tags+'</div></div>'+
+      '<div class="doc-ops"><button class="doc-op" onclick="event.stopPropagation();docRename('+JSON.stringify(d.id)+')">改名</button>'+
+      '<button class="doc-op" onclick="event.stopPropagation();docDuplicate('+JSON.stringify(d.id)+')">复制</button>'+
+      '<button class="doc-op del" onclick="event.stopPropagation();docDelete('+JSON.stringify(d.id)+')">删除</button></div></div>';
+  }).join('');
+  box.querySelectorAll('.doc-thumb [data-media]').forEach(async el=>{const u=await docURLfor(el.dataset.media);if(u)el.src=u;});
+}
+function docThumb(d){
+  const b=(d.blocks||[]).find(x=>x.type==='image'||x.type==='video');
+  if(!b)return '📄';
+  if(b.type==='video'){if(b.url)return '<video src="'+esc(b.url)+'" muted playsinline></video>';return '🎬';}
+  if(b.url)return '<img src="'+esc(b.url)+'" alt="">';
+  if(b.media)return '<img data-media="'+esc(b.media)+'" alt="">';
+  return '🖼️';
+}
+/* 编辑器 */
+function docOpen(id){docEnsure();const d=docFind(id);if(!d)return;docCur=id;document.getElementById('docTitle').value=d.title||'';document.getElementById('docHome').classList.remove('on');document.getElementById('docEditor').classList.add('on');document.getElementById('cw').scrollTop=0;docRenderBlocks(d);docPaceStart();}
+function docBack(){docAutoSave();docPaceStop();docCur=null;document.getElementById('docEditor').classList.remove('on');document.getElementById('docHome').classList.add('on');docRenderHome();}
+function docRenderBlocks(d){const body=document.getElementById('docBody');body.innerHTML=(d.blocks||[]).map(b=>docBlockHTML(b)).join('');body.querySelectorAll('[data-media]').forEach(async el=>{const u=await docURLfor(el.dataset.media);if(u)el.src=u;});}
+function docBlockHTML(b){
+  const id=JSON.stringify(b.id);
+  const hb='<div class="dh"><button onclick="docMove('+id+',-1)">↑</button><button onclick="docMove('+id+',1)">↓</button><button class="del" onclick="docDelBlock('+id+')">✕</button></div>';
+  if(b.type==='text')return '<div class="doc-block" data-id="'+esc(b.id)+'">'+hb+'<div class="doc-text" contenteditable="true" oninput="docTextInput('+id+',this)">'+(b.html||'')+'</div></div>';
+  if(b.type==='divider')return '<div class="doc-block" data-id="'+esc(b.id)+'">'+hb+'<hr class="doc-divider"></div>';
+  if(b.type==='image'){const inner=b.url?('<img class="doc-img" src="'+esc(b.url)+'" alt="">'):('<img class="doc-img" data-media="'+esc(b.media)+'" alt="">');return '<div class="doc-block" data-id="'+esc(b.id)+'">'+hb+'<div class="doc-img-wrap">'+inner+'<div class="doc-scale">缩放 <input type="range" min="40" max="100" value="'+(b.scale||100)+'" oninput="docScale('+id+',this.value)"></div><input class="doc-cap" placeholder="添加图片备注…" value="'+(b.cap||'')+'" oninput="docCap('+id+',this.value)"></div></div>';}
+  if(b.type==='video'){const src=b.url?('<video class="doc-video" src="'+esc(b.url)+'" controls playsinline></video>'):('<video class="doc-video" data-media="'+esc(b.media)+'" controls playsinline></video>');return '<div class="doc-block" data-id="'+esc(b.id)+'">'+hb+src+'</div>';}
+  return '';
+}
+function docTextInput(id,el){const d=docFind(docCur);if(!d)return;const b=d.blocks.find(x=>x.id===id);if(!b)return;b.html=el.innerHTML;docDebouncedSave();}
+function docDebouncedSave(){clearTimeout(_docSaveT);_docSaveT=setTimeout(()=>docAutoSave(),500);}
+function docAutoSave(){const d=docFind(docCur);if(!d)return;d.modified=Date.now();d.title=document.getElementById('docTitle').value||d.title;saveSilent();}
+function docSaveOK(){docAutoSave();docCatSay('内容保存完成 ✨');docCatCheer();toast('💾 已保存');}
+/* 新建/模板 */
+function docNew(){document.getElementById('docTplPop').classList.add('on');}
+function docCreate(tpl){document.getElementById('docTplPop').classList.remove('on');docEnsure();const tplName={book:'读书笔记',trip:'行程规划',wrong:'错题整理'}[tpl]||'';const d={id:uid(),title:tpl==='blank'?'未命名文档':tplName+'模板',folder:(docFolderFilter==='全部'?'未分类':docFolderFilter),tags:[],created:Date.now(),modified:Date.now(),tpl,blocks:docTplBlocks(tpl)};state.docs.list.unshift(d);saveSilent();docCatJump();burstFW();docOpen(d.id);}
+function txt(h){return {id:uid(),type:'text',html:h};}
+function dv(){return {id:uid(),type:'divider'};}
+function docTplBlocks(tpl){if(tpl==='book')return [txt('📚 书名：《》'),txt('✍️ 作者：'),txt('⭐ 评分：'),txt('📝 读书笔记：'),dv()];if(tpl==='trip')return [txt('🧳 目的地：'),txt('📅 日期：'),txt('🗺️ 行程安排：'),txt('🍜 美食推荐：'),dv()];if(tpl==='wrong')return [txt('❌ 题目：'),txt('✏️ 我的答案：'),txt('✅ 正确答案：'),txt('💡 错因分析：'),dv()];return [txt('')];}
+/* 操作 */
+function docRename(id){const d=docFind(id);if(!d)return;const t=prompt('重命名文档：',d.title||'');if(t==null)return;d.title=t.trim()||'未命名文档';d.modified=Date.now();saveSilent();docRenderHome();}
+function docDuplicate(id){const d=docFind(id);if(!d)return;const c=JSON.parse(JSON.stringify(d));c.id=uid();c.title=(d.title||'未命名文档')+' 副本';c.created=Date.now();c.modified=Date.now();(c.blocks||[]).forEach(b=>b.id=uid());state.docs.list.unshift(c);saveSilent();docRenderHome();toast('已复制副本');}
+function docDelete(id){docConfirmId=id;docCatSay('真的要删除吗？🥺');docCatShow();document.getElementById('docConfirmPop').classList.add('on');}
+function docConfirmCancel(){docConfirmId=null;document.getElementById('docConfirmPop').classList.remove('on');docCatHide();}
+function docConfirmYes(){const id=docConfirmId;docConfirmId=null;document.getElementById('docConfirmPop').classList.remove('on');state.docs.list=state.docs.list.filter(x=>x.id!==id);saveSilent();docRenderHome();docCatHide();toast('已删除');}
+function docSetFolder(f){docFolderFilter=f;docRenderHome();}
+function docAddFolder(){const f=prompt('新建分类名称：','');if(!f)return;f=f.trim();if(!f)return;docEnsure();if(!state.docs.folders.includes(f)){state.docs.folders.push(f);saveSilent();}docRenderHome();}
+function docCycleSort(){docEnsure();const i=DOC_SORTS.indexOf(state.docs.sort);state.docs.sort=DOC_SORTS[(i+1)%DOC_SORTS.length];saveSilent();docRenderHome();}
+function docSearch(kw){docSearchKw=kw.trim();docRenderHome();}
+/* 内容块 */
+function docShowAdd(){document.getElementById('docAddPop').classList.toggle('on');document.getElementById('docMediaPop').classList.remove('on');}
+function docAddText(){const d=docFind(docCur);if(!d)return;d.blocks.push({id:uid(),type:'text',html:''});docAutoSave();docRenderBlocks(d);document.getElementById('docAddPop').classList.remove('on');const last=document.querySelector('#docBody .doc-text:last-of-type');if(last)last.focus();}
+function docAddDivider(){const d=docFind(docCur);if(!d)return;d.blocks.push({id:uid(),type:'divider'});docAutoSave();docRenderBlocks(d);document.getElementById('docAddPop').classList.remove('on');}
+function docAddImage(){docMediaType='image';document.getElementById('docMediaTitle').textContent='插入图片';document.getElementById('docAddPop').classList.remove('on');document.getElementById('docMediaPop').classList.add('on');}
+function docAddVideo(){docMediaType='video';document.getElementById('docMediaTitle').textContent='插入视频';document.getElementById('docAddPop').classList.remove('on');document.getElementById('docMediaPop').classList.add('on');}
+function docMediaPick(){document.getElementById('docMediaPop').classList.remove('on');const inp=docMediaType==='image'?document.getElementById('docImgFile'):document.getElementById('docVidFile');if(inp)inp.click();}
+function docMediaUrl(){document.getElementById('docMediaPop').classList.remove('on');const u=prompt(docMediaType==='image'?'粘贴图片链接：':'粘贴视频链接：','');if(!u)return;u=u.trim();if(!u)return;docAddMediaBlock(docMediaType,null,u);}
+async function docStoreMedia(type,file){const id=uid();await docDBput(id,file);docAddMediaBlock(type,id,null);}
+function docAddMediaBlock(type,media,url){const d=docFind(docCur);if(!d)return;d.blocks.push({id:uid(),type,media,url,scale:100,cap:''});docAutoSave();docRenderBlocks(d);}
+function docDelBlock(id){const d=docFind(docCur);if(!d)return;d.blocks=d.blocks.filter(b=>b.id!==id);docAutoSave();docRenderBlocks(d);}
+function docMove(id,dir){const d=docFind(docCur);if(!d)return;const i=d.blocks.findIndex(b=>b.id===id);if(i<0)return;const j=i+dir;if(j<0||j>=d.blocks.length)return;const t=d.blocks[i];d.blocks[i]=d.blocks[j];d.blocks[j]=t;docAutoSave();docRenderBlocks(d);}
+function docScale(id,v){const d=docFind(docCur);if(!d)return;const b=d.blocks.find(x=>x.id===id);if(!b)return;b.scale=+v;const blk=document.querySelector('.doc-block[data-id="'+id+'"] .doc-img');if(blk)blk.style.width=v+'%';docDebouncedSave();}
+function docCap(id,v){const d=docFind(docCur);if(!d)return;const b=d.blocks.find(x=>x.id===id);if(!b)return;b.cap=v;docDebouncedSave();}
+/* 格式 */
+function docFmt(cmd){document.execCommand(cmd,false,null);docDebouncedSave();}
+function docFmtH(n){document.execCommand('formatBlock',false,n===1?'H1':'H2');docDebouncedSave();}
+function docFmtColor(c){document.execCommand('foreColor',false,c);docDebouncedSave();}
+function docUndo(){document.execCommand('undo');docDebouncedSave();}
+function docRedo(){document.execCommand('redo');docDebouncedSave();}
+/* 导出/复制/粘贴 */
+function docBlocksText(d){let t=(d.title||'未命名文档')+'\n';(d.blocks||[]).forEach(b=>{if(b.type==='text')t+=docPlain(b.html)+'\n';else if(b.type==='divider')t+='\n----------\n';else if(b.type==='image')t+='[图片]'+(b.cap?('：'+b.cap):'')+'\n';else if(b.type==='video')t+='[视频]\n';});return t;}
+function docExport(){const d=docFind(docCur);if(!d)return;docAutoSave();const blob=new Blob([docBlocksText(d)],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(d.title||'未命名文档')+'.txt';document.body.appendChild(a);a.click();a.remove();toast('📤 已导出文本文件');}
+function docCopyAll(){const d=docFind(docCur);if(!d)return;const t=docBlocksText(d);if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>toast('📋 已复制全部内容')).catch(()=>toast('复制失败'));}else toast('当前环境不支持复制');}
+async function docPaste(){try{const items=await navigator.clipboard.read();for(const it of items){const ty=it.types.find(t=>t.startsWith('image/'));if(ty){const blob=await it.getType(ty);await docStoreMedia('image',blob);toast('📎 已粘贴图片');return;}}const text=await navigator.clipboard.readText();if(text){const d=docFind(docCur);if(!d)return;d.blocks.push({id:uid(),type:'text',html:esc(text).replace(/\n/g,'<br>')});docAutoSave();docRenderBlocks(d);toast('📎 已粘贴文本');}}catch(e){toast('粘贴失败（浏览器限制了剪贴板读取）');}}
+/* 小猫彩蛋 */
+function docCatShow(){const c=document.getElementById('docCat');if(c)c.classList.add('show');}
+function docCatHide(){const c=document.getElementById('docCat');if(c)c.classList.remove('show');}
+function docCatSay(msg){const b=document.getElementById('docCatBub');if(b)b.textContent=msg;docCatShow();}
+function docCatJump(){const c=document.getElementById('docCat');if(!c)return;c.classList.add('jump');setTimeout(()=>c.classList.remove('jump'),650);}
+function docCatCheer(){docCatJump();setTimeout(()=>docCatSay('内容保存完成 ✨'),300);setTimeout(()=>docCatHide(),2600);}
+function docCatRun(x){const c=document.getElementById('docCat');if(!c)return;const max=document.getElementById('m12').clientWidth-60;c.style.left=Math.max(8,Math.min(max,x))+'px';}
+function docPaceStart(){docPaceStop();_docPaceT=setInterval(()=>{if(document.getElementById('docEditor').classList.contains('on')){const w=document.getElementById('m12').clientWidth-60;docCatRun(Math.random()*w);}},13000);}
+function docPaceStop(){if(_docPaceT){clearInterval(_docPaceT);_docPaceT=null;}}
+/* 其他模块 → 文档（导出为文档 / 视频插入文档） */
+function exportToDoc(title,html){
+  docEnsure();
+  const d={id:uid(),title:title||'导入文档',folder:'未分类',tags:[],created:Date.now(),modified:Date.now(),tpl:'blank',blocks:[{id:uid(),type:'text',html:html||''}]};
+  state.docs.list.unshift(d);saveSilent();
+  toast('📒 已存入「文档笔记工坊」');
+  if(confirm('已生成文档「'+(title||'导入文档')+'」，要现在打开编辑吗？')){switchModule('m12');docOpen(d.id);}
+}
+function docInsertVideo(src){
+  docEnsure();
+  const d={id:uid(),title:'增强视频 '+docFmtTime(Date.now()),folder:'未分类',tags:[],created:Date.now(),modified:Date.now(),tpl:'blank',blocks:[{id:uid(),type:'text',html:'🎬 视频高清增强结果：'}, {id:uid(),type:'video',url:src}]};
+  state.docs.list.unshift(d);saveSilent();
+  toast('📄 已插入文档');
+  if(confirm('已把视频插入到文档「'+d.title+'」，要现在打开吗？')){switchModule('m12');docOpen(d.id);}
+}
+(function(){
+  const m12el=document.getElementById('m12');
+  if(m12el){m12el.addEventListener('pointerdown',e=>{
+    if(e.target.closest('.doc-block,button,input,textarea,select,a,.doc-card,.doc-op,.doc-add-pop'))return;
+    if(!document.getElementById('docEditor').classList.contains('on')&&!document.getElementById('docHome').classList.contains('on'))return;
+    const r=m12el.getBoundingClientRect();docCatRun(e.clientX-r.left);
+  });}
+  const imgF=document.getElementById('docImgFile'), vidF=document.getElementById('docVidFile');
+  if(imgF)imgF.addEventListener('change',e=>{const f=e.target.files[0];if(f)docStoreMedia('image',f);e.target.value='';});
+  if(vidF)vidF.addEventListener('change',e=>{const f=e.target.files[0];if(f)docStoreMedia('video',f);e.target.value='';});
+})();
 function burst(target){
   const r=target.getBoundingClientRect();
   for(let i=0;i<14;i++){const p=document.createElement('div');p.textContent=Math.random()>.5?'⭐':'💖';
