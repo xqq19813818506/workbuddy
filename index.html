@@ -40,7 +40,7 @@
   .nav-btn[data-theme="brightyellow"].active{background:#fff1a8;color:#9a7a10}
   .nav-btn[data-theme="peach"].active{background:#ffd9e0;color:#b04860}
   .nav-btn[data-theme="lightpink"].active{background:#ffd6e4;color:#a04060}
-  .sidebar-egg{margin-top:auto;text-align:center;font-size:22px;cursor:pointer;animation:sw .6s ease-in-out infinite alternate;padding:4px 0}
+  .sidebar-egg{margin-top:auto;text-align:center;font-size:22px;cursor:pointer;animation:sw .6s ease-in-out infinite alternate;padding:4px 0;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
   @keyframes sw{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
 
   .main{flex:1;min-width:0;background:#fff;border-radius:26px;box-shadow:0 8px 24px rgba(255,180,140,.18);display:flex;flex-direction:column;overflow:hidden;height:100%}
@@ -550,6 +550,44 @@
   .egg-box .ec{font-size:56px}
   .egg-box .et{font-size:14px;font-weight:800;color:#b65a2b;margin-top:8px;line-height:1.5}
   .egg-box .ex{font-size:11px;color:#a0938a;margin-top:6px}
+
+  /* ===== 小猫伙伴 · 表达训练聊天 ===== */
+  #buddyChat{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(40,30,25,.5)}
+  #buddyChat.show{display:flex;animation:fadein .25s}
+  .bc-card{width:min(560px,96vw);height:min(78vh,720px);background:linear-gradient(180deg,#fff8f2 0%,#fff 35%);border-radius:22px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 18px 48px rgba(120,70,40,.28)}
+  .bc-top{display:flex;align-items:center;gap:8px;padding:10px 12px;background:linear-gradient(135deg,#ffd5a8,#ffb4a2);color:#5a2e1a}
+  .bc-top .bt-title{font-size:13.5px;font-weight:800;flex:0 0 auto}
+  .bc-tabs{display:flex;gap:6px;flex:1;justify-content:center;flex-wrap:wrap}
+  .bc-tab{background:rgba(255,255,255,.4);color:#5a2e1a;font-size:10.5px;font-weight:800;padding:5px 9px;border-radius:10px;cursor:pointer;border:none;white-space:nowrap}
+  .bc-tab.on{background:#fff;color:#c04a20;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+  .bc-close{background:rgba(255,255,255,.4);border:none;color:#5a2e1a;font-size:14px;font-weight:800;width:26px;height:26px;border-radius:50%;cursor:pointer}
+  .bc-body{flex:1;overflow-y:auto;padding:12px;background:#fff8ef}
+  .bc-msg-row{display:flex;gap:7px;margin-bottom:12px;align-items:flex-start}
+  .bc-msg-row.right{flex-direction:row-reverse}
+  .bc-av{width:28px;height:28px;border-radius:50%;flex-shrink:0;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .bc-av svg{width:26px;height:26px}
+  .bc-bubble{max-width:72%;padding:8px 12px;border-radius:14px;font-size:12.5px;line-height:1.55;word-wrap:break-word}
+  .bc-msg-row.left .bc-bubble{background:#fff;border:1.2px solid #f0d8c4;color:#5a3d2a;border-top-left-radius:4px}
+  .bc-msg-row.right .bc-bubble{background:linear-gradient(135deg,#ffb4a2,#ff8e7a);color:#fff;border-top-right-radius:4px}
+  .bc-bubble .bt{white-space:pre-wrap}
+  .bc-fb{margin-top:6px;padding:7px 10px;background:#fff5ec;border:1.2px dashed #ffc6a0;border-radius:10px;font-size:10.5px;color:#a06040;line-height:1.7}
+  .bc-fb b{color:#7a4520}
+  .bc-fb .ck{font-weight:700}
+  .bc-fb .ck.ok{color:#3a8a4a}
+  .bc-fb .ck.no{color:#c0455a}
+  .bc-fb-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+  .bc-fb-tags span{background:#ffe2d1;color:#a04020;padding:1px 6px;border-radius:8px;font-size:9.5px;font-weight:700}
+  .bc-input{display:flex;gap:7px;padding:8px 10px;background:#fff;border-top:1.2px solid #f0e3d6;align-items:flex-end;position:relative}
+  .bc-textarea{flex:1;min-height:36px;max-height:90px;padding:7px 10px;border:1.5px solid #efe6da;border-radius:14px;font-family:inherit;font-size:12.5px;outline:none;resize:none;line-height:1.5;background:#fffaf3}
+  .bc-textarea:focus{border-color:#ffb4a2}
+  .bc-send{background:linear-gradient(135deg,#ffb07a,#ff8a5a);color:#fff;border:none;padding:0 16px;height:36px;border-radius:14px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap}
+  .bc-send:disabled{opacity:.5}
+  .bc-counter{position:absolute;right:84px;bottom:18px;font-size:9.5px;color:#a0938a;pointer-events:none}
+  .bc-tip{padding:8px 12px;font-size:10.5px;color:#a0938a;background:#fff8ef;border-top:1.2px dashed #f0d8c4;display:flex;justify-content:space-between;align-items:center}
+  .bc-tip .bc-clear{background:none;border:none;color:#a04020;font-size:10.5px;cursor:pointer;text-decoration:underline}
+  @media (max-width:520px){
+    .bc-card{width:100vw;height:100vh;border-radius:0}
+  }
 
   .mini-fab{position:fixed;right:14px;bottom:18px;z-index:40;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#ffb07a,#ff8a5a);border:none;color:#fff;font-size:22px;box-shadow:0 6px 18px rgba(255,138,90,.5);cursor:pointer;animation:breathe 2s ease-in-out infinite}
   .mini-fab:active{transform:scale(.92)}
@@ -1108,7 +1146,7 @@
     <button class="nav-btn" data-target="m8" data-theme="peach" onclick="switchModule('m8',this)"><span class="icon-wrap">🧳</span><span class="label">旅游攻略</span></button>
     <button class="nav-btn" data-target="m9" data-theme="lightpink" onclick="switchModule('m9',this)"><span class="icon-wrap">🎤</span><span class="label">表达能力</span></button>
     <button class="nav-btn" data-target="m10" data-theme="movie" onclick="switchModule('m10',this)"><span class="icon-wrap">🎬</span><span class="label">追剧观影</span></button>
-    <div class="sidebar-egg" onclick="eggPop()">🐱</div>
+    <div class="sidebar-egg" id="buddyEgg" onpointerdown="eggDown(event)" onpointerup="eggUp(event)" onpointerleave="eggUp(event)" oncontextmenu="return false">🐱</div>
     <div class="sidebar-egg" onclick="movieEggPop()" title="随机推荐高分正版影片">🎟️</div>
   </aside>
   <div class="main">
@@ -1464,6 +1502,7 @@
     <div class="visual">🎤</div>
     <div class="text"><div class="t1">表达能力 · 训练进度</div><div class="t2">今日已完成 <span id="c-m9-n">0</span> 次练习</div><div class="bar-wrap"><div class="bar" id="bar-m9" style="width:0%"></div></div></div>
   </div>
+  <button class="add-btn" onclick="openBuddyChat('situation')" style="background:linear-gradient(135deg,#ffd5a8,#ffb4a2);color:#5a2e1a;font-weight:800">🐱 和 Buddy 练一练（点这只小猫也行～长按或双击侧栏🐱）</button>
   <div class="sec-title">逻辑说话模板（四段式，可直接编辑）</div>
   <div class="bubble">📌 <div class="editable" contenteditable="true">背景：先说清楚事情来龙去脉</div></div>
   <div class="bubble said">❓ <div class="editable" contenteditable="true">问题：核心要解决的到底是什么</div></div>
@@ -1573,6 +1612,31 @@
   </div>
 </div>
 
+<div id="buddyChat">
+  <div class="bc-card">
+    <div class="bc-top">
+      <span class="bt-title">🐱 和小橘猫聊一聊</span>
+      <div class="bc-tabs" id="bcTabs">
+        <button class="bc-tab on" data-mode="free">🗣️ 自由</button>
+        <button class="bc-tab" data-mode="situation">🎯 情境</button>
+        <button class="bc-tab" data-mode="retro">📅 复盘</button>
+        <button class="bc-tab" data-mode="day">🌅 晨晚</button>
+      </div>
+      <button class="bc-close" onclick="closeBuddyChat()">✕</button>
+    </div>
+    <div class="bc-body" id="bcBody"></div>
+    <div class="bc-input">
+      <textarea class="bc-textarea" id="bcInput" placeholder="想说点什么…（Shift+回车换行）" oninput="bcCount()" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();bcSend();}"></textarea>
+      <span class="bc-counter" id="bcCounter">0</span>
+      <button class="bc-send" id="bcSend" onclick="bcSend()">发送</button>
+    </div>
+    <div class="bc-tip">
+      <span id="bcModeTip">自由聊天 · 想说啥都行，小猫陪你练</span>
+      <button class="bc-clear" onclick="bcClear()">清空本模式</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-mask" id="drMask" onclick="if(event.target===this)closeDr()"><div class="modal-card" id="drCard"></div></div>
 <div class="modal-mask" id="camMask" onclick="if(event.target===this)closeCam()"><div class="modal-card" id="camCard"></div></div>
 
@@ -1667,7 +1731,9 @@ function defaultState(){
     sms:[],
     summaries:{},
     egg:0, lastTrophy:'',
-    movie:{lists:[],tracks:[],notes:[],cal:[],history:[],goal:12,badge:false}
+    movie:{lists:[],tracks:[],notes:[],cal:[],history:[],goal:12,badge:false},
+    buddyChat:{free:[],situation:[],retro:[],day:[],dayMeta:{morning:null,evening:null},lastMode:'free',retroDate:''},
+    buddyStats:{today:'',count:0}
   };
 }
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -1678,6 +1744,10 @@ function loadAll(){
     state.remind=Object.assign(defaultState().remind,o.remind||{});
     if(!state.fin)state.fin=defaultState().fin;
     ['travelFav','travelHist','trips','travelBills','spotFav','trEdits','travelMode','diet','prep','water','exercise','disease'].forEach(k=>{if(state[k]==null)state[k]=defaultState()[k];});
+    if(!state.buddyChat)state.buddyChat=defaultState().buddyChat;
+    if(!Array.isArray(state.buddyChat.day))state.buddyChat.day=[];
+    if(!state.buddyChat.dayMeta)state.buddyChat.dayMeta={morning:null,evening:null};
+    if(!state.buddyStats)state.buddyStats=defaultState().buddyStats;
   }}catch(e){}
 }
 function saveSilent(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
@@ -1864,6 +1934,162 @@ function calClick(mod,ds){const rec=state.checkins[ds];let lines='';
 const EGGS=['今天也要好好完成任务哦','小猫陪你一起学习～','你已经很棒啦，休息一下吧','每一个小进步都算数','别急，慢慢来，小猫等你','今天也要对自己温柔一点'];
 function eggPop(){const t=EGGS[state.egg%EGGS.length];state.egg++;saveSilent();document.getElementById('egg-c').textContent='🐱';document.getElementById('egg-t').textContent=t;document.getElementById('egg-pop').classList.add('show');}
 function closeEgg(){document.getElementById('egg-pop').classList.remove('show');}
+
+/* ===== 小猫伙伴 · 表达训练聊天 ===== */
+const BC_AVATAR='<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="20" r="12" fill="#FFCDA8"/><path d="M20 12 L18 2 L26 10 Z" fill="#FFB677"/><path d="M40 12 L42 2 L34 10 Z" fill="#FFB677"/><ellipse cx="25" cy="19" rx="2.6" ry="3.4" fill="#3a2418"/><ellipse cx="35" cy="19" rx="2.6" ry="3.4" fill="#3a2418"/><path d="M30 23 L27.5 25 L32.5 25 Z" fill="#FF9999"/><ellipse cx="30" cy="38" rx="17" ry="13" fill="#FFCDA8"/><circle cx="30" cy="31" r="2.4" fill="#FFD23F" stroke="#E09900" stroke-width="0.6"/></svg>';
+const BC_CONN=['因为','所以','但是','然而','不过','虽然','首先','然后','最后','其实','因此','既然'];
+const BC_EMO =['我感受','我觉得','我想','我希望','我打算','我准备','我担心','我开心','我难过','我认为','在我看来'];
+const BC_TIPS={free:'自由聊天 · 想说啥都行，小猫陪你练',situation:'情境演练 · 按四段式组织语言，小猫给你分析',retro:'今日复盘 · 写下今天 3 件好事 / 1 件学到 / 1 件想做，每条 ≥30 字更有收获',day:'晨晚打卡 · 早晨设目标，晚上一句话总结'};
+const SITUATIONS=['向同事汇报本周工作进展','礼貌地拒绝朋友的临时请求','为自己迟到向老师道歉','在面试中做 1 分钟自我介绍','说服室友一起打扫卫生','向家人解释你最近的一个决定'];
+const BC_REPLY={
+  freeLow:['再多说一点呢～我想听你详细说','试着描述一下你的感受？','举个例子会更清楚哦','把你想说的写下来，小猫陪你一起梳理'],
+  freeMid:['嗯嗯有道理！','继续说下去～','我也这么觉得','然后呢？','小本本记下来啦','认真在听哦～'],
+  freeHigh:['说得真清楚！','表达很有条理 ✨','你讲得比昨天更好','这段可以收进小本本了','思路清晰，给力！'],
+  conn:['我看到你用了「{k}」，逻辑清晰 ✨','用「{k}」串联很有节奏感','「{k}」让表达更有条理','「{k}」用得好，逻辑立住了'],
+  emo:['说出了「{k}」很有温度','能表达感受是很好的沟通习惯','「{k}」这种自我觉察特别棒'],
+  retroLow:['再补一点细节呢，比如时间地点～','试着说说是为什么让你觉得好？','加一句感受会更立体哦','写得再具体一点吧～'],
+  retroOk:['记下来啦～这就是今天的好事 ✨','很棒！继续写下一件～','不错不错，这就是今天的亮点'],
+  retroDone:['太棒啦！三件好事都写满了 🎉','今天收获满满，明天继续～','完成度满分，给自己鼓个掌 👏'],
+  dayMLow:['简单写一下为什么这件事重要？','具体打算什么时候做呢？','再多说两句会更清晰哦'],
+  dayMOk:['这个目标很清晰，加油！晚上见～','记下啦，我晚上会问你的哦','出发！小猫晚上来验收 ✨'],
+  dayELow:['写一句今天印象最深的事？','哪怕一句话也算总结哦','多说一点吧～'],
+  dayEMatch:['和你早上设的目标一致，完美闭环 ✨','说到做到！今晚可以安心睡啦'],
+  dayENo:['没关系，目标留到明天也可以，今晚好好休息 🌙','今天也辛苦啦，拥抱自己一下 🫂']
+};
+function bcPick(a){return a[Math.floor(Math.random()*a.length)];}
+function bcFmt(t,k){return t.replace('{k}',k);}
+function buddyGreeting(){const h=new Date().getHours();if(h<6)return '夜深啦';if(h<11)return '早上好呀';if(h<14)return '中午好';if(h<18)return '下午好';return '晚上好';}
+function bcFirstMsg(mode){
+  const hr=buddyGreeting();
+  if(mode==='free')return hr+'～想聊点啥？随便说，小猫陪你练表达 ✨';
+  if(mode==='situation'){const sit=SITUATIONS[Math.floor(Math.random()*SITUATIONS.length)];return '🎯 抽到题目啦：\n【'+sit+'】\n用四段式（背景→问题→原因→方案）组织一下语言吧～';}
+  if(mode==='retro')return '📅 今天是 '+todayStr()+'\n写下今天 3 件好事吧，每条 ≥30 字更有收获～写完一条发一条，我陪你一条条复盘 ✨';
+  if(mode==='day'){const h=new Date().getHours();if(h<12)return '🌅 早上好！\n今天最重要的一件事是什么？简单写一句就好～晚上我会来验收哦';else if(h<18)return '☀️ 下午好！\n现在感觉怎么样？想分享一句吗？';else return '🌙 晚上好！\n一句话总结今天呢？哪怕一句话也算数～';}
+  return '喵～';
+}
+
+// 长按/双击/单击 检测
+let eggPressT=0,eggPressTimer=null,eggClickPending=false,eggLastClickT=0;
+function eggDown(e){if(e&&e.preventDefault)e.preventDefault();eggPressT=Date.now();eggClickPending=false;clearTimeout(eggPressTimer);eggPressTimer=setTimeout(()=>{openBuddyChat(state.buddyChat.lastMode||'free');eggPressT=0;},500);}
+function eggUp(e){clearTimeout(eggPressTimer);const dur=Date.now()-eggPressT;eggPressT=0;if(dur>=500)return;if(Date.now()-eggLastClickT<300){eggLastClickT=0;eggClickPending=false;openBuddyChat(state.buddyChat.lastMode||'free');return;}eggLastClickT=Date.now();eggClickPending=true;setTimeout(()=>{if(eggClickPending){eggPop();eggClickPending=false;}},280);}
+
+let bcMode='free';
+function openBuddyChat(mode){
+  if(mode)bcMode=mode;
+  state.buddyChat.lastMode=bcMode;
+  const el=document.getElementById('buddyChat');if(!el)return;
+  el.classList.add('show');
+  document.getElementById('bcTabs').querySelectorAll('.bc-tab').forEach(t=>{t.classList.toggle('on',t.dataset.mode===bcMode);});
+  document.getElementById('bcModeTip').textContent=BC_TIPS[bcMode]||'';
+  if(bcMode==='retro'&&state.buddyChat.retroDate!==todayStr()){state.buddyChat.retro=[];state.buddyChat.retroDate=todayStr();}
+  const list=state.buddyChat[bcMode];
+  if(!Array.isArray(list)||list.length===0){state.buddyChat[bcMode].push({role:'bot',text:bcFirstMsg(bcMode),ts:Date.now()});saveSilent();}
+  renderBuddyChat();
+  setTimeout(()=>{const ta=document.getElementById('bcInput');if(ta)ta.focus();},120);
+}
+function closeBuddyChat(){document.getElementById('buddyChat').classList.remove('show');}
+function bcSwitch(mode){
+  bcMode=mode;state.buddyChat.lastMode=mode;
+  document.getElementById('bcTabs').querySelectorAll('.bc-tab').forEach(t=>{t.classList.toggle('on',t.dataset.mode===mode);});
+  document.getElementById('bcModeTip').textContent=BC_TIPS[mode]||'';
+  if(mode==='retro'&&state.buddyChat.retroDate!==todayStr()){state.buddyChat.retro=[];state.buddyChat.retroDate=todayStr();}
+  const list=state.buddyChat[mode];
+  if(!Array.isArray(list)||list.length===0){state.buddyChat[mode].push({role:'bot',text:bcFirstMsg(mode),ts:Date.now()});saveSilent();}
+  renderBuddyChat();
+}
+document.getElementById('bcTabs').addEventListener('click',e=>{const t=e.target.closest('.bc-tab');if(t)bcSwitch(t.dataset.mode);});
+
+function bcCount(){const ta=document.getElementById('bcInput');document.getElementById('bcCounter').textContent=ta.value.length;}
+function bcClear(){if(!confirm('清空当前模式的对话记录？'))return;if(bcMode==='retro'){state.buddyChat.retro=[];state.buddyChat.retroDate=todayStr();}else if(bcMode==='day'){state.buddyChat.day=[];state.buddyChat.dayMeta={morning:null,evening:null};}else{state.buddyChat[bcMode]=[];}state.buddyChat[bcMode].push({role:'bot',text:bcFirstMsg(bcMode),ts:Date.now()});saveSilent();renderBuddyChat();}
+
+function buddyFeedback(text){const w=text.length;const conn=BC_CONN.filter(k=>text.includes(k));const emo=BC_EMO.filter(k=>text.includes(k));const wlv=w<10?'偏少':w<30?'适中':w<80?'扎实':'丰富';return {words:w,wordsLv:wlv,conn,emo};}
+function bcAnalyzeSit(text){
+  const checks=[
+    {name:'背景/现象',keys:['背景','当时','今天','上周','最近','那天','起因','之前','现在','我']},
+    {name:'问题',keys:['问题','结果','导致','但是','却','不了','坏','错','慢','卡','没']},
+    {name:'原因',keys:['原因','因为','由于','之所以','原因是','所以']},
+    {name:'方案',keys:['方案','可以','应该','建议','试试','先','最后','第一步','做法','我打算','我准备','我建议']}
+  ];
+  let score=0;const missing=[];const detail=[];
+  checks.forEach(c=>{const ok=c.keys.some(k=>text.includes(k));if(ok)score++;else missing.push(c.name);detail.push((ok?'✅ ':'❌ ')+c.name);});
+  return {score,missing,detail};
+}
+function genBuddyReply(mode,text,fb){
+  if(mode==='free'){
+    let main;const tags=[...fb.conn.slice(0,2),...fb.emo.slice(0,1)];
+    if(fb.words<10)main=bcPick(BC_REPLY.freeLow);
+    else if(fb.words<80)main=bcPick(BC_REPLY.freeMid);
+    else main=bcPick(BC_REPLY.freeHigh);
+    let extra='';
+    if(fb.conn.length)extra='\n'+bcFmt(bcPick(BC_REPLY.conn),fb.conn[0]);
+    else if(fb.emo.length)extra='\n'+bcFmt(bcPick(BC_REPLY.emo),fb.emo[0]);
+    else if(fb.words<30)extra='\n试试用「因为…所以…」让表达更有逻辑？';
+    return {text:main+extra,fb:{words:fb.words,wordsLv:fb.wordsLv,conn:fb.conn,emo:fb.emo,tags}};
+  }
+  if(mode==='situation'){
+    const a=bcAnalyzeSit(text);
+    let main='🎯 四段式分析：\n'+a.detail.join('\n')+'\n\n得分 '+a.score+'/4';
+    let tip='';
+    if(a.missing.length)tip='\n\n💡 试试在【'+a.missing[0]+'】里加一句「因为…」会更稳';
+    else tip='\n\n✨ 四段齐全，表达稳得很！';
+    return {text:main+tip,fb:{analysis:a,words:fb.words}};
+  }
+  if(mode==='retro'){
+    const items=state.buddyChat.retro.filter(m=>m.role==='user');const n=items.length;const ok=text.length>=30;
+    let main;
+    if(!ok)main=bcPick(BC_REPLY.retroLow);
+    else if(n<3)main=bcPick(BC_REPLY.retroOk);
+    else main=bcPick(BC_REPLY.retroDone);
+    return {text:main,fb:{ok,words:fb.words,n:n+1,total:3}};
+  }
+  if(mode==='day'){
+    const isMorning=new Date().getHours()<14;
+    if(!state.buddyChat.dayMeta)state.buddyChat.dayMeta={morning:null,evening:null};
+    if(isMorning){
+      state.buddyChat.dayMeta.morning={text,ts:Date.now()};
+      const main=text.length>=15?bcPick(BC_REPLY.dayMOk):bcPick(BC_REPLY.dayMLow);
+      return {text:main,fb:{period:'morning',words:fb.words}};
+    }else{
+      state.buddyChat.dayMeta.evening={text,ts:Date.now()};
+      const mom=state.buddyChat.dayMeta.morning;
+      let main;
+      if(text.length<10)main=bcPick(BC_REPLY.dayELow);
+      else if(mom&&mom.text&&mom.text.length>=3&&text.includes(mom.text.slice(0,Math.min(6,mom.text.length))))main=bcPick(BC_REPLY.dayEMatch);
+      else main=bcPick(BC_REPLY.dayENo);
+      return {text:main,fb:{period:'evening',words:fb.words}};
+    }
+  }
+  return {text:'喵～'};
+}
+function bcSend(){
+  const ta=document.getElementById('bcInput');const text=(ta.value||'').trim();if(!text)return;
+  ta.value='';bcCount();
+  state.buddyChat[bcMode].push({role:'user',text,ts:Date.now()});
+  setTimeout(()=>{
+    const fb=buddyFeedback(text);
+    const reply=genBuddyReply(bcMode,text,fb);
+    state.buddyChat[bcMode].push({role:'bot',text:reply.text,ts:Date.now(),fb:reply.fb});
+    if(state.buddyStats.today!==todayStr()){state.buddyStats.today=todayStr();state.buddyStats.count=0;}
+    state.buddyStats.count++;state.topicCount++;updateProgress('m9');
+    saveSilent();renderBuddyChat();
+  },380);
+}
+function renderBuddyChat(){
+  const body=document.getElementById('bcBody');if(!body)return;
+  let html='';const msgs=state.buddyChat[bcMode]||[];
+  msgs.forEach(m=>{
+    if(m.role==='bot'){html+='<div class="bc-msg-row left"><div class="bc-av">'+BC_AVATAR+'</div><div><div class="bc-bubble"><div class="bt">'+esc(m.text)+'</div></div>'+(m.fb?renderFB(m.fb):'')+'</div></div>';}
+    else{html+='<div class="bc-msg-row right"><div class="bc-bubble"><div class="bt">'+esc(m.text)+'</div></div></div>';}
+  });
+  body.innerHTML=html;body.scrollTop=body.scrollHeight;
+}
+function renderFB(fb){
+  let h='<div class="bc-fb">';
+  if(fb.analysis){h+='<b>🎯 结构清晰度 '+fb.analysis.score+'/4</b> · '+fb.words+'字';}
+  else if(fb.ok!==undefined){h+='<b>📝 复盘第 '+(fb.n||1)+' 条</b> · '+(fb.ok?'✅ 达标 ('+fb.words+'字)':'⚠️ '+(fb.words||0)+'字，再补点细节');if(fb.n>=3&&fb.ok)h+='<br>🎉 三件好事都达成！';}
+  else{h+='<b>'+fb.words+'字 · '+fb.wordsLv+'</b>';if(fb.tags&&fb.tags.length){h+='<div class="bc-fb-tags">';fb.tags.forEach(t=>h+='<span>'+esc(t)+'</span>');h+='</div>';}}
+  h+='</div>';return h;
+}
 function closeTrophy(){document.getElementById('trophy-pop').classList.remove('show');}
 function burst(target){
   const r=target.getBoundingClientRect();
