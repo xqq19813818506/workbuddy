@@ -135,6 +135,16 @@
   .ab-total{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:2px solid #f0e6db;padding:12px 16px;font-size:13px;color:#5a4d40;text-align:center;z-index:2;box-shadow:0 -4px 14px rgba(180,150,120,.12)}
   .ab-total b{color:#e0567f;font-size:15px}
   .ab-fab-add{position:fixed;right:16px;bottom:70px;z-index:3;width:54px;height:54px;border-radius:50%;border:none;background:linear-gradient(135deg,#ff9ec4,#ff6f9e);color:#fff;font-size:28px;font-weight:800;box-shadow:0 6px 18px rgba(255,110,158,.5);cursor:pointer}
+  .fin-btns{display:flex;flex-direction:column;gap:6px;margin:4px 0}
+  .fin-btns .add-btn{margin:0}
+  .fin-clear{background:#fff0f0;color:#c0392b;border:1.5px solid #f3c6c0}
+  .privacy-note{background:#eef6f0;border:1.5px solid #cfe6d8;border-radius:14px;padding:9px 11px;font-size:10px;line-height:1.6;color:#5a7a68;margin:6px 0 4px}
+  .privacy-note b{color:#3a7a5a}
+  .sync-guide{font-size:11px;line-height:1.6;color:#6a5d50;background:#f7f1ea;border-radius:12px;padding:9px 11px;margin-bottom:6px}
+  .sync-warn{display:block;margin-top:6px;color:#b06a2a;font-weight:700}
+  .ab-sub{font-size:10.5px;color:#8a7a6a;padding:7px 13px;border-top:1px dashed #eee;background:#faf6f1}
+  .ab-priv{font-size:9.5px;color:#9a8c80;padding:6px 14px;text-align:center;line-height:1.5}
+  .ab-priv b{color:#6a8a78}
   .card.done{background:#e6f5e0;border-color:#bce0a8}
   .card.done .t{color:#3a7a2a}
   .check-btn{width:27px;height:27px;border-radius:50%;border:2.5px solid #e3d5c5;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto;transition:all .2s;flex-direction:column;align-items:center;justify-content:center}
@@ -1628,20 +1638,26 @@
   <div class="card" onclick="openCycle()"><div class="ic" style="background:#fff1a8">🔁</div><div class="info"><div class="t">周期自动记账</div><div class="d">每月固定房租/工资自动入账</div></div><div style="font-size:22px">🗓️</div></div>
   <div id="cycle-list"></div>
   <div class="sec-title">🤖 自动记账（微信 / 支付宝 / 电商）</div>
-  <div class="sec-sub">开启渠道后一键抓取账单，自动填好时间·金额·商户·商品；可手动改、可删、可忽略</div>
+  <div class="sec-sub">纯本地应用，账单仅存你本机浏览器，绝不上传云端；同步按「微信/支付宝记账本」格式生成示例账单，可手动改、删、忽略。详见下方隐私说明。</div>
   <div class="auto-ch">
     <span class="toggle on" onclick="finToggleCh('wx',this)"><span class="sw"></span>微信</span>
     <span class="toggle on" onclick="finToggleCh('ali',this)"><span class="sw"></span>支付宝</span>
     <span class="toggle on" onclick="finToggleCh('shop',this)"><span class="sw"></span>电商</span>
   </div>
   <div class="auto-btns">
-    <button class="auto-btn" onclick="finAutoSync('wx')">🔄 同步微信账单</button>
-    <button class="auto-btn" onclick="finAutoSync('ali')">🔄 同步支付宝账单</button>
-    <button class="auto-btn" onclick="finAutoSync('shop')">🔄 同步电商订单</button>
+    <button class="auto-btn" onclick="finSyncModal('wx')">🔄 同步微信账单</button>
+    <button class="auto-btn" onclick="finSyncModal('ali')">🔄 同步支付宝账单</button>
+    <button class="auto-btn" onclick="finSyncModal('shop')">🔄 同步电商订单</button>
   </div>
   <div id="finAutoLog" class="auto-log"></div>
   <div class="card fin-all-entry" onclick="openAllBills()"><div class="ic" style="background:#d6f0e0">📋</div><div class="info"><div class="t">全部账单明细</div><div class="d">点击进入分类汇总页面</div></div><div style="font-size:22px;color:#4caf72">›</div></div>
-  <button class="add-btn" onclick="finExport()">📤 导出账单备份（JSON）</button>
+  <div class="fin-btns">
+    <button class="add-btn" onclick="finExport()">📤 导出账单备份</button>
+    <button class="add-btn" onclick="finImport()">📥 导入账单备份</button>
+    <button class="add-btn fin-clear" onclick="finClearAll()">🧹 清除全部账单数据</button>
+  </div>
+  <div class="privacy-note">🔒 <b>隐私说明</b>：① 账单仅存本机，开发者无法查看/导出你的任何收支；② 链接仅本机可加载账单，他人打开无你的数据；③ 仅同步收支信息，不获取银行卡/姓名/身份等敏感信息。</div>
+  <input type="file" id="finImportFile" accept=".json,application/json" style="display:none" onchange="finImportFile(event)">
   <div class="sec-title">📊 月度账单汇总</div>
   <div class="pie-wrap">
     <div class="pie" id="pie-m7"></div>
@@ -1673,6 +1689,7 @@
       <button class="abt" data-io="in" onclick="abSetIO(this,'in')">只看收入</button>
       <input class="ab-search" id="abSearch" placeholder="🔍 搜索 餐饮/键盘…" oninput="abKW=this.value;abRender()">
     </div>
+    <div class="ab-priv">🔒 账单仅存<b>本机浏览器</b>，不上传云端；换设备需重新同步或从备份恢复，他人打开无你的数据。</div>
     <div class="ab-batchbar" id="abBatchBar" style="display:none">
       <label><input type="checkbox" id="abCheckAll" onchange="abCheckAll(this)"> 全选</label>
       <button class="bdel" onclick="abBatchDel()">🗑 删除选中(<span id="abSelN">0</span>)</button>
@@ -4630,22 +4647,80 @@ const SHOP_BILLS=[{m:'淘宝',item:'女士休闲鞋',amt:89,cat:'其他'},{m:'�
 const CH_NAME={wx:'微信',ali:'支付宝',shop:'电商'};
 let finRankOpen=null;
 function finToggleCh(ch,el){state.fin.autoChannels=state.fin.autoChannels||{wx:true,ali:true,shop:true};state.fin.autoChannels[ch]=!state.fin.autoChannels[ch];el.classList.toggle('on',state.fin.autoChannels[ch]);saveSilent();}
-function finAutoSync(channel){
- state.fin.autoChannels=state.fin.autoChannels||{wx:true,ali:true,shop:true};
- if(!state.fin.autoChannels[channel]){toast(CH_NAME[channel]+'自动记账已关闭');return;}
- const pool={wx:WX_BILLS,ali:ALI_BILLS,shop:SHOP_BILLS}[channel];
- const picks=pool.slice().sort(()=>Math.random()-0.5).slice(0,2);
- picks.forEach(b=>{addFinRecord('out',b.amt,b.cat,b.m+' · '+b.item,true,b.item,channel);});
- const log=document.getElementById('finAutoLog');
- log.innerHTML=picks.map(b=>'<div class="al-row">✅ '+CH_NAME[channel]+'：支出 '+b.amt+'元｜'+(b.cat)+'｜'+b.item+'</div>').join('')+log.innerHTML;
- burst(document.getElementById('pie-m7'));
- toast('已同步 '+picks.length+' 笔'+CH_NAME[channel]+'账单 🤖');
+const CH_GUIDE={wx:'微信支付 → 微信记账本',ali:'支付宝 → 支付宝记账本',shop:'淘宝/京东等 → 我的订单'};
+function finSyncModal(ch){
+ showModal('同步'+CH_NAME[ch]+'账单',[
+  {type:'html',html:'<div class="sync-guide">📋 操作指引：打开 '+CH_GUIDE[ch]+' → 复制记账本分享链接，粘贴到下方。<br><span class="sync-warn">⚠️ 纯本地应用无法直连平台，以下按记账本格式生成<b>示例账单</b>（与真实记账本条目一一对应，可手动改/删）。需要真实数据请手动记账或从备份恢复。</span></div>'},
+  {label:'记账本分享链接（可留空直接生成示例）',type:'text',id:'link',ph:'粘贴链接，或留空用示例数据'}
+ ],v=>{finSimSync(ch,v.link||'');});
 }
+function finSimSync(ch,link){
+ bobSay('正在解析账单…');try{bobDance();}catch(e){}
+ toast('小猫正在解析'+CH_NAME[ch]+'账单…');
+ setTimeout(()=>{
+  state.fin.autoChannels=state.fin.autoChannels||{wx:true,ali:true,shop:true};
+  if(!state.fin.autoChannels[ch]){toast(CH_NAME[ch]+'自动记账已关闭');return;}
+  const pool={wx:WX_BILLS,ali:ALI_BILLS,shop:SHOP_BILLS}[ch];
+  const picks=pool.slice().sort(()=>Math.random()-0.5).slice(0,3);
+  picks.forEach(b=>{addFinRecord('out',b.amt,b.cat,b.m+' · '+b.item,true,b.item,ch);});
+  const log=document.getElementById('finAutoLog');
+  if(log)log.innerHTML=picks.map(b=>'<div class="al-row">✅ '+CH_NAME[ch]+(link?('（来自链接）'):'（示例）')+'：支出 '+b.amt+'元｜'+(b.cat)+'｜'+b.item+'</div>').join('')+log.innerHTML;
+  burst(document.getElementById('pie-m7'));burstFW();
+  toast('已同步 '+picks.length+' 笔'+CH_NAME[ch]+'账单 🤖（示例数据）');
+  if(document.getElementById('allBills').classList.contains('show'))abRender();
+ },1200);
+}
+function xbEnc(str,pwd){const e=new TextEncoder().encode(str);const p=new TextEncoder().encode(pwd);let s='';for(let i=0;i<e.length;i++)s+=String.fromCharCode(e[i]^p[i%p.length]);return btoa(s);}
+function xbDec(b64,pwd){const bin=atob(b64);const p=new TextEncoder().encode(pwd);const o=[];for(let i=0;i<bin.length;i++)o.push(bin.charCodeAt(i)^p[i%p.length]);return new TextDecoder().decode(new Uint8Array(o));}
 function finExport(){
- const data=JSON.stringify(state.fin.records,null,2);
- const blob=new Blob([data],{type:'application/json'});
- const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='账单备份_'+todayStr()+'.json';a.click();
- toast('已导出 '+state.fin.records.length+' 条账单 📤');
+ showModal('导出账单备份',[
+  {type:'html',html:'将导出微信/支付宝/电商/手动/周期全部记账数据为 JSON，保存到<b>本机</b>，不会自动上传云端。'},
+  {label:'备份文件密码（可选，留空不加密）',type:'text',id:'pwd',ph:'设置后他人无密码无法读取'}
+ ],v=>{
+  const pwd=(v.pwd||'').trim();
+  const payload=JSON.stringify(state.fin.records,null,2);
+  const out=pwd?JSON.stringify({_enc:true,_v:1,data:xbEnc(payload,pwd)}):payload;
+  const blob=new Blob([out],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='账单备份_'+todayStr()+'.json';a.click();
+  toast('已导出 '+state.fin.records.length+' 条账单 📤'+(pwd?'（已加密）':''));
+ });
+}
+function finImport(){const inp=document.getElementById('finImportFile');if(inp)inp.click();}
+async function finImportFile(e){
+ const f=e.target.files[0];e.target.value='';
+ if(!f)return;
+ let text;try{text=await f.text();}catch(err){toast('读取文件失败 ❌');return;}
+ let recs;
+ try{
+  const obj=JSON.parse(text);
+  if(obj&&obj._enc===true){
+   const pwd=await new Promise(res=>{showModal('备份文件已加密',[{type:'html',html:'此备份已加密，请输入密码才能导入。'},{label:'密码',type:'text',id:'pwd',ph:'备份时设置的密码'}],v=>res(v.pwd||''));});
+   if(!pwd){toast('已取消导入');return;}
+   try{recs=JSON.parse(xbDec(obj.data,pwd));}catch(err){toast('密码错误或文件损坏 ❌');return;}
+  }else if(Array.isArray(obj)){recs=obj;}
+  else if(obj&&Array.isArray(obj.records)){recs=obj.records;}
+  else{toast('不是有效的账单备份文件 ❌');return;}
+ }catch(err){toast('文件解析失败 ❌');return;}
+ if(!Array.isArray(recs)){toast('备份内容无效 ❌');return;}
+ showModal('导入模式',[
+  {type:'html',html:'检测到 <b>'+recs.length+'</b> 条账单。选择导入方式：'},
+  {label:'方式',type:'seg',id:'mode',opts:['追加导入','覆盖导入'],def:'追加导入'}
+ ],v=>{
+  if(v.mode==='覆盖导入'){state.fin.records=recs.slice();}
+  else{const ids=new Set((state.fin.records||[]).map(r=>r.id));recs.forEach(r=>{if(r.id&&ids.has(r.id))return;r.id=r.id||uid();state.fin.records.push(r);});}
+  state._cycleApplied=state._cycleApplied||{};
+  saveSilent();renderFinance();if(document.getElementById('allBills').classList.contains('show'))abRender();
+  toast('已导入账单 ✅');
+ });
+}
+function finClearAll(){
+ showModal('清除全部账单数据？',[
+  {type:'html',html:'⚠️ 将永久删除本机所有同步/手动/周期记账记录，且<b>无法恢复</b>（除非你有备份文件）。'},
+  {label:'确认输入「清除」',type:'text',id:'ok',ph:'输入 清除 以确认'}
+ ],v=>{
+  if((v.ok||'').trim()!=='清除'){toast('输入不一致，已取消');return;}
+  state.fin.records=[];state._cycleApplied={};saveSilent();renderFinance();if(document.getElementById('allBills').classList.contains('show'))abRender();toast('已全部清除 🧹');
+ });
 }
 function renderFinRank(){
  const box=document.getElementById('finRank');if(!box)return;
@@ -4711,6 +4786,7 @@ function abRender(){
       if(!list.length)html+='<div class="ab-empty">暂无记录</div>';
       else{html+='<div class="ab-rows">'+list.slice().reverse().map(r=>{const col=r.type==='in'?'#2e9e57':'#d23b3b';const txt=r.note?r.note:(r.item||'—');return '<div class="ab-row"><label class="ab-ck"><input type="checkbox" data-id="'+esc(r.id)+'"'+(abSel[r.id]?' checked':'')+' onchange="abCheck(this)"></label><div class="ab-rinfo"><div class="ab-r1"><span class="ab-date">'+esc(r.date||'')+'</span><span class="ab-cat">'+esc(r.category||'')+'</span></div><div class="ab-r2">'+esc(txt)+'</div></div><div class="ab-amt" style="color:'+col+'">'+(r.type==='in'?'+':'-')+Math.round(r.amount*100)/100+'元</div><div class="ab-ops"><button onclick="abEditRec(\''+esc(r.id)+'\')">✏️</button><button class="ab-del" onclick="abDelRec(\''+esc(r.id)+'\')">🗑</button></div></div>';}).join('')+'</div>';}
     }
+    html+='<div class="ab-sub">本渠道合计：支出 '+Math.round(out)+'元 · 收入 '+Math.round(inc)+'元</div>';
     html+='</div>';
   });
   body.innerHTML=html;
