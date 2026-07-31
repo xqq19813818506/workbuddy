@@ -667,6 +667,7 @@
   .doc-search{display:flex;align-items:center;gap:6px;background:#fff;border-radius:99px;padding:8px 12px;border:2px solid #ffd9ee;margin-bottom:10px}
   .doc-search input{flex:1;border:none;outline:none;font-family:inherit;font-size:13px;background:transparent}
   .doc-new{width:100%;border:none;border-radius:16px;padding:13px;font-size:14px;font-weight:800;color:#fff;background:linear-gradient(135deg,#ff8ac0,#ff5a8a);box-shadow:0 6px 16px rgba(255,120,170,.35);cursor:pointer;margin-bottom:10px}
+  .doc-new.doc-auto{background:linear-gradient(135deg,#8ab6ff,#6a7bff);box-shadow:0 6px 16px rgba(110,130,255,.35)}
   .doc-new:active{transform:scale(.98)}
   .doc-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
   .doc-folder{font-size:11px;font-weight:700;padding:5px 11px;border-radius:99px;background:#fff;border:1.5px solid #ffd9ee;color:#b65a94;cursor:pointer}
@@ -1804,6 +1805,7 @@
       <div class="doc-head"><h2>📒 文档笔记工坊</h2></div>
       <div class="doc-search"><span>🔍</span><input id="docSearch" placeholder="搜索文档名称 / 内容…" oninput="docSearch(this.value)"></div>
       <button class="doc-new" onclick="docNew()">＋ 新建空白文档</button>
+      <button class="doc-new doc-auto" onclick="docAutoImport()">📥 一键自动存（导入我的笔记）</button>
       <div class="doc-filters" id="docFolders"></div>
       <div class="doc-sort">排序：<b id="docSortLabel" onclick="docCycleSort()">按修改时间 ⇅</b></div>
       <div class="doc-list" id="docList"></div>
@@ -2715,6 +2717,30 @@ async function docInsertVideo(src){
   state.docs.list.unshift(d);saveSilent();
   toast('📄 已插入文档');
   if(confirm('已把视频插入到文档「'+d.title+'」，要现在打开吗？')){switchModule('m12');docOpen(d.id);}
+}
+/* 一键自动存：把其它模块的现有笔记批量、去重地导入文档工坊 */
+function docAutoImport(){
+  docEnsure();
+  let n=0,skip=0;
+  const fp=h=>docPlain(h).replace(/\s/g,'').slice(0,24);
+  const has=(title,html)=>state.docs.list.some(d=>d.title===title&&(d.blocks||[]).some(b=>b.type==='text'&&fp(b.html)===fp(html)));
+  const add=(title,html,folder)=>{if(has(title,html)){skip++;return;}state.docs.list.unshift({id:uid(),title,folder:folder||'日常记录',tags:[],created:Date.now(),modified:Date.now(),tpl:'blank',blocks:[{id:uid(),type:'text',html}]});n++;};
+  (state.inspire||[]).forEach(s=>{const t=(s.text||'').trim();if(t)add('💭 '+t.slice(0,14),'<h3>💭 灵感</h3><p>'+esc(t)+'</p>','日常记录');});
+  ((state.movie&&state.movie.notes)||[]).forEach(nt=>{const t=(nt.text||'').trim();if(!t)return;add('🎬 '+(nt.work||'观影笔记'),'<h3>📝 观影笔记</h3>'+(nt.work?('<p><b>作品：</b>'+esc(nt.work)+'</p>'):'')+'<p>'+esc(t)+'</p>','日常记录');});
+  ['free','situation','retro','day'].forEach(mode=>{
+    const msgs=(state.buddyChat&&state.buddyChat[mode])||[];if(!msgs.length)return;
+    let html='<h3>🐱 表达训练 · '+mode+'</h3>';
+    msgs.forEach(m=>{html+='<p><b>'+(m.role==='bot'?'小橘猫':'我')+'：</b>'+(m.text||'').replace(/\n/g,'<br>')+'</p>';});
+    add('🗣️ 表达训练-'+mode,html,'学习笔记');
+  });
+  const fav=state.travelFav||{};
+  Object.keys(fav).forEach(k=>{if(!fav[k])return;const ci=k.split('|');const city=ci[0],name=ci[1];const d=trData(city);if(!d)return;const s=(d.spots||[]).find(x=>x.n===name);if(s)add('⭐ 收藏·'+city+'·'+name,'<h3>⭐ '+esc(name)+'</h3><p><b>'+esc(city)+' · 收藏景点</b></p><p>门票：'+esc(s.ticket||'')+'</p><p>建议游玩：'+esc(s.dur||'')+'</p><p>亮点：'+esc(s.highlight||'')+'</p>','旅游资料');});
+  (state.trips||[]).forEach(t=>{if(!t||!t.name)return;let html='<h3>🧳 '+esc(t.name)+'</h3><p>共 '+(t.days||1)+' 天</p>'+(t.items||[]).map((it,i)=>'<p>'+(i+1)+'. '+esc(it.t||'')+(it.cost?('（'+it.cost+'元）'):'')+'</p>').join('');add('🧳 行程·'+t.name,html,'旅游资料');});
+  if(n>0){saveSilent();docRenderHome();docCatJump();burstFW();}
+  let msg=n>0?('📥 已自动存入 '+n+' 篇文档'):'没有可导入的新内容';
+  if(skip)msg+='（跳过 '+skip+' 篇重复）';
+  if(state.videoEnh&&state.videoEnh.history&&state.videoEnh.history.length)msg+='；视频请在各段点「存到文档」';
+  toast(msg);
 }
 (function(){
   const m12el=document.getElementById('m12');
