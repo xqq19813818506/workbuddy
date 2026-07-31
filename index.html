@@ -304,6 +304,87 @@
   .pomo-time{font-size:26px;font-weight:800;color:#b04860;font-variant-numeric:tabular-nums}
   .pomo-btn{background:#e06090;color:#fff;border:none;padding:7px 18px;border-radius:14px;font-size:12px;font-weight:700;cursor:pointer}
   .pomo-btn:active{transform:scale(.96)}
+  .pomo-tip{font-size:10px;color:#a89bbd;text-align:center;line-height:1.5;margin-top:2px}
+  /* ===== 专注力中心 Focus Center ===== */
+  #focusCenter{position:fixed;inset:0;z-index:60;background:linear-gradient(160deg,#efe8fb,#f6f0fa);display:none;flex-direction:column;overflow-y:auto}
+  #focusCenter.show{display:flex}
+  .fc-top{display:flex;align-items:center;gap:8px;padding:14px 16px 6px}
+  .fc-title{font-size:16px;font-weight:900;color:#6b4ca8}
+  .fc-close{margin-left:auto;background:#e6dcf5;color:#6b4ca8;border:none;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer}
+  .fc-tabs{display:flex;gap:6px;padding:4px 16px 10px}
+  .fc-tab{flex:1;background:#e9e0f7;color:#7a5cb0;border:none;border-radius:12px;padding:7px;font-size:12px;font-weight:700;cursor:pointer}
+  .fc-tab.on{background:#9d7fdc;color:#fff}
+  .fc-body{padding:0 16px 24px;flex:1}
+  .fc-sec{background:#fff;border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 3px 12px rgba(120,90,180,.08)}
+  .fc-sec-h{font-size:13px;font-weight:900;color:#6b4ca8;margin-bottom:9px;display:flex;align-items:center;gap:6px}
+  .fc-mode-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+  .fc-mode{flex:0 0 30%;min-width:104px;background:linear-gradient(160deg,#f6f1ff,#fff);border:2px solid #ece2fb;border-radius:16px;padding:10px 9px;cursor:pointer;transition:all .18s}
+  .fc-mode.on{border-color:#9d7fdc;background:linear-gradient(160deg,#efe6ff,#fff);box-shadow:0 4px 14px rgba(157,127,220,.25)}
+  .fc-mode .mi{font-size:26px}
+  .fc-mode .mn{font-size:12.5px;font-weight:800;color:#4a3a6a}
+  .fc-mode .md{font-size:9.5px;color:#9083a8;line-height:1.4;margin-top:3px}
+  .fc-mode .mt{font-size:9.5px;color:#b08ad0;margin-top:4px}
+  .fc-noise-row{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-noise{flex:1;min-width:64px;background:#faf6ff;border:1.5px solid #ece2fb;border-radius:14px;padding:9px 6px;text-align:center;cursor:pointer;font-size:11px;color:#7a5cb0;font-weight:700}
+  .fc-noise.on{background:#9d7fdc;color:#fff;border-color:#9d7fdc}
+  .fc-vol{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:11px;color:#7a5cb0}
+  .fc-vol input{flex:1}
+  .fc-go{width:100%;background:linear-gradient(135deg,#a889e8,#8c63d6);color:#fff;border:none;border-radius:16px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;margin-top:4px}
+  .fc-go:active{transform:scale(.98)}
+  .fc-edit{display:flex;gap:7px;margin-top:9px}
+  .fc-edit input{flex:1;min-width:0;border:1.5px solid #e3d8f5;border-radius:10px;padding:6px 8px;font-size:11px}
+  /* 沉浸式专注页 */
+  #focusImmerse{position:fixed;inset:0;z-index:70;background:linear-gradient(170deg,#3a2a63,#5b3f9e);display:none;flex-direction:column;align-items:center;justify-content:center;color:#fff}
+  #focusImmerse.show{display:flex}
+  .fi-cat{font-size:14px;color:#d9caf7;margin-bottom:6px}
+  .fi-time{font-size:78px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:2px;text-shadow:0 4px 20px rgba(0,0,0,.3)}
+  .fi-bar{width:78%;height:8px;background:rgba(255,255,255,.2);border-radius:99px;margin:16px 0;overflow:hidden}
+  .fi-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffd28a,#ff9ec4);transition:width 1s linear}
+  .fi-buddy{font-size:54px;margin-top:6px;animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  .fi-btns{display:flex;gap:14px;margin-top:22px}
+  .fi-btn{background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:14px;padding:10px 22px;font-size:14px;font-weight:700;cursor:pointer}
+  .fi-btn.primary{background:#ff9ec4;border-color:#ff9ec4;color:#5a2a44}
+  .fi-thoughts{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.16);border:none;color:#fff;border-radius:50%;width:40px;height:40px;font-size:18px;cursor:pointer}
+  .fi-drawer{position:absolute;top:0;right:0;height:100%;width:80%;max-width:320px;background:#fff;color:#3d3a3a;transform:translateX(100%);transition:transform .3s;padding:16px;overflow-y:auto;z-index:2}
+  .fi-drawer.show{transform:translateX(0)}
+  .fi-drawer h4{margin:0 0 8px;color:#6b4ca8}
+  .fi-drawer textarea{width:100%;height:80px;border:1.5px solid #e3d8f5;border-radius:10px;padding:8px;font-size:12px;resize:none}
+  .fi-thought{background:#f6f1ff;border-radius:10px;padding:7px 9px;font-size:11px;margin-bottom:6px;color:#5a4a7a}
+  .fi-flip{position:absolute;bottom:0;left:0;width:100%;background:rgba(255,255,255,.95);color:#3d3a3a;padding:10px 12px;border-top-left-radius:18px;border-top-right-radius:18px}
+  .fi-flip.on{display:block}
+  .fi-flip .ffc{background:#faf6ff;border:1.5px solid #ece2fb;border-radius:14px;padding:10px;min-height:54px;font-size:12px;line-height:1.5}
+  .fi-flip .ffnav{display:flex;gap:8px;margin-top:8px}
+  .fi-flip .ffnav button{flex:1;background:#efe6ff;border:none;border-radius:10px;padding:7px;font-size:11px;font-weight:700;color:#6b4ca8;cursor:pointer}
+  .fi-quit-tip{position:absolute;inset:0;z-index:3;background:rgba(40,25,70,.82);display:none;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px}
+  .fi-quit-tip.show{display:flex}
+  .fi-quit-tip .fk{font-size:60px;margin-bottom:10px}
+  .fi-quit-tip p{font-size:14px;line-height:1.6;margin-bottom:18px}
+  .fi-quit-tip .qb{background:#ff9ec4;color:#5a2a44;border:none;border-radius:14px;padding:11px 26px;font-size:14px;font-weight:800;cursor:pointer;margin:6px}
+  .fi-quit-tip .qb.cancel{background:rgba(255,255,255,.2);color:#fff}
+  /* 数据复盘 */
+  .fc-stats-top{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .fc-stat{background:linear-gradient(160deg,#f6f1ff,#fff);border-radius:14px;padding:11px;text-align:center}
+  .fc-stat b{display:block;font-size:22px;color:#7a4fc0;font-weight:800}
+  .fc-stat span{font-size:10px;color:#9083a8}
+  .fc-chart{margin-top:8px}
+  .fc-chart .bar-row{display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:10px;color:#7a5cb0}
+  .fc-chart .bar-row .lab{width:34px;text-align:right;flex:0 0 34px}
+  .fc-chart .bar-row .bar{flex:1;height:11px;background:#efe6ff;border-radius:99px;overflow:hidden}
+  .fc-chart .bar-row .bar i{display:block;height:100%;background:linear-gradient(90deg,#a889e8,#ff9ec4)}
+  .fc-chart .bar-row .val{width:30px;flex:0 0 30px;color:#6b4ca8;font-weight:700}
+  .fc-seg{display:flex;gap:5px;margin-bottom:8px}
+  .fc-seg button{flex:1;background:#efe6ff;border:none;border-radius:10px;padding:6px;font-size:11px;font-weight:700;color:#7a5cb0;cursor:pointer}
+  .fc-seg button.on{background:#9d7fdc;color:#fff}
+  /* 徽章墙 */
+  .fc-badges{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .fc-badge{background:linear-gradient(160deg,#f6f1ff,#fff);border:2px solid #ece2fb;border-radius:16px;padding:12px;text-align:center;position:relative}
+  .fc-badge.locked{filter:grayscale(1);opacity:.45}
+  .fc-badge .bi{font-size:38px}
+  .fc-badge .bn{font-size:12px;font-weight:800;color:#4a3a6a;margin-top:4px}
+  .fc-badge .bd{font-size:9.5px;color:#9083a8;margin-top:3px;line-height:1.4}
+  .fc-badge .lock{position:absolute;top:8px;right:10px;font-size:13px}
+  .fc-empty{text-align:center;color:#a89bbd;font-size:12px;padding:18px 0}
 
   .rec-btn{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ff8aa8,#e06090);border:none;color:#fff;font-size:26px;cursor:pointer;box-shadow:0 6px 16px rgba(224,96,144,.4);transition:all .2s}
   .rec-btn:active{transform:scale(.92)}
@@ -1219,9 +1300,10 @@
   </div>
   <div id="m6DiseaseLib"></div>
   <div class="pomo">
-    <div class="pomo-tomato eye" id="pomo-tomato" onclick="togglePomodoro()">🍅</div>
-    <div class="pomo-time" id="pomo-time">25:00</div>
-    <button class="pomo-btn" onclick="togglePomodoro()">▶ 开始专注</button>
+    <div class="pomo-tomato eye" id="pomo-tomato" onclick="openFocusCenter()">🍅</div>
+    <div class="pomo-time" id="pomo-time" onclick="openFocusCenter()">25:00</div>
+    <button class="pomo-btn" onclick="openFocusCenter()">▶ 进入专注力中心</button>
+    <div class="pomo-tip">点番茄进入「专注力中心」：选模式·开白噪音·沉浸式专注·自动打卡 ✨</div>
   </div>
   <div class="sec-title">知识点翻页卡</div>
   <div class="sec-sub">左右滑动卡片，点卡片翻面看答案</div>
@@ -1461,6 +1543,45 @@
 
 <canvas id="fx"></canvas>
 <input type="file" id="backupFile" accept="application/json,.json" style="display:none" onchange="backupDoImport(this)">
+
+<div id="focusCenter">
+  <div class="fc-top"><span class="fc-title">🍅 专注力中心</span><button class="fc-close" onclick="closeFocusCenter()">×</button></div>
+  <div class="fc-tabs">
+    <button class="fc-tab on" data-fct="home" onclick="fcTab(this,'home')">🎯 专注</button>
+    <button class="fc-tab" data-fct="stats" onclick="fcTab(this,'stats')">📊 复盘</button>
+    <button class="fc-tab" data-fct="badge" onclick="fcTab(this,'badge')">🏅 徽章</button>
+  </div>
+  <div class="fc-body" id="fcBody"></div>
+</div>
+
+<div id="focusImmerse">
+  <div class="fi-cat" id="fiCat">经典番茄 · 专注中</div>
+  <div class="fi-time" id="fiTime">25:00</div>
+  <div class="fi-bar"><i id="fiBar"></i></div>
+  <div class="fi-buddy" id="fiBuddy">🐱📖</div>
+  <div class="fi-btns">
+    <button class="fi-btn" id="fiPause" onclick="fiPauseToggle()">⏸ 暂停</button>
+    <button class="fi-btn primary" id="fiEndBtn" onclick="showQuitTip()">结束</button>
+  </div>
+  <button class="fi-thoughts" onclick="toggleThoughtDrawer()" title="记一下杂念">💭</button>
+  <div class="fi-drawer" id="fiDrawer">
+    <h4>💭 杂念速记</h4>
+    <textarea id="fiThought" placeholder="突然想到的琐事，先记下来，专注完再处理～"></textarea>
+    <button class="fc-go" style="margin-top:8px" onclick="saveThought()">保存这条</button>
+    <div id="fiThoughtList" style="margin-top:10px"></div>
+  </div>
+  <div class="fi-flip" id="fiFlip">
+    <div class="ffc" id="fiFlipCard"></div>
+    <div class="ffnav"><button onclick="fiFlipPrev()">← 上一张</button><button onclick="fiFlipFlip()">↻ 翻面</button><button onclick="fiFlipNext()">下一张 →</button></div>
+  </div>
+  <div class="fi-quit-tip" id="fiQuitTip">
+    <div class="fk">😿</div>
+    <p>再坚持一下就完成啦，<br>确定现在要离开吗？</p>
+    <button class="qb cancel" onclick="closeQuitTip()">再坚持会儿</button>
+    <button class="qb" onclick="fiEnd(true)">确定离开</button>
+  </div>
+</div>
+
 </body>
 <script>
 
@@ -1478,6 +1599,13 @@ function defaultState(){
     quizDone:{},
     circles:{m5:[false,false,false]},
     pomoMin:0,
+    focus:{
+      custom:{id:'custom',name:'自定义模式',focus:30,short:5,longEvery:4,long:15,note:'适配个人节奏',icon:'⚙️'},
+      sessions:[],
+      badges:{},
+      goal:2,
+      noise:'off', vol:0.5, zen:false
+    },
     recCount:0,
     topicCount:0,
     spots:{},
@@ -1680,6 +1808,7 @@ function renderCal(mod){
     let badges='';
     if(rec&&rec.travel)badges+='<span class="cdot tr" style="background:#d6f0e6;color:#2f9e74">'+rec.travel+'</span>';
     if(rec&&rec.diet){badges+='<span class="cdot '+(rec.diet==='over'?'over':'ok')+'" style="background:'+(rec.diet==='over'?'#ffd6d6':'#d8f5e6')+';color:'+(rec.diet==='over'?'#c02a2a':'#2f9e74')+'">'+(rec.diet==='over'?'糖超':'✓')+'</span>';}
+    if(rec&&rec.focus){badges+='<span class="cdot" style="background:#ffe0ec;color:#c04a7e">🍅'+rec.focus+'</span>';}
     h+='<div class="'+cls+(hidden?' hide':'')+'" '+attrs+'>'+d+starHtml+badges+'</div>';
   }
   grid.innerHTML=h;
@@ -1692,6 +1821,7 @@ function calClick(mod,ds){const rec=state.checkins[ds];let lines='';
   if(mod==='m7'){const recs=(state.fin.records||[]).filter(r=>r.date===ds);lines+='<div style="margin-top:6px">'+recs.map(r=>'<div class="sum-row"><span class="k">'+(r.type==='in'?'收入':'支出')+' '+esc(r.category||'')+'</span><span class="v">'+(r.type==='in'?'+':'-')+r.amount+'</span></div>').join('')+'</div>';}
   if(mod==='m5'&&rec){if(rec.diet)lines+='<div style="margin-top:6px"><div class="sum-row"><span class="k">🍬 饮食</span><span class="v">'+(rec.diet==='over'?'糖分/热量超标':'达标 ✓')+'</span></div></div>';}
   if((mod==='m5'||mod==='m8')&&rec&&rec.travel)lines+='<div style="margin-top:6px"><div class="sum-row"><span class="k">🚗 出行方式</span><span class="v">'+rec.travel+(rec.travel==='🚌'?' 跟团游':' 自驾游')+'</span></div></div>';
+  if(rec&&rec.focus){const fs=(state.focus.sessions||[]).filter(x=>x.date===ds&&!x.voided);const dist=fs.reduce((a,b)=>a+(b.dist||0),0);lines+='<div style="margin-top:6px"><div class="sum-row"><span class="k">🍅 专注</span><span class="v">'+rec.focus+' 个番茄钟</span></div></div>'+(dist?'<div class="sum-row"><span class="k">😿 分心</span><span class="v">'+dist+' 次</span></div>':'');}
   showModal(ds+' 打卡明细',[{type:'html',html:'<div style="font-size:11px">'+lines+'</div>'}],null,true);
 }
 
@@ -2031,6 +2161,165 @@ function renderFlip(mod){
 }
 function addFlip(){const mod=curMod==='m6'?'m6':'m9';showModal('加一张卡',[{label:'正面标题',type:'text',id:'f',ph:'例如 重点知识'},{label:'背面内容',type:'text',id:'b',ph:'例如 要点说明'}],v=>{state.flips[mod]=state.flips[mod]||[];state.flips[mod].push({f:v.f,b:v.b});renderFlip(mod);saveSilent();});}
 function delFlip(mod,i){state.flips[mod].splice(i,1);renderFlip(mod);saveSilent();}
+
+/* ===== 专注力中心 Focus Center ===== */
+const FOCUS_PRESETS=[
+  {id:'classic',name:'经典番茄',focus:25,short:5,longEvery:4,long:15,note:'日常背诵、知识点记忆',icon:'🍅'},
+  {id:'deep',name:'深度专注',focus:45,short:10,longEvery:2,long:20,note:'整理笔记、深度学习',icon:'🧠'},
+  {id:'quiz',name:'快速刷题',focus:15,short:3,longEvery:6,long:10,note:'刷选择题、速记卡片',icon:'⚡'}
+];
+const NOISE_ICON={rain:'🌧️',forest:'🌲',cafe:'☕',fan:'🌀'};
+const NOISE_NAME={rain:'绵密细雨',forest:'森林溪流',cafe:'咖啡馆',fan:'轻柔风扇'};
+const FOCUS_BADGES=[
+  {id:'cat7',icon:'🐱',name:'自律小猫',desc:'连续7天专注打卡'},
+  {id:'master',icon:'🏆',name:'专注达人',desc:'累计专注满1000分钟'},
+  {id:'warrior',icon:'⚡',name:'高效战神',desc:'单日完成6个番茄钟'},
+  {id:'flow',icon:'🌊',name:'心流时刻',desc:'零分心完成深度专注'}
+];
+function presetById(id){const f=state.focus;if(id==='custom')return f.custom;return FOCUS_PRESETS.find(p=>p.id===id)||FOCUS_PRESETS[0];}
+function dateStr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function dayFocusMin(ds){return (state.focus.sessions||[]).filter(x=>x.date===ds&&!x.voided).reduce((a,b)=>a+(b.focusMin||0),0);}
+function focusStreak(){let s=0;const d=new Date();for(;;){const ds=dateStr(d);const done=(state.focus.sessions||[]).some(x=>x.date===ds&&!x.voided);if(!done)break;s++;d.setDate(d.getDate()-1);if(s>400)break;}return s;}
+function totalFocusMin(){return (state.focus.sessions||[]).filter(x=>!x.voided).reduce((a,b)=>a+(b.focusMin||0),0);}
+
+/* 白噪音引擎：Web Audio 合成（无外部音频文件） */
+let focusAudio=null,focusVisBound=false;
+function focusAudioStart(type,vol){
+  focusAudioStop();
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;const ctx=new AC();
+    const bufferSize=2*ctx.sampleRate;const noiseBuf=ctx.createBuffer(1,bufferSize,ctx.sampleRate);
+    const out=noiseBuf.getChannelData(0);
+    for(let i=0;i<bufferSize;i++)out[i]=Math.random()*2-1;
+    const src=ctx.createBufferSource();src.buffer=noiseBuf;src.loop=true;
+    const filt=ctx.createBiquadFilter();const g=ctx.createGain();g.gain.value=vol;
+    if(type==='rain'){filt.type='bandpass';filt.frequency.value=1100;filt.Q.value=0.5;}
+    else if(type==='forest'){filt.type='lowpass';filt.frequency.value=750;}
+    else if(type==='cafe'){filt.type='lowpass';filt.frequency.value=480;}
+    else{filt.type='lowpass';filt.frequency.value=320;}
+    src.connect(filt);filt.connect(g);g.connect(ctx.destination);
+    if(type==='forest'||type==='fan'){const lfo=ctx.createOscillator();lfo.frequency.value=0.18;const lg=ctx.createGain();lg.gain.value=180;lfo.connect(lg);lg.connect(filt.frequency);lfo.start();}
+    src.start();
+    focusAudio={ctx:ctx,src:src,g:g};
+  }catch(e){}
+}
+function focusAudioStop(){if(focusAudio){try{focusAudio.src.stop();focusAudio.ctx.close();}catch(e){}focusAudio=null;}}
+
+/* 中心页面 */
+function openFocusCenter(){document.getElementById('focusCenter').classList.add('show');fcTabReset();fcRenderHome();}
+function closeFocusCenter(){focusAudioStop();document.getElementById('focusImmerse').classList.remove('show');document.getElementById('focusCenter').classList.remove('show');}
+function fcTabReset(){document.querySelectorAll('.fc-tab').forEach((x,i)=>x.classList.toggle('on',i===0));}
+function fcTab(btn,t){document.querySelectorAll('.fc-tab').forEach(x=>x.classList.remove('on'));btn.classList.add('on');if(t==='home')fcRenderHome();else if(t==='stats')fcRenderStats('week');else if(t==='badge')renderBadges();}
+function fcSelectMode(id){state.focus._sel=id;fcRenderHome();}
+function fcSaveCustom(){const f=state.focus;f.custom.focus=Math.max(1,parseInt(document.getElementById('fc-c-f').value)||30);f.custom.short=Math.max(1,parseInt(document.getElementById('fc-c-s').value)||5);saveSilent();fcRenderHome();toast('自定义已保存 ⚙️');}
+function fcGoal(){const v=prompt('设置今日番茄钟目标数量：',state.focus.goal||2);const n=parseInt(v);if(n>0){state.focus.goal=n;saveSilent();fcRenderHome();}}
+function fcToggleNoise(t){const f=state.focus;if(f.noise===t){f.noise='off';focusAudioStop();}else{f.noise=t;focusAudioStart(t,f.vol);}saveSilent();fcRenderHome();}
+function fcSetVol(v){const f=state.focus;f.vol=parseFloat(v);if(focusAudio&&focusAudio.g)focusAudio.g.gain.value=f.vol;const e=document.getElementById('fc-volv');if(e)e.textContent=Math.round(f.vol*100)+'%';saveSilent();}
+function fcRenderHome(){
+  const f=state.focus;const presets=FOCUS_PRESETS.concat([f.custom]);const sel=f._sel||'classic';const mm=presetById(sel);
+  const cards=presets.map(p=>'<div class="fc-mode'+(sel===p.id?' on':'')+'" onclick="fcSelectMode(\''+p.id+'\')"><div class="mi">'+p.icon+'</div><div class="mn">'+esc(p.name)+'</div><div class="md">专注'+p.focus+'分 · 休'+p.short+'分</div><div class="mt">'+esc(p.note)+'</div></div>').join('');
+  const noises=['rain','forest','cafe','fan'].map(t=>'<div class="fc-noise'+(f.noise===t?' on':'')+'" onclick="fcToggleNoise(\''+t+'\')">'+NOISE_ICON[t]+' '+NOISE_NAME[t]+'</div>').join('');
+  const today=todayStr();const done=(f.sessions||[]).filter(x=>x.date===today&&!x.voided).length;const goal=f.goal||2;
+  document.getElementById('fcBody').innerHTML=
+    '<div class="fc-sec"><div class="fc-sec-h">🎚️ 选择专注模式</div><div class="fc-mode-row">'+cards+'</div>'
+    +'<div class="fc-edit"><input id="fc-c-f" placeholder="自定义专注(分)" value="'+f.custom.focus+'"><input id="fc-c-s" placeholder="短休(分)" value="'+f.custom.short+'"><button class="fc-go" style="flex:0 0 auto;padding:8px 12px;margin:0" onclick="fcSaveCustom()">保存</button></div></div>'
+    +'<div class="fc-sec"><div class="fc-sec-h">🌿 白噪音伴学</div><div class="fc-noise-row">'+noises+'</div><div class="fc-vol">🔊 音量 <input type="range" min="0" max="1" step="0.05" value="'+f.vol+'" oninput="fcSetVol(this.value)"> <span id="fc-volv">'+Math.round(f.vol*100)+'%</span></div></div>'
+    +'<div class="fc-sec"><div class="fc-sec-h">📌 今日目标</div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-size:11px;color:#7a5cb0;margin-bottom:4px">已完成 '+done+' / '+goal+' 个番茄钟</div><div class="fi-bar" style="width:100%;margin:0"><i style="width:'+Math.min(100,done/goal*100)+'%"></i></div></div><button class="fc-go" style="flex:0 0 auto;padding:8px 12px;margin:0" onclick="fcGoal()">设目标</button></div></div>'
+    +'<div class="fc-sec"><div class="fc-sec-h">🔒 禅定模式</div><label style="display:flex;align-items:center;gap:8px;font-size:11px;color:#7a5cb0;cursor:pointer"><input type="checkbox" '+(f.zen?'checked':'')+' onchange="state.focus.zen=this.checked;saveSilent();"> 开启后无法中途退出，切出APP会记录分心并强制提醒（适合深度沉浸）</label></div>'
+    +'<button class="fc-go" onclick="startFocus()">▶ 开始专注（'+mm.focus+'分钟）</button>'
+    +'<div style="font-size:10px;color:#a89bbd;text-align:center;margin-top:8px">💡 专注中底部可「同步背题」边计时边背；切出APP会记1次分心～</div>';
+}
+
+/* 沉浸式专注 */
+let fi=null;
+function startFocus(){
+  const f=state.focus;const mode=presetById(f._sel||'classic');
+  fi={mode:mode,total:mode.focus*60,left:mode.focus*60,run:true,paused:false,t0:Date.now(),dist:[],thoughts:[],noise:f.noise,zen:!!f.zen};
+  document.getElementById('focusCenter').classList.remove('show');
+  const im=document.getElementById('focusImmerse');im.classList.add('show');
+  document.getElementById('fiCat').textContent=mode.name+' · 专注中';
+  document.getElementById('fiBuddy').textContent='🐱📖';
+  document.getElementById('fiPause').textContent='⏸ 暂停';
+  const eb=document.getElementById('fiEndBtn');if(eb)eb.style.display=fi.zen?'none':'';
+  document.getElementById('fiFlip').style.display='block';fiFlipIdx=0;renderFiFlip();
+  updateFiTime();
+  if(f.noise!=='off')focusAudioStart(f.noise,f.vol);
+  fi._iv=setInterval(fiTick,1000);
+  if(!focusVisBound){document.addEventListener('visibilitychange',onFocusVisibility);focusVisBound=true;}
+}
+function updateFiTime(){const m=Math.floor(fi.left/60),s=fi.left%60;document.getElementById('fiTime').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');document.getElementById('fiBar').style.width=Math.round((fi.mode.focus*60-fi.left)/(fi.mode.focus*60)*100)+'%';}
+function fiTick(){if(!fi||!fi.run||fi.paused)return;fi.left--;if(fi.left<=0){fiComplete();return;}updateFiTime();}
+function fiPauseToggle(){if(!fi)return;if(fi.paused){fi.paused=false;document.getElementById('fiPause').textContent='⏸ 暂停';}else{fi.paused=true;document.getElementById('fiPause').textContent='▶ 继续';}}
+function showQuitTip(){document.getElementById('fiQuitTip').classList.add('show');}
+function closeQuitTip(){document.getElementById('fiQuitTip').classList.remove('show');}
+function fiComplete(){clearInterval(fi._iv);fiEnd(false);}
+function fiEnd(voided){
+  if(!fi)return;clearInterval(fi._iv);focusAudioStop();
+  const m=fi.mode;const f=state.focus;f.sessions=f.sessions||[];
+  if(voided){
+    f.sessions.push({date:todayStr(),t0:fi.t0,t1:Date.now(),focusMin:0,elapsedMin:Math.round((m.focus*60-fi.left)/60),mode:m.name,voided:true,dist:fi.dist.length,thoughts:fi.thoughts,noise:fi.noise});
+    saveSilent();closeQuitTip();
+    document.getElementById('focusImmerse').classList.remove('show');
+    document.getElementById('focusCenter').classList.add('show');fcTabReset();fcRenderHome();
+    fi=null;toast('已记录，但本次中断作废，不计入完成数 😿');return;
+  }
+  f.sessions.push({date:todayStr(),t0:fi.t0,t1:Date.now(),focusMin:m.focus,mode:m.name,voided:false,dist:fi.dist.length,thoughts:fi.thoughts,noise:fi.noise});
+  state.pomoMin+=m.focus;
+  const t=todayStr();state.checkins[t]=state.checkins[t]||{};state.checkins[t].focus=(state.checkins[t].focus||0)+1;
+  refreshCheckin(t);updateProgress('m6');
+  const todays=f.sessions.filter(x=>x.date===t&&!x.voided).length;const longBreak=(todays%m.longEvery===0);
+  saveSilent();closeQuitTip();
+  document.getElementById('focusImmerse').classList.remove('show');
+  document.getElementById('focusCenter').classList.add('show');fcTabReset();fcRenderHome();
+  burstFW();checkFocusBadges();
+  fi=null;toast('太棒啦！又完成一个番茄钟 ✨'+(longBreak?' 到点啦，'+m.long+'分钟长休走起～':''));
+}
+function onFocusVisibility(){if(!fi||!fi.run||fi.paused)return;if(document.hidden){fi._hiddenAt=Date.now();}else{if(fi._hiddenAt){fi.dist.push({t:Date.now(),type:'切出APP',dur:Date.now()-fi._hiddenAt});fi._hiddenAt=0;showQuitTip();}}}
+function toggleThoughtDrawer(){document.getElementById('fiDrawer').classList.toggle('show');renderThoughts();}
+function saveThought(){const v=document.getElementById('fiThought').value.trim();if(!v)return;if(fi)fi.thoughts.push({t:Date.now(),note:v});document.getElementById('fiThought').value='';renderThoughts();}
+function renderThoughts(){const box=document.getElementById('fiThoughtList');if(!fi)return;box.innerHTML=(fi.thoughts||[]).map(x=>'<div class="fi-thought">📝 '+esc(x.note)+'</div>').join('');}
+let fiFlipIdx=0;
+function renderFiFlip(){const data=(state.flips.m6&&state.flips.m6.length)?state.flips.m6:FLIP6;if(!data.length){const el=document.getElementById('fiFlip');if(el)el.style.display='none';return;}fiFlipIdx=Math.max(0,Math.min(fiFlipIdx,data.length-1));const c=data[fiFlipIdx];const back=(c.d?diseaseTpl(c.d):(c.b||'').replace(/\n/g,'<br>'));document.getElementById('fiFlipCard').innerHTML='<div style="font-weight:800;color:#6b4ca8;margin-bottom:4px">'+(fiFlipIdx+1)+'/'+data.length+' · '+esc(c.f)+'</div><div style="color:#5a4a7a">'+back+'</div>';}
+function fiFlipPrev(){fiFlipIdx--;renderFiFlip();}
+function fiFlipNext(){fiFlipIdx++;renderFiFlip();}
+function fiFlipFlip(){const el=document.getElementById('fiFlipCard');if(el)el.classList.toggle('flipped');}
+
+/* 数据复盘 */
+function fcRenderStats(seg){
+  const f=state.focus;const t=todayStr();
+  const todays=f.sessions.filter(x=>x.date===t&&!x.voided);
+  const todayPomo=todays.length;const todayMin=todays.reduce((a,b)=>a+(b.focusMin||0),0);
+  const todayDist=todays.reduce((a,b)=>a+(b.dist||0),0);const avg=todayPomo?Math.round(todayMin/todayPomo):0;
+  let labels=[],vals=[];
+  if(seg==='week'){const now=new Date();for(let i=6;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);labels.push(['日','一','二','三','四','五','六'][d.getDay()]);vals.push(dayFocusMin(dateStr(d)));}}
+  else{const now=new Date();const y=now.getFullYear(),mo=now.getMonth()+1;const days=new Date(y,mo,0).getDate();for(let d=1;d<=days;d++){labels.push(d);vals.push(dayFocusMin(y+'-'+String(mo).padStart(2,'0')+'-'+String(d).padStart(2,'0')));}}
+  const max=Math.max(1,...vals);
+  const bars=labels.map((l,i)=>'<div class="bar-row"><span class="lab">'+l+'</span><span class="bar"><i style="width:'+(vals[i]/max*100)+'%"></i></span><span class="val">'+vals[i]+'</span></div>').join('');
+  document.getElementById('fcBody').innerHTML=
+    '<div class="fc-sec"><div class="fc-sec-h">📅 今日概览</div><div class="fc-stats-top">'
+    +'<div class="fc-stat"><b>'+todayPomo+'</b><span>完成番茄钟</span></div>'
+    +'<div class="fc-stat"><b>'+todayMin+'</b><span>专注分钟</span></div>'
+    +'<div class="fc-stat"><b>'+todayDist+'</b><span>分心次数</span></div>'
+    +'<div class="fc-stat"><b>'+avg+'</b><span>平均单段(分)</span></div></div></div>'
+    +'<div class="fc-sec"><div class="fc-sec-h">📈 专注趋势</div><div class="fc-seg"><button class="'+(seg==='week'?'on':'')+'" onclick="fcRenderStats(\'week\')">近7天</button><button class="'+(seg==='month'?'on':'')+'" onclick="fcRenderStats(\'month\')">本月</button></div><div class="fc-chart">'+bars+'</div></div>';
+}
+
+/* 徽章墙 */
+function renderBadges(){
+  const b=state.focus.badges||{};
+  document.getElementById('fcBody').innerHTML='<div class="fc-sec"><div class="fc-sec-h">🏅 专注成就徽章</div><div class="fc-badges">'+FOCUS_BADGES.map(x=>'<div class="fc-badge'+(b[x.id]?'':' locked')+'"><span class="lock">'+(b[x.id]?'✨':'🔒')+'</span><div class="bi">'+x.icon+'</div><div class="bn">'+x.name+'</div><div class="bd">'+x.desc+'</div></div>').join('')+'</div><div style="font-size:10px;color:#a89bbd;margin-top:8px;text-align:center">连续打卡 '+focusStreak()+' 天 · 累计专注 '+totalFocusMin()+' 分钟</div></div>';
+}
+function checkFocusBadges(){
+  const b=state.focus.badges||{};let newB=[];
+  if(focusStreak()>=7&&!b.cat7){b.cat7=true;newB.push('自律小猫');}
+  if(totalFocusMin()>=1000&&!b.master){b.master=true;newB.push('专注达人');}
+  const t=todayStr();const todayPomo=(state.focus.sessions||[]).filter(x=>x.date===t&&!x.voided).length;
+  if(todayPomo>=6&&!b.warrior){b.warrior=true;newB.push('高效战神');}
+  const flow=(state.focus.sessions||[]).some(x=>!x.voided&&x.mode==='深度专注'&&(x.dist||0)===0);
+  if(flow&&!b.flow){b.flow=true;newB.push('心流时刻');}
+  state.focus.badges=b;saveSilent();
+  if(newB.length)setTimeout(()=>{burstFW();alert('🏅 解锁专注徽章：'+newB.join('、')+'！小猫给你撒星星～');},400);
+}
 
 /* ===== m7 录音自测 ===== */
 let recState=false,recTimer=null,recSec=0,recStream=null,recMedia=null;
