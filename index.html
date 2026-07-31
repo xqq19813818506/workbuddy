@@ -278,6 +278,7 @@
   .tr-dact .add{background:linear-gradient(135deg,#ff8fb0,#f06a92);color:#fff}
   .tr-dact .fav{background:#fff0d6;color:#9a7a10}
   .tr-dact .fav.on{background:linear-gradient(135deg,#ffd36b,#f5a623);color:#fff}
+  .tr-dact .docbtn{background:#ffe6f3;color:#d4498f}
   .tr-egg{text-align:center;color:#a98f80;font-size:11px;padding:18px 10px}
   .tr-egg .em{font-size:34px;margin-bottom:6px}
 
@@ -753,6 +754,7 @@
   .movie-cal-grid .mcal-day .dot{position:absolute;bottom:3px;width:5px;height:5px;border-radius:50%;background:#e06090}
   .movie-cal-grid .mcal-day:hover{background:#e3f1f8}
   .movie-tip{font-size:10.5px;color:#7a8a90;background:#eaf6fb;border-radius:12px;padding:9px 11px;line-height:1.6;margin-top:6px}
+  .note-item .movie-doc{display:inline-block;margin-top:7px;margin-right:6px;background:#ffe6f3;color:#d4498f;border:none;font-size:10px;font-weight:800;padding:4px 10px;border-radius:11px;cursor:pointer}
   .movie-tip b{color:#3a7a99}
   .ach-sticker{display:inline-block;background:linear-gradient(135deg,#a9d6e5,#7bb8d4);color:#fff;border-radius:16px;padding:6px 12px;font-size:12px;font-weight:800;margin:4px}
   .egg-movie{position:fixed;inset:0;background:rgba(40,70,90,.45);display:none;align-items:center;justify-content:center;z-index:80}
@@ -1783,6 +1785,7 @@
       <button onclick="veCopyLink()">🔗 复制新视频链接</button>
       <button onclick="veRestart()">🗑️ 重新处理</button>
       <button onclick="veSaveTpl()">⭐ 保存模板</button>
+      <button onclick="veSaveDoc()">📄 存到文档</button>
     </div>
 
     <div class="ve-warn">⚠️ <b>温馨提示</b>：受平台限制，部分加密分享链接无法解析，可改用【上传模式】选择本地视频；视频时长越长，处理等待越久；原始画质极度损坏时只能最大程度优化，无法无限制复原。</div>
@@ -1941,6 +1944,7 @@
     <div class="bc-tip">
       <span id="bcModeTip">自由聊天 · 想说啥都行，小猫陪你练</span>
       <button class="bc-clear" onclick="bcClear()">清空本模式</button>
+      <button class="bc-clear" style="background:#ffe6f3;color:#d4498f" onclick="bcExportDoc()">📄 存对话</button>
     </div>
   </div>
 </div>
@@ -2404,6 +2408,23 @@ function renderFB(fb){
   else{h+='<b>'+fb.words+'字 · '+fb.wordsLv+'</b>';if(fb.tags&&fb.tags.length){h+='<div class="bc-fb-tags">';fb.tags.forEach(t=>h+='<span>'+esc(t)+'</span>');h+='</div>';}}
   h+='</div>';return h;
 }
+function bcExportDoc(){
+  docEnsure();
+  const msgs=state.buddyChat[bcMode]||[];
+  if(!msgs.length){toast('还没有对话内容，先和小橘猫聊聊吧');return;}
+  const L={free:'自由聊天',situation:'情境表达',retro:'每日复盘',day:'晨间/晚间'};
+  let html='<h3>🐱 表达训练 · '+(L[bcMode]||bcMode)+'</h3>';
+  msgs.forEach(m=>{
+    html+='<p><b>'+(m.role==='bot'?'小橘猫':'我')+'：</b>'+(m.text||'').replace(/\n/g,'<br>')+'</p>';
+    if(m.fb){
+      if(m.fb.analysis)html+='<p style="color:#7a5cff">🎯 结构清晰度 '+m.fb.analysis.score+'/4 · '+m.fb.words+'字</p>';
+      else if(m.fb.ok!==undefined)html+='<p style="color:#7a5cff">📝 复盘第 '+(m.fb.n||1)+' 条 · '+(m.fb.ok?'✅ 达标（'+m.fb.words+'字）':'⚠️ 待补充（'+m.fb.words+'字）')+'</p>';
+      else html+='<p style="color:#7a5cff">✍️ '+m.fb.words+'字 · '+m.fb.wordsLv+'</p>';
+    }
+  });
+  html+='<p style="color:#999">来自 Work Buddy 表达训练 · '+docFmtTime(Date.now())+'</p>';
+  exportToDoc('表达训练-'+bcMode, html);
+}
 
 /* ===== m11 视频高清增强 ===== */
 const VE_SHARP={light:1.04, std:1.12, strong:1.22, ultra:1.35};
@@ -2541,6 +2562,7 @@ function veCopyLink(){
 }
 function veRestart(){veOutBlob=null;veOutSrc=null;document.getElementById('veDone').classList.remove('show');document.getElementById('veProg').classList.remove('show');document.getElementById('veBar').style.width='0%';veStatus('待处理');toast('已重置，调整参数再处理吧');}
 function veSaveTpl(){const name=prompt('给这个模板起个名字：','我的高清预设');if(!name)return;state.videoEnh.templates.push({name,params:veParams()});saveSilent();toast('⭐ 已保存模板：'+name);}
+function veSaveDoc(){const src=veOutBlob?URL.createObjectURL(veOutBlob):veOutSrc;if(!src){toast('暂无可保存的增强视频，先去处理一段吧');return;}docInsertVideo(src);}
 function m10ToVideoEnhance(){switchModule('m11');toast('粘贴或上传片源，Buddy 帮你一键高清增强～');}
 (function(){
   const fileEl=document.getElementById('veFile');
@@ -2682,9 +2704,14 @@ function exportToDoc(title,html){
   toast('📒 已存入「文档笔记工坊」');
   if(confirm('已生成文档「'+(title||'导入文档')+'」，要现在打开编辑吗？')){switchModule('m12');docOpen(d.id);}
 }
-function docInsertVideo(src){
+async function docInsertVideo(src){
   docEnsure();
-  const d={id:uid(),title:'增强视频 '+docFmtTime(Date.now()),folder:'未分类',tags:[],created:Date.now(),modified:Date.now(),tpl:'blank',blocks:[{id:uid(),type:'text',html:'🎬 视频高清增强结果：'}, {id:uid(),type:'video',url:src}]};
+  let mediaId=null,url=null;
+  if(src&&String(src).indexOf('blob:')===0){
+    try{const blob=await (await fetch(src)).blob();mediaId=uid();await docDBput(mediaId,blob);}
+    catch(e){url=src;}
+  } else { url=src; }
+  const d={id:uid(),title:'增强视频 '+docFmtTime(Date.now()),folder:'未分类',tags:[],created:Date.now(),modified:Date.now(),tpl:'blank',blocks:[{id:uid(),type:'text',html:'🎬 视频高清增强结果：'}, {id:uid(),type:'video',url:url, media:mediaId}]};
   state.docs.list.unshift(d);saveSilent();
   toast('📄 已插入文档');
   if(confirm('已把视频插入到文档「'+d.title+'」，要现在打开吗？')){switchModule('m12');docOpen(d.id);}
@@ -2946,7 +2973,7 @@ function exportSummary(mk){
 /* ===== m3 灵感 ===== */
 function renderInspire(){
   const box=document.getElementById('inspire-list');if(!box)return;
-  box.innerHTML=(state.inspire||[]).map((s,i)=>'<div class="bubble">💭 '+(s.text||'')+'<button class="del" style="float:right;display:inline-block;width:20px;height:20px;border-radius:50%;background:#ffe0e0;color:#a02a2a;border:none" onclick="delInspire('+i+')">×</button></div>').join('');
+  box.innerHTML=(state.inspire||[]).map((s,i)=>'<div class="bubble">💭 '+(s.text||'')+'<span style="float:right"><button class="del" style="display:inline-block;width:20px;height:20px;border-radius:50%;background:#ffe0e0;color:#a02a2a;border:none" onclick="delInspire('+i+')">×</button> <button class="del" style="display:inline-block;width:auto;padding:0 7px;height:20px;border-radius:99px;background:#ffe6f3;color:#d4498f;border:none;font-size:11px;font-weight:700" onclick="exportToDoc(\'每日灵感\',\''+esc(s.text||'').replace(/'/g,'')+'\')">📄 存文档</button></span></div>').join('');
 }
 function addInspire(){
   const ta=document.getElementById('inspire-input');const v=ta.value.trim();if(!v)return;
@@ -3563,7 +3590,8 @@ function trOpenDetail(kind,idx){
   else{const f=d.foods[idx.fi];const it=f.items[idx.ii];title=it.n;sub=f.cat;rows=[['💰 人均',it.price],['📍 推荐区域',it.area],['⚠️ 避坑提示',it.tip]];}
   const cost=kind==='spots'?(function(){const m=(d.spots[idx].ticket||'').match(/(\d+)/);return m?+m[1]:0;})():0;
   const fav=state.spotFav&&state.spotFav[curCity+'|'+title];
-  const html='<div class="tr-detail"><h3>'+d.ic+' '+esc(title)+'</h3><span class="dsub">'+esc(sub)+'</span>'+rows.map(r=>'<div class="tr-drow"><div class="dl">'+r[0]+'</div><div class="dv">'+esc(r[1])+'</div></div>').join('')+'<div class="tr-dact"><button class="add" onclick="trAddToTrip(\''+kind+'\','+idx+')">＋ 加入行程'+(cost?'（约'+cost+'元）':'')+'</button><button class="fav'+(fav?' on':'')+'" onclick="trFavSpotFromDetail(\''+esc(title)+'\')">'+(fav?'⭐ 已收藏':'☆ 收藏')+'</button></div></div>';
+  const docHtml='<h3>'+esc(title)+'</h3><p><b>'+esc(sub)+'</b></p>'+rows.map(r=>'<p><b>'+esc(r[0])+'：</b>'+esc(r[1])+'</p>').join('')+'<p>来自 Work Buddy 旅游攻略 · '+esc(curCity)+'</p>';
+  const html='<div class="tr-detail"><h3>'+d.ic+' '+esc(title)+'</h3><span class="dsub">'+esc(sub)+'</span>'+rows.map(r=>'<div class="tr-drow"><div class="dl">'+r[0]+'</div><div class="dv">'+esc(r[1])+'</div></div>').join('')+'<div class="tr-dact"><button class="add" onclick="trAddToTrip(\''+kind+'\','+idx+')">＋ 加入行程'+(cost?'（约'+cost+'元）':'')+'</button><button class="fav'+(fav?' on':'')+'" onclick="trFavSpotFromDetail(\''+esc(title)+'\')">'+(fav?'⭐ 已收藏':'☆ 收藏')+'</button><button class="docbtn" onclick="exportToDoc(\''+esc(curCity+'·'+title).replace(/'/g,'')+'\',\''+docHtml.replace(/'/g,'')+'\')">📄 存文档</button></div></div>';
   document.getElementById('trDetailCard').innerHTML=html;
   document.getElementById('trDetailMask').classList.add('show');
 }
@@ -3594,7 +3622,8 @@ function trOpenTrip(id){
   const t=(state.trips||[]).find(x=>x.id===id);if(!t)return;
   const items=t.items||[];const cost=items.reduce((s,i)=>s+(+i.cost||0),0);
   const rows=items.map((it,i)=>'<div class="tr-fi"><div style="flex:1"><div class="fn"><span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:'+(it.done?'#7bc97a':'#eee')+';color:#fff;text-align:center;line-height:16px;font-size:11px;margin-right:6px" onclick="trToggleItem(\''+id+'\','+i+')">'+(it.done?'✓':'')+'</span>'+esc(it.t)+'</div></div><div class="fp">'+it.cost+'元</div>'+(it.synced?'<span style="color:#7bc97a;font-size:9px;font-weight:800;align-self:center">✓</span>':'')+'<button class="fadd" style="background:#ffe0e0;color:#c2547a" onclick="trDelItem(\''+id+'\','+i+')">🗑</button></div>').join('')||'<div class="tr-empty">还没有安排，去城市攻略一键加入吧～</div>';
-  const html='<h3>🧳 '+esc(t.name)+'</h3><span class="dsub">'+(t.days||1)+'天 · 预算合计 '+cost+'元</span><div style="margin:10px 0">'+rows+'</div><div class="tr-dact"><button class="add" onclick="trSyncFinance()">🔄 同步到财务管理</button></div>';
+  const tripHtml='<h3>🧳 '+esc(t.name)+'</h3><p>共 '+(t.days||1)+' 天 · 预算合计 '+cost+' 元</p>'+items.map((it,i)=>'<p>'+(i+1)+'. '+esc(it.t)+(it.cost?('（'+it.cost+'元）'):'')+(it.done?' ✅':'')+'</p>').join('')+'<p>来自 Work Buddy 旅游攻略 · '+docFmtTime(Date.now())+'</p>';
+  const html='<h3>🧳 '+esc(t.name)+'</h3><span class="dsub">'+(t.days||1)+'天 · 预算合计 '+cost+'元</span><div style="margin:10px 0">'+rows+'</div><div class="tr-dact"><button class="add" onclick="trSyncFinance()">🔄 同步到财务管理</button><button class="docbtn" onclick="exportToDoc(\''+esc(t.name).replace(/'/g,'')+'\',\''+tripHtml.replace(/'/g,'')+'\')">📄 存文档</button></div>';
   document.getElementById('trDetailCard').innerHTML=html;
   document.getElementById('trDetailMask').classList.add('show');
 }
@@ -4751,7 +4780,15 @@ function renderNotes(){
   const box=document.getElementById('movie-notes');if(!box)return;
   const arr=state.movie.notes||[];
   if(!arr.length){box.innerHTML='<div class="movie-tip">还没写笔记，点下面"写一条笔记"记录观后感～</div>';return;}
-  box.innerHTML=arr.map(n=>'<div class="note-item"><div class="t">📝 '+(n.work?esc(n.work)+'：':'')+'</div><div class="d">'+esc(n.text)+'</div><button class="del" onclick="movieDel(\'notes\',\''+n.id+'\')">×</button></div>').join('');
+  box.innerHTML=arr.map(n=>'<div class="note-item"><div class="t">📝 '+(n.work?esc(n.work)+'：':'')+'</div><div class="d">'+esc(n.text)+'</div><button class="movie-doc" onclick="movieExportNote(\''+n.id+'\')">📄 存文档</button><button class="del" onclick="movieDel(\'notes\',\''+n.id+'\')">×</button></div>').join('');
+}
+function movieExportNote(id){
+  const n=(state.movie.notes||[]).find(x=>x.id===id);if(!n){toast('笔记不存在了');return;}
+  let html='<h3>📝 观影笔记</h3>';
+  if(n.work)html+='<p><b>作品：</b>'+esc(n.work)+'</p>';
+  html+='<p>'+esc(n.text).replace(/\n/g,'<br>')+'</p>';
+  html+='<p style="color:#999">来自 Work Buddy 追剧观影 · '+docFmtTime(Date.now())+'</p>';
+  exportToDoc(n.work?('观影笔记-'+n.work):'观影笔记', html);
 }
 function movieDel(kind,id){
   state.movie[kind]=(state.movie[kind]||[]).filter(x=>x.id!==id);saveSilent();
