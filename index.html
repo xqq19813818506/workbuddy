@@ -90,6 +90,51 @@
   .card .info{flex:1;min-width:0}
   .card .info .t{font-weight:700;font-size:12.5px;color:#3d3a3a;line-height:1.25}
   .card .info .d{font-size:9.5px;color:#9a8c80;margin-top:2px;line-height:1.4}
+  /* ===== 财务管理 · 全部账单明细 ===== */
+  .fin-all-entry{border-left:5px solid #4caf72;background:linear-gradient(135deg,#eafaf0,#f3fbf6)}
+  .fin-all-entry .ic{background:#d6f0e0}
+  .allbills{position:fixed;inset:0;z-index:48;background:linear-gradient(170deg,#fbf3ec,#f3eee6);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .32s cubic-bezier(.3,.8,.3,1);padding:0;overflow:hidden}
+  .allbills.show{transform:translateY(0)}
+  .ab-head{display:flex;align-items:center;gap:8px;padding:12px 14px;background:#fff;border-bottom:1.5px solid #f0e6db}
+  .ab-back{background:none;border:none;font-size:22px;color:#7a6a5a;cursor:pointer;width:34px}
+  .ab-title{flex:1;text-align:center;font-weight:800;font-size:16px;color:#4a3f36}
+  .ab-export{background:#ffe6f3;color:#d4498f;border:none;border-radius:12px;padding:6px 12px;font-size:12px;font-weight:800;cursor:pointer}
+  .ab-filters{display:flex;gap:7px;padding:10px 14px 4px}
+  .ab-f{flex:1;border:1.5px solid #ecdfd2;background:#fff;border-radius:14px;padding:8px 0;font-size:12px;font-weight:700;color:#8a7a6a;cursor:pointer;transition:all .15s}
+  .ab-f.active{background:linear-gradient(135deg,#ff9ec4,#ff6f9e);color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(255,110,158,.3)}
+  .ab-subfilters{display:flex;gap:6px;align-items:center;padding:6px 14px 8px;flex-wrap:wrap}
+  .abt{border:1.5px solid #ecdfd2;background:#fff;border-radius:12px;padding:5px 10px;font-size:11px;font-weight:700;color:#8a7a6a;cursor:pointer}
+  .abt.active{background:#fff0d6;color:#9a7a10;border-color:#f3d9a0}
+  .ab-search{flex:1;min-width:120px;border:1.5px solid #ecdfd2;border-radius:12px;padding:6px 10px;font-size:12px;outline:none}
+  .ab-custom{display:flex;gap:6px;align-items:center;padding:0 14px 8px;font-size:11px;color:#8a7a6a}
+  .ab-custom input{border:1.5px solid #ecdfd2;border-radius:10px;padding:5px;font-size:12px}
+  .ab-batchbar{display:flex;gap:8px;align-items:center;padding:8px 14px;background:#fff3f8;border-bottom:1.5px solid #f3d9e6}
+  .ab-batchbar label{font-size:12px;color:#7a5a6a;display:flex;align-items:center;gap:4px}
+  .ab-batchbar button{border:none;border-radius:12px;padding:6px 12px;font-size:12px;font-weight:800;cursor:pointer}
+  .ab-batchbar .bdel{background:#ffd9d9;color:#c0392b}.ab-batchbar .bcancel{background:#eee;color:#777}
+  .ab-body{flex:1;overflow-y:auto;padding:10px 12px 80px}
+  .ab-sec{background:#fff;border-radius:18px;margin-bottom:10px;overflow:hidden;box-shadow:0 3px 10px rgba(180,150,120,.1)}
+  .ab-sech{display:flex;align-items:center;gap:8px;padding:11px 13px;cursor:pointer;border-left:5px solid #ccc}
+  .ab-seci{font-size:16px}
+  .ab-secn{font-weight:800;font-size:13.5px;color:#3d3a3a}
+  .ab-seco{margin-left:auto;font-size:10.5px;color:#9a8c80}
+  .ab-secc{font-size:12px;color:#9a8c80}
+  .ab-empty{padding:14px;text-align:center;color:#b0a090;font-size:11px}
+  .ab-row{display:flex;align-items:center;gap:8px;padding:9px 12px;border-top:1px solid #f3ece2}
+  .ab-ck{display:flex;align-items:center}
+  .ab-ck input{width:18px;height:18px}
+  .ab-rinfo{flex:1;min-width:0}
+  .ab-r1{display:flex;gap:7px;align-items:center}
+  .ab-date{font-size:10px;color:#a99c8e;font-weight:700}
+  .ab-cat{font-size:9.5px;background:#f1ece4;color:#8a7a6a;border-radius:8px;padding:1px 7px}
+  .ab-r2{font-size:12px;color:#4a4138;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ab-amt{font-weight:800;font-size:13px;white-space:nowrap}
+  .ab-ops{display:flex;gap:4px}
+  .ab-ops button{border:none;background:#f6f1ea;border-radius:9px;width:28px;height:28px;font-size:13px;cursor:pointer}
+  .ab-ops .ab-del{background:#ffe3e3}
+  .ab-total{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:2px solid #f0e6db;padding:12px 16px;font-size:13px;color:#5a4d40;text-align:center;z-index:2;box-shadow:0 -4px 14px rgba(180,150,120,.12)}
+  .ab-total b{color:#e0567f;font-size:15px}
+  .ab-fab-add{position:fixed;right:16px;bottom:70px;z-index:3;width:54px;height:54px;border-radius:50%;border:none;background:linear-gradient(135deg,#ff9ec4,#ff6f9e);color:#fff;font-size:28px;font-weight:800;box-shadow:0 6px 18px rgba(255,110,158,.5);cursor:pointer}
   .card.done{background:#e6f5e0;border-color:#bce0a8}
   .card.done .t{color:#3a7a2a}
   .check-btn{width:27px;height:27px;border-radius:50%;border:2.5px solid #e3d5c5;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto;transition:all .2s;flex-direction:column;align-items:center;justify-content:center}
@@ -1595,6 +1640,7 @@
     <button class="auto-btn" onclick="finAutoSync('shop')">🔄 同步电商订单</button>
   </div>
   <div id="finAutoLog" class="auto-log"></div>
+  <div class="card fin-all-entry" onclick="openAllBills()"><div class="ic" style="background:#d6f0e0">📋</div><div class="info"><div class="t">全部账单明细</div><div class="d">点击进入分类汇总页面</div></div><div style="font-size:22px;color:#4caf72">›</div></div>
   <button class="add-btn" onclick="finExport()">📤 导出账单备份（JSON）</button>
   <div class="sec-title">📊 月度账单汇总</div>
   <div class="pie-wrap">
@@ -1604,7 +1650,39 @@
   <div class="fin-rank" id="finRank"></div>
   <div class="fin-summary" id="finSummary"></div>
   <div id="fin-list"></div>
-  <div class="tip">🐷 <b>省钱妙招</b>：设月度预算红线；消费前问自己"真的需要吗"；自动账单把固定开销排好，剩下的才是可花余额。日用品遇大促再囤，别为凑单乱买～</div></section>
+  <div class="tip">🐷 <b>省钱妙招</b>：设月度预算红线；消费前问自己"真的需要吗"；自动账单把固定开销排好，剩下的才是可花余额。日用品遇大促再囤，别为凑单乱买～</div>
+  <!-- 全部账单明细 · 二级页面 -->
+  <div class="allbills" id="allBills">
+    <div class="ab-head">
+      <button class="ab-back" onclick="closeAllBills()">‹</button>
+      <div class="ab-title">全部账单明细</div>
+      <button class="ab-export" onclick="abExport()">📤 导出</button>
+    </div>
+    <div class="ab-filters">
+      <button class="ab-f active" data-tf="today" onclick="abSetTime(this,'today')">今日</button>
+      <button class="ab-f" data-tf="week" onclick="abSetTime(this,'week')">本周</button>
+      <button class="ab-f" data-tf="month" onclick="abSetTime(this,'month')">本月</button>
+      <button class="ab-f" data-tf="custom" onclick="abSetTime(this,'custom')">自定义</button>
+    </div>
+    <div class="ab-custom" id="abCustom" style="display:none">
+      <span>从</span><input type="date" id="abStart" onchange="abRender()"><span>至</span><input type="date" id="abEnd" onchange="abRender()">
+    </div>
+    <div class="ab-subfilters">
+      <button class="abt active" data-io="all" onclick="abSetIO(this,'all')">全部</button>
+      <button class="abt" data-io="out" onclick="abSetIO(this,'out')">只看支出</button>
+      <button class="abt" data-io="in" onclick="abSetIO(this,'in')">只看收入</button>
+      <input class="ab-search" id="abSearch" placeholder="🔍 搜索 餐饮/键盘…" oninput="abKW=this.value;abRender()">
+    </div>
+    <div class="ab-batchbar" id="abBatchBar" style="display:none">
+      <label><input type="checkbox" id="abCheckAll" onchange="abCheckAll(this)"> 全选</label>
+      <button class="bdel" onclick="abBatchDel()">🗑 删除选中(<span id="abSelN">0</span>)</button>
+      <button class="bcancel" onclick="abBatchCancel()">取消</button>
+    </div>
+    <div class="ab-body" id="abBody"></div>
+    <div class="ab-total" id="abTotal"></div>
+    <button class="ab-fab-add" onclick="abAddManually()">＋</button>
+  </div>
+</section>
 
       <section class="module" id="m8">
   <div class="cal" data-mod="m8">
@@ -2071,6 +2149,7 @@ function uid(){return 'x'+Math.random().toString(36).slice(2,8);}
 
 let curMod='m1';
 function switchModule(id,btn){
+  const abx=document.getElementById('allBills');if(abx)abx.classList.remove('show');
   curMod=id;
   document.querySelectorAll('.module').forEach(m=>m.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -4597,6 +4676,70 @@ function renderFinSummary(){
   +warn;
 }
 function lastMonth(mk){const y=+mk.split('-')[0],m=+mk.split('-')[1];const d=new Date(y,m-2,1);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
+
+/* ===== 全部账单明细（二级页面） ===== */
+let abTime='month',abIO='all',abKW='',abSel={},abCollapsed={};
+const AB_CH=[{k:'wx',name:'微信账单汇总',color:'#3fbf6f',ic:'🟢'},{k:'ali',name:'支付宝账单汇总',color:'#3a8ad0',ic:'🔵'},{k:'shop',name:'电商订单汇总',color:'#f0952a',ic:'🟠'},{k:'other',name:'其他渠道',color:'#b09ad0',ic:'⚪'}];
+function abChOf(r){return (r.channel==='wx'||r.channel==='ali'||r.channel==='shop')?r.channel:'other';}
+function openAllBills(){const el=document.getElementById('allBills');if(el)el.classList.add('show');abTime='month';abIO='all';abKW='';abSel={};const s=document.getElementById('abSearch');if(s)s.value='';document.querySelectorAll('#allBills .abf').forEach(b=>b.classList.toggle('active',b.dataset.tf==='month'));document.querySelectorAll('#allBills .abt').forEach(b=>b.classList.toggle('active',b.dataset.io==='all'));const cc=document.getElementById('abCustom');if(cc)cc.style.display='none';abRender();}
+function closeAllBills(){const el=document.getElementById('allBills');if(el)el.classList.remove('show');}
+function abSetTime(btn,tf){abTime=tf;document.querySelectorAll('#allBills .abf').forEach(b=>b.classList.toggle('active',b===btn));const cc=document.getElementById('abCustom');if(cc)cc.style.display=tf==='custom'?'flex':'none';abRender();}
+function abSetIO(btn,io){abIO=io;document.querySelectorAll('#allBills .abt').forEach(b=>b.classList.toggle('active',b===btn));abRender();}
+function abDateInRange(ds){
+  if(!ds)return false;const today=todayStr();
+  if(abTime==='today')return ds===today;
+  if(abTime==='month')return ds.slice(0,7)===today.slice(0,7);
+  if(abTime==='week'){const d=new Date(ds+'T00:00:00');const now=new Date(today+'T00:00:00');const dow=(now.getDay()+6)%7;const mon=new Date(now);mon.setDate(now.getDate()-dow);const sun=new Date(mon);sun.setDate(mon.getDate()+7);return d>=mon&&d<sun;}
+  if(abTime==='custom'){const a=document.getElementById('abStart').value,b=document.getElementById('abEnd').value;if(a&&ds<a)return false;if(b&&ds>b)return false;return true;}
+  return true;
+}
+function abToggle(k){abCollapsed[k]=!abCollapsed[k];abRender();}
+function abCheck(el){const id=el.dataset.id;if(el.checked)abSel[id]=true;else delete abSel[id];const sel=Object.keys(abSel).filter(k=>abSel[k]);const bb=document.getElementById('abBatchBar');if(bb)bb.style.display=sel.length?'flex':'none';const sn=document.getElementById('abSelN');if(sn)sn.textContent=sel.length;const ca=document.getElementById('abCheckAll');if(ca)ca.checked=(sel.length>0&&sel.length===abCurCount());}
+function abCurCount(){const kw=abKW.trim();return (state.fin.records||[]).filter(r=>abDateInRange(r.date)).filter(r=>abIO==='all'||r.type===abIO).filter(r=>!kw||(r.note&&r.note.indexOf(kw)>=0)||(r.category&&r.category.indexOf(kw)>=0)||(r.item&&r.item.indexOf(kw)>=0)).length;}
+function abCheckAll(el){document.querySelectorAll('#abBody input[type=checkbox][data-id]').forEach(c=>{c.checked=el.checked;if(el.checked)abSel[c.dataset.id]=true;else delete abSel[c.dataset.id];});const sel=Object.keys(abSel).filter(k=>abSel[k]);const bb=document.getElementById('abBatchBar');if(bb)bb.style.display=sel.length?'flex':'none';const sn=document.getElementById('abSelN');if(sn)sn.textContent=sel.length;}
+function abRender(){
+  const body=document.getElementById('abBody');if(!body)return;
+  const kw=abKW.trim();
+  const recs=(state.fin.records||[]).filter(r=>abDateInRange(r.date)).filter(r=>abIO==='all'||r.type===abIO).filter(r=>!kw||(r.note&&r.note.indexOf(kw)>=0)||(r.category&&r.category.indexOf(kw)>=0)||(r.item&&r.item.indexOf(kw)>=0));
+  const byCh={wx:[],ali:[],shop:[],other:[]};recs.forEach(r=>byCh[abChOf(r)].push(r));
+  let html='',totOut=0,totIn=0;
+  AB_CH.forEach(ch=>{
+    const list=byCh[ch.k];const out=list.filter(r=>r.type==='out').reduce((s,r)=>s+r.amount,0);const inc=list.filter(r=>r.type==='in').reduce((s,r)=>s+r.amount,0);totOut+=out;totIn+=inc;
+    const collapsed=abCollapsed[ch.k];
+    html+='<div class="ab-sec"'+(collapsed?' style="opacity:.96"':'')+'><div class="ab-sech" onclick="abToggle(\''+ch.k+'\')" style="border-left-color:'+ch.color+'"><span class="ab-seci">'+ch.ic+'</span><span class="ab-secn">'+ch.name+'</span><span class="ab-seco">支出 '+Math.round(out)+'元 · 收入 '+Math.round(inc)+'元</span><span class="ab-secc">'+(collapsed?'▸':'▾')+'</span></div>';
+    if(!collapsed){
+      if(!list.length)html+='<div class="ab-empty">暂无记录</div>';
+      else{html+='<div class="ab-rows">'+list.slice().reverse().map(r=>{const col=r.type==='in'?'#2e9e57':'#d23b3b';const txt=r.note?r.note:(r.item||'—');return '<div class="ab-row"><label class="ab-ck"><input type="checkbox" data-id="'+esc(r.id)+'"'+(abSel[r.id]?' checked':'')+' onchange="abCheck(this)"></label><div class="ab-rinfo"><div class="ab-r1"><span class="ab-date">'+esc(r.date||'')+'</span><span class="ab-cat">'+esc(r.category||'')+'</span></div><div class="ab-r2">'+esc(txt)+'</div></div><div class="ab-amt" style="color:'+col+'">'+(r.type==='in'?'+':'-')+Math.round(r.amount*100)/100+'元</div><div class="ab-ops"><button onclick="abEditRec(\''+esc(r.id)+'\')">✏️</button><button class="ab-del" onclick="abDelRec(\''+esc(r.id)+'\')">🗑</button></div></div>';}).join('')+'</div>';}
+    }
+    html+='</div>';
+  });
+  body.innerHTML=html;
+  const tb=document.getElementById('abTotal');
+  if(tb){const wx=byCh.wx.filter(r=>r.type==='out').reduce((s,r)=>s+r.amount,0),ali=byCh.ali.filter(r=>r.type==='out').reduce((s,r)=>s+r.amount,0),shop=byCh.shop.filter(r=>r.type==='out').reduce((s,r)=>s+r.amount,0);tb.innerHTML='✅ 总支出 <b>'+Math.round(totOut)+'</b> 元（微信 '+Math.round(wx)+' / 支付宝 '+Math.round(ali)+' / 电商 '+Math.round(shop)+'）<br>总收入 <b>'+Math.round(totIn)+'</b> 元';}
+}
+function abEditRec(id){
+  const r=(state.fin.records||[]).find(x=>x.id===id);if(!r)return;
+  showModal('编辑账单',[{label:'类型',type:'seg',id:'type',opts:['支出','收入'],def:r.type==='in'?'收入':'支出'},{label:'金额(元)',type:'text',id:'amt',ph:'例如 69'},{label:'分类',type:'select',id:'cat',opts:['餐饮','日用品','学习','交通','医疗','娱乐','工资','兼职','房租','其他']},{label:'备注/商品',type:'text',id:'note',ph:'例如 肯德基全家桶'},{label:'归属渠道',type:'select',id:'ch',opts:['微信','支付宝','电商','其他']},{label:'日期',type:'date',id:'date'}],v=>{
+    const amt=parseFloat(v.amt);if(isNaN(amt)||amt<=0){toast('金额无效');return;}
+    r.type=v.type==='收入'?'in':'out';r.amount=amt;r.category=v.cat;r.note=v.note;r.channel={微信:'wx',支付宝:'ali',电商:'shop',其他:''}[v.ch];r.date=v.date||r.date;saveSilent();abRender();renderFinance();toast('已更新 💾');
+  });
+  document.getElementById('mf-amt').value=r.amount;
+  const cat=document.getElementById('mf-cat');if(cat&&(r.category)){for(const o of cat.options)if(o.value===r.category||o.text===r.category)cat.value=o.value;}
+  const note=document.getElementById('mf-note');if(note)note.value=r.note||'';
+  const ch=document.getElementById('mf-ch');if(ch){const cv={wx:'微信',ali:'支付宝',shop:'电商','':'其他'}[r.channel]||'其他';for(const o of ch.options)if(o.text===cv)ch.value=o.value;}
+  const dt=document.getElementById('mf-date');if(dt)dt.value=r.date||'';
+}
+function abDelRec(id){state.fin.records=state.fin.records.filter(r=>r.id!==id);delete abSel[id];saveSilent();abRender();renderFinance();toast('已删除 🗑');}
+function abBatchDel(){const ids=Object.keys(abSel).filter(k=>abSel[k]);if(!ids.length){toast('请先勾选');return;}state.fin.records=state.fin.records.filter(r=>!ids.includes(r.id));ids.forEach(k=>delete abSel[k]);saveSilent();abRender();renderFinance();toast('已删除 '+ids.length+' 条 🗑');}
+function abBatchCancel(){abSel={};abRender();}
+function abAddManually(){
+  showModal('记一笔',[{label:'类型',type:'seg',id:'type',opts:['支出','收入'],def:'支出'},{label:'金额(元)',type:'text',id:'amt',ph:'例如 69'},{label:'分类',type:'select',id:'cat',opts:['餐饮','日用品','学习','交通','医疗','娱乐','工资','兼职','房租','其他']},{label:'备注/商品',type:'text',id:'note',ph:'例如 肯德基全家桶'},{label:'归属渠道',type:'select',id:'ch',opts:['微信','支付宝','电商','其他']},{label:'日期',type:'date',id:'date'}],v=>{
+    const amt=parseFloat(v.amt);if(isNaN(amt)||amt<=0){toast('金额无效');return;}
+    state.fin.records.push({id:uid(),date:v.date||todayStr(),type:v.type==='收入'?'in':'out',amount:amt,category:v.cat,note:v.note||'',auto:false,item:'',channel:{微信:'wx',支付宝:'ali',电商:'shop',其他:''}[v.ch]});saveSilent();abRender();renderFinance();toast('已记录 💰');
+  });
+}
+function abExport(){const recs=(state.fin.records||[]).filter(r=>abDateInRange(r.date)).filter(r=>abIO==='all'||r.type===abIO);const blob=new Blob([JSON.stringify(recs,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='账单明细_'+abTime+'_'+todayStr()+'.json';a.click();toast('已导出 '+recs.length+' 条 📤');}
+
 
 /* ===== 全屏陪伴小猫 Buddy（点哪跑哪，可跑/走/跳） ===== */
 let bob={x:0,y:0,tx:0,ty:0,fc:1,_jumped:true,_mode:'idle'};
