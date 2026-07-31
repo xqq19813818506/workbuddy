@@ -145,6 +145,18 @@
   .ab-sub{font-size:10.5px;color:#8a7a6a;padding:7px 13px;border-top:1px dashed #eee;background:#faf6f1}
   .ab-priv{font-size:9.5px;color:#9a8c80;padding:6px 14px;text-align:center;line-height:1.5}
   .ab-priv b{color:#6a8a78}
+  .imp-prev{background:#faf7f2;border:1px solid #ece3d6;border-radius:12px;padding:8px 9px;margin-bottom:4px}
+  .imp-stat{font-size:11px;color:#5a4d40;margin-bottom:5px}
+  .imp-stat b{color:#c0392b;font-size:13px}
+  .imp-rows{max-height:118px;overflow:auto}
+  .imp-row{display:flex;align-items:center;gap:6px;font-size:10.5px;padding:3px 0;border-top:1px dashed #eee}
+  .imp-row:first-child{border-top:none}
+  .imp-d{color:#8a7d70;flex:0 0 66px}
+  .imp-t{flex:0 0 20px;font-weight:800}
+  .imp-t.in{color:#3a8a5c}.imp-t.out{color:#c0392b}
+  .imp-am{flex:0 0 56px;font-weight:700;color:#4a3d30}
+  .imp-n{color:#6a5d50;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .imp-more{font-size:10px;color:#a89a8c;text-align:center;padding-top:3px}
   .card.done{background:#e6f5e0;border-color:#bce0a8}
   .card.done .t{color:#3a7a2a}
   .check-btn{width:27px;height:27px;border-radius:50%;border:2.5px solid #e3d5c5;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto;transition:all .2s;flex-direction:column;align-items:center;justify-content:center}
@@ -1656,8 +1668,8 @@
     <button class="add-btn" onclick="finImport()">📥 导入账单备份</button>
     <button class="add-btn fin-clear" onclick="finClearAll()">🧹 清除全部账单数据</button>
   </div>
-  <div class="privacy-note">🔒 <b>隐私说明</b>：① 账单仅存本机，开发者无法查看/导出你的任何收支；② 链接仅本机可加载账单，他人打开无你的数据；③ 仅同步收支信息，不获取银行卡/姓名/身份等敏感信息。</div>
-  <input type="file" id="finImportFile" accept=".json,application/json" style="display:none" onchange="finImportFile(event)">
+  <div class="privacy-note">🔒 <b>隐私说明</b>：① 账单仅存本机，开发者无法查看/导出你的任何收支；② 链接仅本机可加载账单，他人打开无你的数据；③ 仅同步收支信息，不获取银行卡/姓名/身份等敏感信息；④ <b>想导入真实账单</b>？从微信/支付宝导出 CSV/Excel（或解压后的 CSV）后点「📥 导入账单备份」即可，文件<b>全程在本机浏览器解析，绝不上传</b>。</div>
+  <input type="file" id="finImportFile" accept=".json,.csv,.xls,.xlsx,.zip,application/json,text/csv" style="display:none" onchange="finImportFile(event)">
   <div class="sec-title">📊 月度账单汇总</div>
   <div class="pie-wrap">
     <div class="pie" id="pie-m7"></div>
@@ -4650,7 +4662,7 @@ function finToggleCh(ch,el){state.fin.autoChannels=state.fin.autoChannels||{wx:t
 const CH_GUIDE={wx:'微信支付 → 微信记账本',ali:'支付宝 → 支付宝记账本',shop:'淘宝/京东等 → 我的订单'};
 function finSyncModal(ch){
  showModal('同步'+CH_NAME[ch]+'账单',[
-  {type:'html',html:'<div class="sync-guide">📋 操作指引：打开 '+CH_GUIDE[ch]+' → 复制记账本分享链接，粘贴到下方。<br><span class="sync-warn">⚠️ 纯本地应用无法直连平台，以下按记账本格式生成<b>示例账单</b>（与真实记账本条目一一对应，可手动改/删）。需要真实数据请手动记账或从备份恢复。</span></div>'},
+  {type:'html',html:'<div class="sync-guide">📋 操作指引：打开 '+CH_GUIDE[ch]+' → 导出账单文件（CSV/Excel），再到本页点「📥 导入账单备份」选文件即可导入<b>真实账单</b>（全程本机解析，不上传）。<br><span class="sync-warn">⚠️ 纯本地应用无法直连平台、也不能复制链接自动抓取。下方「生成示例」会按记账本格式造一笔样例数据（可手动改/删），方便你先看效果；真实数据请用上面的文件导入。</span></div>'},
   {label:'记账本分享链接（可留空直接生成示例）',type:'text',id:'link',ph:'粘贴链接，或留空用示例数据'}
  ],v=>{finSimSync(ch,v.link||'');});
 }
@@ -4686,32 +4698,152 @@ function finExport(){
  });
 }
 function finImport(){const inp=document.getElementById('finImportFile');if(inp)inp.click();}
+
+/* —— 真实账单文件导入（CSV 原生解析；xlsx/xls/zip 按需本机加载解析库，数据不出本机） —— */
+function finNormDate(s){if(!s)return '';s=String(s).trim();let d=s.split(/[ T]/)[0];d=d.replace(/\//g,'-');const m=d.match(/^(\d{4})-?(\d{1,2})-?(\d{1,2})/);if(!m)return '';return m[1]+'-'+String(+m[2]).padStart(2,'0')+'-'+String(+m[3]).padStart(2,'0');}
+function finNum(s){if(s==null)return 0;s=String(s).replace(/[¥￥$,\s元]/g,'').replace(/[－—–]/g,'-');const n=parseFloat(s);return isNaN(n)?0:Math.abs(n);}
+function finParseCSV(text){
+ if(!text)return [];
+ if(text.charCodeAt(0)===0xFEFF)text=text.slice(1);
+ const rows=[];let row=[],cur='',q=false;
+ for(let i=0;i<text.length;i++){const c=text[i];
+  if(q){ if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+  else { if(c==='"')q=true; else if(c===','){row.push(cur);cur='';} else if(c==='\n'){row.push(cur);rows.push(row);row=[];cur='';} else if(c!=='\r')cur+=c; }
+ }
+ if(cur!==''||row.length){row.push(cur);rows.push(row);}
+ return rows.map(r=>r.map(c=>String(c==null?'':c).trim()));
+}
+function finLoadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=()=>res();s.onerror=()=>rej(new Error('lib load fail'));document.head.appendChild(s);});}
+async function finParseExcelOrZip(f,name){
+ const buf=await f.arrayBuffer();
+ if(name.endsWith('.zip')){
+  if(typeof JSZip==='undefined'){await finLoadScript('https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js');}
+  const zip=await JSZip.loadAsync(buf);
+  const cands=[];zip.forEach((p,entry)=>{if(/\.(csv|xlsx?)$/i.test(p))cands.push(entry);});
+  cands.sort((a,b)=>(/(明细|交易)/.test(b.name)?1:0)-(/明细|交易/.test(a.name)?1:0));
+  const target=cands[0];if(!target)throw new Error('zip 内无表格文件');
+  if(/\.csv$/i.test(target.name))return finParseCSV(await target.async('string'));
+  if(typeof XLSX==='undefined'){await finLoadScript('https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js');}
+  const wb=XLSX.read(await target.async('arraybuffer'),{type:'array'});
+  return finParseCSV(XLSX.utils.sheet_to_csv(wb.Sheets[wb.SheetNames[0]]));
+ }
+ if(typeof XLSX==='undefined'){await finLoadScript('https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js');}
+ const wb=XLSX.read(buf,{type:'array'});
+ return finParseCSV(XLSX.utils.sheet_to_csv(wb.Sheets[wb.SheetNames[0]]));
+}
+function finMapBillRows(rows,defaultCh){
+ const CH={'微信':'wx','支付宝':'ali','电商':'shop','其他':''};
+ let hi=-1;
+ for(let i=0;i<rows.length;i++){const line=(rows[i]||[]).join('|');if(/交易时间|交易日期|收\/支|收付款|金额|交易对方|商品说明|交易分类/.test(line)){hi=i;break;}}
+ if(hi<0)return {records:[],byCh:{wx:0,ali:0,shop:0,other:0}};
+ const head=rows[hi].map(c=>String(c||'').trim());
+ const col={};
+ head.forEach((h,idx)=>{
+  if(/交易时间|记账时间|交易日期|日期/.test(h)&&col.date==null)col.date=idx;
+  else if(/收\/支|收付款|收支/.test(h)&&col.type==null)col.type=idx;
+  else if(/金额/.test(h)&&col.amount==null)col.amount=idx;
+  else if(/(交易)?对方/.test(h)&&col.cp==null)col.cp=idx;
+  else if(/商品说明|商品|交易说明/.test(h)&&col.goods==null)col.goods=idx;
+  else if(/订单号|流水号|交易单号|商户订单/.test(h)&&col.order==null)col.order=idx;
+  else if(/支付方式|付款方式|收\/付款方式/.test(h)&&col.pay==null)col.pay=idx;
+  else if(/交易分类|分类/.test(h)&&col.cat==null)col.cat=idx;
+  else if(/备注/.test(h)&&col.note==null)col.note=idx;
+ });
+ if(col.date==null||col.amount==null)return {records:[],byCh:{wx:0,ali:0,shop:0,other:0}};
+ const recs=[];const byCh={wx:0,ali:0,shop:0,other:0};
+ for(let i=hi+1;i<rows.length;i++){
+  const r=rows[i];if(!r||r.length<2)continue;
+  const get=k=>(col[k]==null?'':String(r[col[k]]||'').trim());
+  const date=finNormDate(get('date'));const amt=finNum(get('amount'));
+  if(!date||!(amt>0))continue;
+  let type='out';const tr=get('type');
+  if(/收入|进账|收款|转入/.test(tr))type='in';
+  else if(/支出|消费|付款|记账|转出/.test(tr))type='out';
+  else if(/^\s*[-−]/.test(get('amount')))type='out';
+  else if(/^\s*[+＋]/.test(get('amount')))type='in';
+  let ch=defaultCh||'';const pay=get('pay');const ctx=get('cp')+' '+get('goods');
+  if(/支付宝|蚂蚁|花呗|借呗/.test(pay))ch='ali';
+  else if(/微信/.test(pay))ch='wx';
+  else if(/淘宝|京东|拼多多|美团|苏宁|电商/.test(pay)||/淘宝|京东|拼多多|美团/.test(ctx))ch='shop';
+  if(!ch)ch=defaultCh||'other';
+  const cp=get('cp'),goods=get('goods'),noteRaw=get('note');
+  const note=[cp,goods,noteRaw].filter(Boolean).join(' · ').slice(0,80);
+  const category=get('cat')||(goods?goods.split(/[\s,，]/)[0]:'')||'其他';
+  const item=goods||cp||category;
+  recs.push({id:get('order')||uid(),date,type,amount:amt,category:category||'其他',note,auto:false,item,channel:ch});
+  byCh[ch]++;
+ }
+ return {records:recs,byCh};
+}
+function finFilePreviewHTML(recs,byCh){
+ const CN={wx:'微信',ali:'支付宝',shop:'电商',other:'其他'};
+ let html='<div class="imp-prev"><div class="imp-stat">识别到 <b>'+recs.length+'</b> 条真实账单';
+ const parts=[];['wx','ali','shop','other'].forEach(k=>{if(byCh[k])parts.push(CN[k]+' '+byCh[k]);});
+ html+='（'+parts.join(' / ')+'）</div><div class="imp-rows">';
+ recs.slice(0,4).forEach(r=>{html+='<div class="imp-row"><span class="imp-d">'+esc(r.date)+'</span><span class="imp-t '+(r.type==='in'?'in':'out')+'">'+(r.type==='in'?'收':'支')+'</span><span class="imp-am">'+r.amount+'元</span><span class="imp-n">'+esc(r.note||r.category||'')+'</span></div>';});
+ if(recs.length>4)html+='<div class="imp-more">… 还有 '+(recs.length-4)+' 条</div>';
+ return html+'</div></div>';
+}
+function finApplyImport(recs,mode){
+ if(mode==='覆盖导入'){state.fin.records=recs.slice();}
+ else{const ids=new Set((state.fin.records||[]).map(r=>r.id));recs.forEach(r=>{if(r.id&&ids.has(r.id))return;r.id=r.id||uid();state.fin.records.push(r);});}
+ state._cycleApplied=state._cycleApplied||{};
+ saveSilent();renderFinance();if(document.getElementById('allBills').classList.contains('show'))abRender();
+ toast('已导入 '+recs.length+' 条真实账单 ✅');
+}
+function finImportRows(rows,fname){
+ const guess=/微信/.test(fname)?'wx':/支付宝|阿里/.test(fname)?'ali':/淘宝|京东|拼多多|美团/.test(fname)?'shop':'other';
+ const map=finMapBillRows(rows,guess);
+ if(!map.records.length){toast('未识别到账单数据 ❌ 请确认是微信/支付宝导出的文件');return;}
+ const initCh=guess;
+ const chLabel={wx:'微信',ali:'支付宝',shop:'电商',other:'其他'}[guess];
+ showModal('导入真实账单文件',[
+  {type:'html',html:finFilePreviewHTML(map.records,map.byCh)},
+  {type:'html',html:'🔒 文件在本机浏览器解析，<b>不会上传任何服务器</b>。'},
+  {label:'未识别渠道的账单默认归入',type:'seg',id:'ch',opts:['微信','支付宝','电商','其他'],def:chLabel},
+  {label:'导入方式',type:'seg',id:'mode',opts:['追加导入','覆盖导入'],def:'追加导入'}
+ ],v=>{
+  const CM={'微信':'wx','支付宝':'ali','电商':'shop','其他':''};
+  const defCh=CM[v.ch]||'';
+  const finalRecs=(defCh!==initCh)?finMapBillRows(rows,defCh).records:map.records;
+  finApplyImport(finalRecs,v.mode);
+ });
+}
 async function finImportFile(e){
  const f=e.target.files[0];e.target.value='';
  if(!f)return;
- let text;try{text=await f.text();}catch(err){toast('读取文件失败 ❌');return;}
- let recs;
+ const name=f.name.toLowerCase();
  try{
-  const obj=JSON.parse(text);
-  if(obj&&obj._enc===true){
-   const pwd=await new Promise(res=>{showModal('备份文件已加密',[{type:'html',html:'此备份已加密，请输入密码才能导入。'},{label:'密码',type:'text',id:'pwd',ph:'备份时设置的密码'}],v=>res(v.pwd||''));});
-   if(!pwd){toast('已取消导入');return;}
-   try{recs=JSON.parse(xbDec(obj.data,pwd));}catch(err){toast('密码错误或文件损坏 ❌');return;}
-  }else if(Array.isArray(obj)){recs=obj;}
-  else if(obj&&Array.isArray(obj.records)){recs=obj.records;}
-  else{toast('不是有效的账单备份文件 ❌');return;}
- }catch(err){toast('文件解析失败 ❌');return;}
- if(!Array.isArray(recs)){toast('备份内容无效 ❌');return;}
- showModal('导入模式',[
-  {type:'html',html:'检测到 <b>'+recs.length+'</b> 条账单。选择导入方式：'},
-  {label:'方式',type:'seg',id:'mode',opts:['追加导入','覆盖导入'],def:'追加导入'}
- ],v=>{
-  if(v.mode==='覆盖导入'){state.fin.records=recs.slice();}
-  else{const ids=new Set((state.fin.records||[]).map(r=>r.id));recs.forEach(r=>{if(r.id&&ids.has(r.id))return;r.id=r.id||uid();state.fin.records.push(r);});}
-  state._cycleApplied=state._cycleApplied||{};
-  saveSilent();renderFinance();if(document.getElementById('allBills').classList.contains('show'))abRender();
-  toast('已导入账单 ✅');
- });
+  if(name.endsWith('.json')){
+   const text=await f.text();
+   let recs;
+   try{
+    const obj=JSON.parse(text);
+    if(obj&&obj._enc===true){
+     const pwd=await new Promise(res=>{showModal('备份文件已加密',[{type:'html',html:'此备份已加密，请输入密码才能导入。'},{label:'密码',type:'text',id:'pwd',ph:'备份时设置的密码'}],v=>res(v.pwd||''));});
+     if(!pwd){toast('已取消导入');return;}
+     try{recs=JSON.parse(xbDec(obj.data,pwd));}catch(err){toast('密码错误或文件损坏 ❌');return;}
+    }else if(Array.isArray(obj)){recs=obj;}
+    else if(obj&&Array.isArray(obj.records)){recs=obj.records;}
+    else{toast('不是有效的账单备份文件 ❌');return;}
+   }catch(err){toast('文件解析失败 ❌');return;}
+   if(!Array.isArray(recs)){toast('备份内容无效 ❌');return;}
+   showModal('导入模式',[{type:'html',html:'检测到 <b>'+recs.length+'</b> 条账单。选择导入方式：'},{label:'方式',type:'seg',id:'mode',opts:['追加导入','覆盖导入'],def:'追加导入'}],v=>finApplyImport(recs,v.mode));
+   return;
+  }
+  if(name.endsWith('.csv')){
+   const text=await f.text();
+   finImportRows(finParseCSV(text),f.name);
+   return;
+  }
+  if(name.endsWith('.xlsx')||name.endsWith('.xls')||name.endsWith('.zip')){
+   toast('正在本机解析表格文件…');
+   const rows=await finParseExcelOrZip(f,name);
+   finImportRows(rows,f.name);
+   return;
+  }
+  toast('不支持的文件类型 ❌（支持 .json/.csv/.xlsx/.xls/.zip）');
+ }catch(err){console.error(err);toast('文件解析失败 ❌（xlsx/zip 需联网加载本机解析库，或导出为 CSV 再导入）');}
 }
 function finClearAll(){
  showModal('清除全部账单数据？',[
