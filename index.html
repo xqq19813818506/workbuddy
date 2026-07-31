@@ -592,6 +592,68 @@
   .mini-fab{position:fixed;right:14px;bottom:18px;z-index:40;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#ffb07a,#ff8a5a);border:none;color:#fff;font-size:22px;box-shadow:0 6px 18px rgba(255,138,90,.5);cursor:pointer;animation:breathe 2s ease-in-out infinite}
   .mini-fab:active{transform:scale(.92)}
   .scroll-hint{text-align:center;font-size:10px;color:#c0b4a8;margin:8px 0 16px;animation:pulse 1.6s infinite}
+
+  /* ===== m11 视频高清增强 · 紫粉多巴胺 ===== */
+  .nav-btn[data-theme="videofx"].active{background:#efe2fb;color:#7a3fb0}
+  .ve-wrap{max-width:560px;margin:0 auto}
+  .ve-title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:#7a3fb0;margin:4px 0 2px}
+  .ve-title .badge{font-size:10px;font-weight:800;color:#fff;background:linear-gradient(135deg,#b07cff,#ff7ac0);padding:2px 8px;border-radius:10px}
+  .ve-status{display:flex;gap:6px;margin:6px 0 12px}
+  .ve-status .s{flex:1;text-align:center;font-size:10.5px;font-weight:800;padding:5px 0;border-radius:12px;background:#f1ebf8;color:#b3a3c8}
+  .ve-status .s.on{background:linear-gradient(135deg,#b07cff,#ff7ac0);color:#fff;box-shadow:0 2px 8px rgba(176,124,255,.4)}
+  .ve-card{background:#fff;border-radius:18px;padding:13px;margin-bottom:12px;box-shadow:0 3px 12px rgba(150,110,200,.1)}
+  .ve-card h4{font-size:12.5px;font-weight:800;color:#6a3d9e;margin:0 0 9px;display:flex;align-items:center;gap:5px}
+  .ve-mode{display:flex;gap:7px;margin-bottom:9px}
+  .ve-mode button{flex:1;padding:9px 0;border-radius:13px;border:2px solid #ece3f6;background:#faf7fe;font-size:11.5px;font-weight:800;color:#8a79a8;cursor:pointer}
+  .ve-mode button.on{background:linear-gradient(135deg,#b07cff,#ff7ac0);color:#fff;border-color:transparent}
+  .ve-input-row{display:flex;gap:7px}
+  .ve-input{flex:1;padding:10px 12px;border:2px solid #ece3f6;border-radius:13px;font-size:12px;outline:none;font-family:inherit;background:#faf7fe}
+  .ve-input:focus{border-color:#c9a8ff}
+  .ve-in-btn{padding:0 12px;border:none;border-radius:13px;background:#efe2fb;color:#7a3fb0;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
+  .ve-in-btn:active{transform:scale(.95)}
+  .ve-mini{display:flex;gap:7px;margin-top:8px}
+  .ve-mini button{flex:1;padding:7px 0;border:none;border-radius:11px;background:#f3ecfb;color:#7a3fb0;font-size:10.5px;font-weight:800;cursor:pointer}
+  .ve-upload-hint{font-size:10px;color:#a0938a;margin-top:7px;display:none}
+  .ve-levels{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .ve-level{border:2px solid #ece3f6;border-radius:14px;padding:9px 10px;cursor:pointer;background:#faf7fe}
+  .ve-level.on{background:linear-gradient(135deg,#f3e8ff,#ffe9f5);border-color:#c9a8ff}
+  .ve-level .ln{font-size:12px;font-weight:800;color:#6a3d9e}
+  .ve-level .ld{font-size:9.5px;color:#a0938a;margin-top:2px;line-height:1.4}
+  .ve-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .ve-opt{display:flex;align-items:center;gap:7px;background:#faf7fe;border:2px solid #ece3f6;border-radius:12px;padding:8px 10px;cursor:pointer;font-size:11px;font-weight:700;color:#6a3d9e}
+  .ve-opt .sw{width:34px;height:19px;border-radius:10px;background:#d8cce8;position:relative;flex-shrink:0;transition:.2s}
+  .ve-opt .sw::after{content:'';position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;transition:.2s}
+  .ve-opt.on .sw{background:linear-gradient(135deg,#b07cff,#ff7ac0)}
+  .ve-opt.on .sw::after{left:17px}
+  .ve-go{width:100%;padding:13px 0;border:none;border-radius:15px;background:linear-gradient(135deg,#b07cff,#ff7ac0);color:#fff;font-size:13.5px;font-weight:900;cursor:pointer;box-shadow:0 6px 16px rgba(176,124,255,.4)}
+  .ve-go:active{transform:scale(.98)}
+  .ve-go:disabled{opacity:.6}
+  .ve-progress{margin-top:12px;display:none}
+  .ve-progress.show{display:block}
+  .ve-bar{height:10px;border-radius:6px;background:#eee4f6;overflow:hidden}
+  .ve-bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#b07cff,#ff7ac0);border-radius:6px;transition:width .25s}
+  .ve-ptxt{display:flex;justify-content:space-between;font-size:10.5px;color:#8a79a8;margin-top:6px}
+  .ve-spin{width:20px;height:20px;border:3px solid #ecdffb;border-top-color:#b07cff;border-radius:50%;animation:vespin .8s linear infinite;display:inline-block;vertical-align:-4px;margin-right:6px}
+  @keyframes vespin{to{transform:rotate(360deg)}}
+  .ve-cmp{position:relative;aspect-ratio:9/16;max-height:340px;background:#1c1024;border-radius:16px;overflow:hidden;margin-top:12px;user-select:none}
+  .ve-cmp video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+  .ve-cmp .ve-top{clip-path:inset(0 0 0 50%)}
+  .ve-cmp .lab{position:absolute;top:8px;font-size:9.5px;font-weight:800;color:#fff;background:rgba(0,0,0,.45);padding:2px 7px;border-radius:8px}
+  .ve-cmp .lab.l{left:8px}.ve-cmp .lab.r{right:8px}
+  .ve-slider{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;box-shadow:0 0 5px rgba(0,0,0,.5);cursor:ew-resize;z-index:5}
+  .ve-slider::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+  .ve-done{display:none;margin-top:12px;gap:7px;flex-wrap:wrap}
+  .ve-done.show{display:flex}
+  .ve-done button{flex:1;min-width:120px;padding:10px 0;border:none;border-radius:13px;font-size:11.5px;font-weight:800;cursor:pointer;background:#f3ecfb;color:#7a3fb0}
+  .ve-done button.primary{background:linear-gradient(135deg,#b07cff,#ff7ac0);color:#fff}
+  .ve-warn{background:#fff6fb;border:1.5px dashed #f3b8e2;border-radius:14px;padding:10px 12px;font-size:10.5px;color:#b5589a;line-height:1.6;margin-top:12px}
+  .ve-warn b{color:#9a3f86}
+  .ve-hist{margin-top:6px}
+  .ve-hist-item{display:flex;align-items:center;gap:9px;background:#fff;border-radius:13px;padding:9px 11px;margin-bottom:7px;box-shadow:0 2px 7px rgba(150,110,200,.1)}
+  .ve-hist-item .hi-name{font-size:11.5px;font-weight:700;color:#6a3d9e;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ve-hist-item .hi-meta{font-size:9px;color:#a0938a}
+  .ve-hist-item button{border:none;background:#f3ecfb;color:#7a3fb0;font-size:10px;font-weight:800;padding:5px 9px;border-radius:9px;cursor:pointer}
+  .ve-empty{text-align:center;color:#b3a3c8;font-size:11px;padding:14px 0}
   /* ===== m10 追剧观影馆 · 奶蓝主题 ===== */
   .pc-movie{background:linear-gradient(135deg,#a9d6e5,#7bb8d4);color:#fff}
   .nav-btn[data-theme="movie"].active{background:#d8eefc;color:#2f6f8c}
@@ -1146,6 +1208,7 @@
     <button class="nav-btn" data-target="m8" data-theme="peach" onclick="switchModule('m8',this)"><span class="icon-wrap">🧳</span><span class="label">旅游攻略</span></button>
     <button class="nav-btn" data-target="m9" data-theme="lightpink" onclick="switchModule('m9',this)"><span class="icon-wrap">🎤</span><span class="label">表达能力</span></button>
     <button class="nav-btn" data-target="m10" data-theme="movie" onclick="switchModule('m10',this)"><span class="icon-wrap">🎬</span><span class="label">追剧观影</span></button>
+    <button class="nav-btn" data-target="m11" data-theme="videofx" onclick="switchModule('m11',this)"><span class="icon-wrap">🎬</span><span class="label">视频高清增强</span></button>
     <div class="sidebar-egg" id="buddyEgg" onpointerdown="eggDown(event)" onpointerup="eggUp(event)" onpointerleave="eggUp(event)" oncontextmenu="return false">🐱</div>
     <div class="sidebar-egg" onclick="movieEggPop()" title="随机推荐高分正版影片">🎟️</div>
   </aside>
@@ -1528,6 +1591,8 @@
     </div>
   </div>
 
+  <button class="add-btn" onclick="m10ToVideoEnhance()" style="background:linear-gradient(135deg,#b07cff,#ff7ac0);color:#fff;font-weight:800">🎬 一键优化片源（去视频高清增强）</button>
+
   <div class="reminder-bar" data-mod="m10">
     <span class="lab">🔔 提醒</span>
     <span class="toggle on" onclick="toggleRemind('m10','alarm',this)"><span class="sw"></span>闹钟</span>
@@ -1563,6 +1628,81 @@
   </div>
 
   <div class="tip">🍿 <b>观影小贴士</b>：学生党可开平台学生优惠会员；周末观影搭配轻食更惬意；悬疑片适合专注夜，合家欢选午后。理性追剧，正版支持创作者，每月娱乐支出也别忘了记一笔～</div>
+</section>
+
+<section class="module" id="m11">
+  <div class="ve-wrap">
+    <div class="ve-title">🎬 视频高清增强助手 <span class="badge">NEW</span></div>
+    <div class="ve-status">
+      <div class="s on" id="veS0">待处理</div>
+      <div class="s" id="veS1">增强中</div>
+      <div class="s" id="veS2">处理完成</div>
+    </div>
+
+    <div class="ve-card">
+      <h4>① 视频来源</h4>
+      <div class="ve-mode">
+        <button class="on" id="veMlink" onclick="veSetMode('link')">🔗 链接模式</button>
+        <button id="veMupload" onclick="veSetMode('upload')">🖼️ 上传模式</button>
+      </div>
+      <div id="veLinkBox">
+        <div class="ve-input-row">
+          <input class="ve-input" id="veUrl" placeholder="粘贴视频链接（支持 .mp4 直链）">
+          <button class="ve-in-btn" onclick="vePaste()">粘贴</button>
+        </div>
+      </div>
+      <div id="veUploadBox" style="display:none">
+        <input type="file" id="veFile" accept="video/*" style="width:100%;font-size:11px;color:#6a3d9e">
+        <div class="ve-upload-hint" id="veUpHint">已选择：<span id="veUpName"></span></div>
+      </div>
+      <div class="ve-mini"><button onclick="veClear()">🗑️ 清空</button></div>
+    </div>
+
+    <div class="ve-card">
+      <h4>② 画质增强参数</h4>
+      <div class="ve-levels" id="veLevels">
+        <div class="ve-level" data-l="light" onclick="vePickLevel('light')"><div class="ln">轻度修复</div><div class="ld">轻微模糊、压缩视频</div></div>
+        <div class="ve-level on" data-l="std" onclick="vePickLevel('std')"><div class="ln">标准增强</div><div class="ld">日常短视频（推荐）</div></div>
+        <div class="ve-level" data-l="strong" onclick="vePickLevel('strong')"><div class="ln">强力高清</div><div class="ld">严重模糊、老视频</div></div>
+        <div class="ve-level" data-l="ultra" onclick="vePickLevel('ultra')"><div class="ln">超清细节</div><div class="ld">强化人脸、景物纹理</div></div>
+      </div>
+      <div class="ve-opts">
+        <div class="ve-opt on" data-k="denoise" onclick="veToggleOpt('denoise',this)"><span class="sw"></span>智能降噪</div>
+        <div class="ve-opt on" data-k="color" onclick="veToggleOpt('color',this)"><span class="sw"></span>色彩优化</div>
+        <div class="ve-opt" data-k="face" onclick="veToggleOpt('face',this)"><span class="sw"></span>人脸优化</div>
+        <div class="ve-opt" data-k="stabilize" onclick="veToggleOpt('stabilize',this)"><span class="sw"></span>防抖修复</div>
+      </div>
+    </div>
+
+    <div class="ve-card">
+      <h4>③ 开始处理</h4>
+      <button class="ve-go" id="veGo" onclick="veStart()">✨ 开始高清处理</button>
+      <div class="ve-progress" id="veProg">
+        <div class="ve-bar"><i id="veBar"></i></div>
+        <div class="ve-ptxt"><span id="vePpct">0%</span><span id="vePtime">预估剩余 --</span></div>
+      </div>
+      <div class="ve-cmp" id="veCmp" style="display:none">
+        <video class="ve-base" id="veBase" playsinline muted></video>
+        <video class="ve-top" id="veTop" playsinline muted></video>
+        <span class="lab l">处理前</span><span class="lab r">增强后</span>
+        <div class="ve-slider" id="veSlider"></div>
+      </div>
+    </div>
+
+    <div class="ve-done" id="veDone">
+      <button class="primary" onclick="veDownload()">📥 保存到相册</button>
+      <button onclick="veCopyLink()">🔗 复制新视频链接</button>
+      <button onclick="veRestart()">🗑️ 重新处理</button>
+      <button onclick="veSaveTpl()">⭐ 保存模板</button>
+    </div>
+
+    <div class="ve-warn">⚠️ <b>温馨提示</b>：受平台限制，部分加密分享链接无法解析，可改用【上传模式】选择本地视频；视频时长越长，处理等待越久；原始画质极度损坏时只能最大程度优化，无法无限制复原。</div>
+
+    <div class="ve-card">
+      <h4>📁 处理历史</h4>
+      <div class="ve-hist" id="veHist"></div>
+    </div>
+  </div>
 </section>
     </div>
   </div>
@@ -1686,8 +1826,8 @@
 <script>
 
 const KEY='workbuddy_v4';
-const MODULES=['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10'];
-const MOD_NAME={m1:'今天吃什么',m2:'每日计划',m3:'每日灵感',m4:'逻辑训练',m5:'身材管理',m6:'学习模块',m7:'财务管理',m8:'旅游攻略',m9:'表达能力',m10:'追剧观影'};
+const MODULES=['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11'];
+const MOD_NAME={m1:'今天吃什么',m2:'每日计划',m3:'每日灵感',m4:'逻辑训练',m5:'身材管理',m6:'学习模块',m7:'财务管理',m8:'旅游攻略',m9:'表达能力',m10:'追剧观影',m11:'视频高清增强'};
 
 let state = defaultState();
 function defaultState(){
@@ -1733,7 +1873,8 @@ function defaultState(){
     egg:0, lastTrophy:'',
     movie:{lists:[],tracks:[],notes:[],cal:[],history:[],goal:12,badge:false},
     buddyChat:{free:[],situation:[],retro:[],day:[],dayMeta:{morning:null,evening:null},lastMode:'free',retroDate:''},
-    buddyStats:{today:'',count:0}
+    buddyStats:{today:'',count:0},
+    videoEnh:{history:[],templates:[],lastParams:{level:'std',denoise:true,color:true,face:false,stabilize:false}}
   };
 }
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -1798,6 +1939,7 @@ function updateProgress(mod){
     const go=document.getElementById('go-btn');const note=document.getElementById('lock-note-m8');
     if(n===5){go.classList.add('on');if(note)note.style.display='none';}else{go.classList.remove('on');if(note)note.style.display='';}}
   if(mod==='m9'){const n=state.recCount+state.topicCount;setNum('c-m9-n',n);setBar('bar-m9',Math.min(n/3,1)*100);}
+  if(mod==='m11'){const n=state.videoEnh.history.length;const e=document.getElementById('c-m11-n');if(e)e.textContent=n;}
   if(mod==='m10'){const mv=state.movie||{};const done=(mv.history||[]).filter(x=>x.type==='work'&&x.date&&x.date.slice(0,7)===todayStr().slice(0,7)).length;const goal=mv.goal||12;setNum('c-m10-n',done);setNum('c-m10-t',goal);setBar('bar-m10',goal?Math.min(done/goal,1)*100:0);if(done>=goal&&!mv.badge){mv.badge=true;saveSilent();setTimeout(()=>{burstFW();alert('🎬 恭喜解锁「观影达人」徽章！本月已看 '+done+' 部，小猫给你撒星星～');},400);}}
   refreshCheckin(todayStr());
   updateToday();
@@ -2090,6 +2232,157 @@ function renderFB(fb){
   else{h+='<b>'+fb.words+'字 · '+fb.wordsLv+'</b>';if(fb.tags&&fb.tags.length){h+='<div class="bc-fb-tags">';fb.tags.forEach(t=>h+='<span>'+esc(t)+'</span>');h+='</div>';}}
   h+='</div>';return h;
 }
+
+/* ===== m11 视频高清增强 ===== */
+const VE_SHARP={light:1.04, std:1.12, strong:1.22, ultra:1.35};
+let veMode='link', veBlob=null, veSrc=null, veFileName='video', veBusy=false, veOutBlob=null, veOutSrc=null, veRaf=0;
+function veParams(){const p=state.videoEnh.lastParams;return {level:p.level, denoise:p.denoise, color:p.color, face:p.face, stabilize:p.stabilize};}
+function veBuildFilter(p){
+  let f='contrast('+(VE_SHARP[p.level]||1.12)+') ';
+  if(p.color) f+='saturate(1.28) brightness(1.08) ';
+  if(p.face)  f+='saturate(1.12) brightness(1.05) ';
+  if(p.denoise) f+='blur(0.35px) ';
+  if(p.stabilize) f+='blur(0.2px) ';
+  return f.trim();
+}
+function veSetMode(m){
+  veMode=m;
+  const a=document.getElementById('veMlink'),b=document.getElementById('veMupload');
+  if(a)a.classList.toggle('on',m==='link');
+  if(b)b.classList.toggle('on',m==='upload');
+  const lb=document.getElementById('veLinkBox'),ub=document.getElementById('veUploadBox');
+  if(lb)lb.style.display=m==='link'?'':'none';
+  if(ub)ub.style.display=m==='upload'?'':'none';
+}
+async function vePaste(){try{const t=await navigator.clipboard.readText();const u=document.getElementById('veUrl');if(u){u.value=t;toast('已粘贴链接');}}catch(e){toast('剪贴板读取失败，请手动粘贴');}}
+function veClear(){
+  const u=document.getElementById('veUrl');if(u)u.value='';
+  const f=document.getElementById('veFile');if(f)f.value='';
+  if(veSrc&&veSrc.indexOf('blob:')===0){try{URL.revokeObjectURL(veSrc);}catch(e){}}
+  veSrc=null;veBlob=null;
+  const h=document.getElementById('veUpHint');if(h)h.style.display='none';
+  const cmp=document.getElementById('veCmp');if(cmp)cmp.style.display='none';
+  document.getElementById('veDone').classList.remove('show');
+  document.getElementById('veProg').classList.remove('show');
+  document.getElementById('veBar').style.width='0%';
+  veStatus('待处理');
+}
+function vePickLevel(l){state.videoEnh.lastParams.level=l;document.querySelectorAll('#veLevels .ve-level').forEach(e=>e.classList.toggle('on',e.dataset.l===l));}
+function veToggleOpt(k,el){state.videoEnh.lastParams[k]=!state.videoEnh.lastParams[k];if(el)el.classList.toggle('on',state.videoEnh.lastParams[k]);}
+function veStatus(s){['待处理','增强中','处理完成'].forEach((name,i)=>{const el=document.getElementById('veS'+i);if(el)el.classList.toggle('on',name===s);});}
+async function veStart(){
+  if(veBusy)return;
+  const base=document.getElementById('veBase'),top=document.getElementById('veTop');
+  let src;
+  if(veMode==='upload'){ if(!veBlob){toast('请先选择本地视频');return;} src=veSrc; }
+  else{ const url=(document.getElementById('veUrl').value||'').trim(); if(!url){toast('请粘贴视频链接');return;} if(!/\.(mp4|webm|ogg|mov)(\?|$)/i.test(url)){toast('⚠️ 平台加密链接无法解析，请改用【上传模式】');return;} src=url; }
+  veBusy=true;veOutBlob=null;veOutSrc=null;
+  document.getElementById('veGo').disabled=true;
+  veStatus('增强中');
+  document.getElementById('veCmp').style.display='block';
+  document.getElementById('veProg').classList.add('show');
+  document.getElementById('veDone').classList.remove('show');
+  base.src=src;top.src=src;top.style.filter=veBuildFilter(veParams());
+  try{ await new Promise((res,rej)=>{base.onloadedmetadata=()=>res();base.onerror=()=>rej(new Error('视频加载失败（可能是加密链接）'));}); }
+  catch(e){ toast('⚠️ '+e.message+'，请改用上传模式'); veStatus('待处理'); document.getElementById('veGo').disabled=false; veBusy=false; return; }
+  const dur=base.duration||5;
+  const cv=document.createElement('canvas');
+  cv.width=base.videoWidth||360; cv.height=base.videoHeight||640;
+  const ctx=cv.getContext('2d');
+  await base.play().catch(()=>{});
+  top.currentTime=0;
+  const filt=veBuildFilter(veParams());
+  let mime='video/webm';
+  if(typeof MediaRecorder!=='undefined'&&MediaRecorder.isTypeSupported){ if(!MediaRecorder.isTypeSupported('video/webm')) mime=MediaRecorder.isTypeSupported('video/mp4')?'video/mp4':'video/webm'; }
+  let rec=null;
+  try{ const stream=cv.captureStream(30); rec=new MediaRecorder(stream,{mimeType:mime}); }catch(e){ rec=null; }
+  const chunks=[];
+  if(rec){ rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);}; rec.start(); }
+  function finish(){ if(rec&&rec.state!=='inactive'){try{rec.stop();}catch(e){}} setTimeout(()=>finalize(chunks,mime,src),rec?450:0); }
+  function step(){
+    if(base.ended||base.paused||base.currentTime>=dur){
+      try{ctx.filter=filt;ctx.drawImage(base,0,0,cv.width,cv.height);}catch(e){}
+      finish(); return;
+    }
+    try{ctx.filter=filt;ctx.drawImage(base,0,0,cv.width,cv.height);}catch(e){}
+    try{top.currentTime=base.currentTime;}catch(e){}
+    const p=Math.min(1,base.currentTime/dur);
+    document.getElementById('veBar').style.width=Math.round(p*100)+'%';
+    document.getElementById('vePpct').textContent=Math.round(p*100)+'%';
+    document.getElementById('vePtime').textContent='预估剩余 '+Math.max(0,Math.ceil(dur-base.currentTime))+'s';
+    veRaf=requestAnimationFrame(step);
+  }
+  veRaf=requestAnimationFrame(step);
+}
+function finalize(chunks,mime,src){
+  document.getElementById('veGo').disabled=false; veBusy=false;
+  if(chunks.length){ try{ veOutBlob=new Blob(chunks,{type:mime}); }catch(e){ veOutBlob=null; } }
+  if(!veOutBlob) veOutSrc=src;
+  veStatus('处理完成');
+  document.getElementById('veDone').classList.add('show');
+  document.getElementById('vePpct').textContent='100%';
+  document.getElementById('veBar').style.width='100%';
+  veSaveHistory(src);
+  veRenderHistory();
+  if(veOutBlob) toast('✨ 增强完成！可保存到相册');
+  else toast('当前浏览器暂不支持视频导出，可长按预览视频保存');
+}
+function veSaveHistory(src){
+  const id='ve'+Date.now();
+  const item={id, name:veFileName||'视频', params:veParams(), ts:Date.now()};
+  if(veOutBlob){ item.hasBlob=true; veDBput(id,veOutBlob); }
+  state.videoEnh.history.unshift(item);
+  if(state.videoEnh.history.length>40)state.videoEnh.history=state.videoEnh.history.slice(0,40);
+  saveSilent(); updateProgress('m11');
+}
+let _veDB=null;
+function veDB(){return new Promise((res,rej)=>{try{const r=indexedDB.open('wb_ve',1);r.onupgradeneeded=e=>{const db=e.target.result;if(!db.objectStoreNames.contains('blobs'))db.createObjectStore('blobs',{keyPath:'id'});};r.onsuccess=e=>{_veDB=e.target.result;res(_veDB);};r.onerror=e=>rej(e);}catch(e){rej(e);}});}
+function veDBput(id,blob){return veDB().then(db=>new Promise((res,rej)=>{const tx=db.transaction('blobs','readwrite');tx.objectStore('blobs').put({id,blob,ts:Date.now()});tx.oncomplete=()=>res();tx.onerror=()=>rej();}));}
+function veDBget(id){return veDB().then(db=>new Promise((res,rej)=>{const tx=db.transaction('blobs','readonly');const rq=tx.objectStore('blobs').get(id);rq.onsuccess=()=>{const v=rq.result;if(v&&v.blob)res(v.blob);else rej(new Error('nf'));};rq.onerror=()=>rej(new Error('nf'));}));}
+function veRenderHistory(){
+  const box=document.getElementById('veHist');if(!box)return;
+  const h=state.videoEnh.history;
+  if(!h.length){box.innerHTML='<div class="ve-empty">还没有处理记录，去增强第一个视频吧～</div>';return;}
+  box.innerHTML=h.map(it=>'<div class="ve-hist-item"><div><div class="hi-name">'+esc(it.name||'视频')+'</div><div class="hi-meta">'+(it.hasBlob?'增强后已存档':'原片')+' · '+new Date(it.ts).toLocaleDateString()+'</div></div><button onclick="veWatch(\''+it.id+'\')">▶ 重看</button></div>').join('');
+}
+function veWatch(id){
+  const it=state.videoEnh.history.find(x=>x.id===id);if(!it)return;
+  veDBget(id).then(blob=>{
+    const url=URL.createObjectURL(blob);
+    const base=document.getElementById('veBase'),top=document.getElementById('veTop');
+    document.getElementById('veCmp').style.display='block';
+    base.src=url;top.src=url;top.style.filter=veBuildFilter(it.params||veParams());
+    base.play().catch(()=>{});top.currentTime=0;
+    veStatus('处理完成');toast('正在播放历史增强视频');
+  }).catch(()=>toast('该历史视频已失效，请重新处理'));
+}
+function veDownload(){
+  if(veOutBlob){const a=document.createElement('a');a.href=URL.createObjectURL(veOutBlob);a.download=(veFileName||'video')+'_enhanced.'+(String(veOutBlob.type).indexOf('mp4')>=0?'mp4':'webm');document.body.appendChild(a);a.click();a.remove();toast('已保存到下载文件夹 📥');}
+  else if(veOutSrc){const a=document.createElement('a');a.href=veOutSrc;a.download=(veFileName||'video')+'_enhanced';document.body.appendChild(a);a.click();a.remove();toast('已尝试保存');}
+  else toast('暂无可导出的增强视频');
+}
+function veCopyLink(){
+  const url=veOutBlob?URL.createObjectURL(veOutBlob):veOutSrc;
+  if(!url){toast('暂无链接');return;}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(()=>toast('已复制增强视频本地链接（同浏览器可打开）')).catch(()=>toast('复制失败'));}
+  else toast('当前环境不支持复制');
+}
+function veRestart(){veOutBlob=null;veOutSrc=null;document.getElementById('veDone').classList.remove('show');document.getElementById('veProg').classList.remove('show');document.getElementById('veBar').style.width='0%';veStatus('待处理');toast('已重置，调整参数再处理吧');}
+function veSaveTpl(){const name=prompt('给这个模板起个名字：','我的高清预设');if(!name)return;state.videoEnh.templates.push({name,params:veParams()});saveSilent();toast('⭐ 已保存模板：'+name);}
+function m10ToVideoEnhance(){switchModule('m11');toast('粘贴或上传片源，Buddy 帮你一键高清增强～');}
+(function(){
+  const fileEl=document.getElementById('veFile');
+  if(fileEl)fileEl.addEventListener('change',function(e){const f=e.target.files[0];if(!f)return;veBlob=f;veSrc=URL.createObjectURL(f);veFileName=f.name.replace(/\.[^.]+$/,'')||'video';const h=document.getElementById('veUpHint');if(h){h.style.display='block';document.getElementById('veUpName').textContent=f.name;}});
+  const cmp=document.getElementById('veCmp'),slider=document.getElementById('veSlider'),top=document.getElementById('veTop');
+  if(cmp&&slider&&top){
+    let drag=false;
+    function move(x){const r=cmp.getBoundingClientRect();let pct=Math.max(0,Math.min(100,(x-r.left)/r.width*100));slider.style.left=pct+'%';top.style.clipPath='inset(0 0 0 '+pct+'%)';}
+    cmp.addEventListener('pointerdown',e=>{drag=true;move(e.clientX);});
+    window.addEventListener('pointermove',e=>{if(drag)move(e.clientX);});
+    window.addEventListener('pointerup',()=>{drag=false;});
+  }
+})();
+
 function closeTrophy(){document.getElementById('trophy-pop').classList.remove('show');}
 function burst(target){
   const r=target.getBoundingClientRect();
