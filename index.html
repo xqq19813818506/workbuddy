@@ -385,6 +385,15 @@
   .fc-badge .bd{font-size:9.5px;color:#9083a8;margin-top:3px;line-height:1.4}
   .fc-badge .lock{position:absolute;top:8px;right:10px;font-size:13px}
   .fc-empty{text-align:center;color:#a89bbd;font-size:12px;padding:18px 0}
+  /* ===== 全屏陪伴小猫 Buddy ===== */
+  #buddyCat{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;font-size:40px;line-height:1;will-change:transform;filter:drop-shadow(0 5px 7px rgba(120,90,180,.28));display:none}
+  #buddyCat .bc{display:inline-block}
+  #buddyCat.walking .bc{animation:catwalk .42s ease-in-out infinite}
+  #buddyCat.idle .bc{animation:catbreathe 2.6s ease-in-out infinite}
+  @keyframes catwalk{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-7px) rotate(4deg)}}
+  @keyframes catbreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  #buddyCat .bubble{position:absolute;left:50%;top:-26px;transform:translateX(-50%);background:#fff;color:#7a4fc0;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.1);opacity:0;transition:opacity .3s}
+  #buddyCat .bubble.show{opacity:1}
 
   .rec-btn{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ff8aa8,#e06090);border:none;color:#fff;font-size:26px;cursor:pointer;box-shadow:0 6px 16px rgba(224,96,144,.4);transition:all .2s}
   .rec-btn:active{transform:scale(.92)}
@@ -1542,6 +1551,7 @@
 <div class="modal-mask" id="camMask" onclick="if(event.target===this)closeCam()"><div class="modal-card" id="camCard"></div></div>
 
 <canvas id="fx"></canvas>
+<div id="buddyCat"><span class="bc">🐱</span><span class="bubble" id="buddyBubble"></span></div>
 <input type="file" id="backupFile" accept="application/json,.json" style="display:none" onchange="backupDoImport(this)">
 
 <div id="focusCenter">
@@ -3671,6 +3681,36 @@ function renderFinSummary(){
   +warn;
 }
 function lastMonth(mk){const y=+mk.split('-')[0],m=+mk.split('-')[1];const d=new Date(y,m-2,1);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
+
+/* ===== 全屏陪伴小猫 Buddy（点哪跑哪） ===== */
+let bob={x:0,y:0,tx:0,ty:0,fc:1};
+function bobInit(){const el=document.getElementById('buddyCat');if(!el)return;bob.x=innerWidth/2;bob.y=innerHeight-90;bob.tx=bob.x;bob.ty=bob.y;el.classList.add('idle');setBob();}
+function setBob(){const el=document.getElementById('buddyCat');if(!el)return;el.style.transform='translate('+(bob.x-20)+'px,'+(bob.y-20)+'px) scaleX('+bob.fc+')';}
+function bobHide(){const i=document.getElementById('focusImmerse');return (i&&i.classList.contains('show'));}
+function bobLoop(){
+  const el=document.getElementById('buddyCat');
+  if(el){
+    if(bobHide()){el.style.display='none';}
+    else{
+      el.style.display='block';
+      const dx=bob.tx-bob.x,dy=bob.ty-bob.y,dist=Math.hypot(dx,dy);
+      if(dist>2.5){
+        const sp=Math.min(Math.max(dist*0.14,2.4),22); // 缓动 + 靠近目标自动减速
+        bob.x+=dx/dist*sp;bob.y+=dy/dist*sp;
+        if(dx<-0.5)bob.fc=-1;else if(dx>0.5)bob.fc=1;
+        if(!el.classList.contains('walking')){el.classList.add('walking');el.classList.remove('idle');}
+        setBob();
+      }else if(el.classList.contains('walking')){el.classList.remove('walking');el.classList.add('idle');}
+      // 保持在可视范围内
+      if(bob.x<14)bob.x=14;if(bob.x>innerWidth-14)bob.x=innerWidth-14;
+      if(bob.y<14)bob.y=14;if(bob.y>innerHeight-14)bob.y=innerHeight-14;
+    }
+  }
+  requestAnimationFrame(bobLoop);
+}
+function bobSay(t){const b=document.getElementById('buddyBubble');if(!b)return;b.textContent=t;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),1800);}
+document.addEventListener('pointerdown',e=>{const c=document.getElementById('buddyCat');if(!c||c.style.display==='none')return;if(e.target.closest('#buddyCat'))return;bob.tx=Math.max(20,Math.min(innerWidth-20,e.clientX));bob.ty=Math.max(20,Math.min(innerHeight-20,e.clientY));});
+bobInit();bobLoop();
 
 function init(){
   loadAll();
