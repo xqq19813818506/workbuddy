@@ -5299,7 +5299,7 @@ function openM1Detail(type){
     body+='<div class="field"><label>📜 菜名池（每行一道，自己编辑保存）</label><textarea id="m1-pool" style="width:100%;min-height:120px;padding:9px;border-radius:12px;border:2px solid #efe6da;font-family:inherit;font-size:12px;outline:none">'+esc(pool)+'</textarea></div>';
     body+='<div class="field"><label>🎯 配套题：今天想吃哪种口味？<small style="color:#a0938a">(选完给推荐)</small></label><div class="segs" id="m1-taste-segs"><div class="seg" onclick="segPick(this);m1PickTaste()">辣味</div><div class="seg" onclick="segPick(this);m1PickTaste()">清淡</div><div class="seg" onclick="segPick(this);m1PickTaste()">快手菜</div><div class="seg" onclick="segPick(this);m1PickTaste()">喝汤</div></div></div>';
     body+='<div id="m1-pick-out"></div>';
-    var actions='<div class="modal-actions"><button class="btn-primary" onclick="m1Save(\'jianjue\')">💾 保存菜名</button><button class="btn-primary" onclick="m1RollFromPool()">🎲 随机抽一个</button><button class="btn-ghost" onclick="closeModal()">关闭</button></div>';
+    var actions='<div class="modal-actions"><button class="btn-primary" onclick="m1Save(\'jianjue\')">💾 保存菜名</button><button class="btn-primary" onclick="m1RollFromPool(this)">🎲 随机抽一个</button><button class="btn-ghost" onclick="closeModal()">关闭</button></div>';
   } else {
     const labels={tangshi:'店名+地址+避雷菜品',waimai:'套餐名+大概热量',ziji:'菜品 + 食材 + 步骤'};
     body+='<div class="sec-sub" style="margin-left:0">'+labels[type]+'，可加可改可删，自动保存</div>';
@@ -5315,7 +5315,7 @@ function m1Save(type){
   if(type==='jianjue'){
     const v=document.getElementById('m1-pool').value;
     state.m1Custom.jianjue=v.split('\n').map(s=>s.trim()).filter(Boolean);
-    saveSilent();alert('菜名池已保存，骰子按钮会用这里～');
+    saveSilent();toast('💾 菜名池已保存，点 🎲 就能抽啦');
   }
 }
 function m1Add(type){
@@ -5345,9 +5345,29 @@ function m1PickTaste(){
   const rec=(tasteMap[t]||DISHES).slice();rec.sort(()=>Math.random()-.5);
   document.getElementById('m1-pick-out').innerHTML='<div class="sum-advice" style="margin-top:8px">根据你选「'+t+'」，推荐：<b>'+rec[0]+'</b> / 备选 '+rec[1]+'<br>分析：'+t+'类口味特点 <span style="color:#c0651a">'+tips[t]+'</span>～记得配一份蔬菜，主食不超过一拳～</div>';
 }
-function m1RollFromPool(){
-  const pool=(state.m1Custom&&state.m1Custom.jianjue)||DISHES;
-  alert('🎲 今天吃：'+pool[Math.floor(Math.random()*pool.length)]);
+function m1RollFromPool(btn){
+  const raw=(state.m1Custom&&state.m1Custom.jianjue);
+  let pool=(raw&&raw.length?raw:DISHES).filter(s=>s&&s.trim());
+  if(!pool.length){toast('菜名池是空的，先点「💾 保存菜名」填几道菜～');return;}
+  // 选中口味则优先从口味映射里抽（兼顾自定义菜名）
+  const seg=document.querySelector('#modalCard .segs .seg.active');
+  const t=seg?seg.textContent:'';
+  const tasteMap={辣味:['宫保鸡丁','麻婆豆腐','红烧排骨','酸辣土豆丝','可乐鸡翅'],清淡:['清蒸鲈鱼','凉拌黄瓜','蒜蓉西兰花'],快手菜:['番茄炒蛋','凉拌黄瓜','葱油拌面','蒜蓉西兰花'],喝汤:['紫菜蛋花汤','番茄蛋花汤']};
+  const flavorHits=t?tasteMap[t]||[]:[];
+  const flavorPool=pool.filter(d=>flavorHits.some(h=>d.indexOf(h)>=0));
+  const pickPool=flavorPool.length?flavorPool:pool;
+  const pick=pickPool[Math.floor(Math.random()*pickPool.length)];
+  const tips={辣味:'浓郁开胃超下饭',清淡:'少油少盐不油腻',快手菜:'15分钟搞定',喝汤:'滋润暖胃'};
+  const flavorNote=t?('<span style="color:#c0651a">（按你选的「'+t+'」口味抽的）</span>'):'（从菜名池随机抽）';
+  document.getElementById('m1-pick-out').innerHTML=
+    '<div class="sum-advice" style="margin-top:10px;text-align:center;padding:14px 12px;background:linear-gradient(135deg,#fff4e6,#ffe1c2);border:2px dashed #ffae6c">'+
+      '<div style="font-size:13px;color:#a07050;margin-bottom:4px">🎲 骰子已经落了 '+flavorNote+'</div>'+
+      '<div style="font-size:22px;font-weight:800;color:#e0567f;letter-spacing:2px;text-shadow:0 2px 0 rgba(255,200,180,.6)">'+esc(pick)+'</div>'+
+      (t&&tips[t]?('<div style="font-size:12px;color:#806050;margin-top:6px">口味特点：'+tips[t]+'～记得配一份蔬菜，主食不超过一拳</div>'):'')+
+    '</div>';
+  if(btn){try{burst(btn);}catch(e){}}
+  burstFW();
+  toast('🎲 命中：'+pick);
 }
 
 /* ===== m4 配套实战题（每天3道，按日期变换+作答后分析） ===== */
