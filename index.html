@@ -1348,6 +1348,65 @@
 .bk-row .btn-ghost{background:#fff;border:1.5px solid #ffc6a0;color:#c0651a}
 .bk-row button:active{transform:scale(.96)}
 
+/* ===== 医识小乐园 / 表达小剧场（并入工作台，本地数据互通） ===== */
+.game-banner{margin:10px 12px;border-radius:20px;padding:14px;color:#fff;position:relative;overflow:hidden;box-shadow:0 6px 16px rgba(150,120,200,.18)}
+.game-banner.med{background:linear-gradient(135deg,#7fd1c4,#5ab0e0)}
+.game-banner.exp{background:linear-gradient(135deg,#ff9ab0,#b07cff)}
+.game-banner .gb-t{font-size:16px;font-weight:900}
+.game-banner .gb-s{font-size:10.5px;opacity:.92;margin:3px 0 9px;line-height:1.5}
+.game-banner .gb-go{display:inline-block;background:#fff;color:#5a3d8a;font-weight:800;font-size:12px;padding:6px 14px;border-radius:99px}
+.yl-tabs{display:flex;gap:6px;margin:4px 12px}
+.yl-tab{flex:1;text-align:center;font-size:11px;font-weight:800;padding:8px 4px;border-radius:14px;background:#f3eefb;color:#8a7aa0;cursor:pointer}
+.yl-tab.on{background:linear-gradient(135deg,#ffb07a,#ff8a5a);color:#fff}
+.yl-body{margin:8px 12px 4px}
+.det-patient{background:#eaf6ff;border:2px solid #bfe3ff;border-radius:18px;padding:12px;margin-bottom:8px;position:relative}
+.det-patient .dp-who{font-size:11px;font-weight:800;color:#2a7fb8}
+.det-patient .dp-say{font-size:13px;color:#2a3a44;line-height:1.7;margin-top:5px}
+.det-patient .dp-emoji{position:absolute;right:10px;top:8px;font-size:30px;animation:dpulse 1.4s infinite}
+@keyframes dpulse{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.12) rotate(4deg)}}
+.det-q{font-size:13px;font-weight:800;margin:8px 2px 6px;color:#3d3a3a}
+.det-opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid #e6dcef;border-radius:14px;padding:10px 12px;margin:6px 0;font-size:13px;font-weight:700;color:#4a3d55;cursor:pointer}
+.det-opt:active{transform:scale(.98)}
+.det-opt.ok{border-color:#5ac080;background:#e8f7ee;color:#2f7a4d}
+.det-opt.no{border-color:#e08a8a;background:#fdeaea;color:#b03a3a}
+.det-hint{font-size:11px;color:#b06a2a;background:#fff4ec;border-radius:12px;padding:8px 10px;margin:6px 0;line-height:1.6}
+.det-card{background:#fff;border-radius:18px;padding:14px;margin:8px 0;box-shadow:0 4px 12px rgba(120,100,180,.12)}
+.det-card .dc-t{font-size:15px;font-weight:900;color:#6a3d9e;margin-bottom:8px}
+.det-card .dc-sec{margin-bottom:6px;font-size:11.5px;line-height:1.6;color:#4a3d55}
+.det-card .dc-sec b{color:#c0651a}
+.germ-area{position:relative;height:300px;background:linear-gradient(180deg,#eafaff,#f3f0ff);border-radius:18px;overflow:hidden;margin:8px 0}
+.germ{position:absolute;font-size:30px;cursor:pointer;user-select:none;transition:transform .1s;animation:gfloat 3s infinite ease-in-out}
+@keyframes gfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.germ:active{transform:scale(1.3)}
+.germ-pop{position:absolute;font-size:11px;background:#fff;border-radius:10px;padding:4px 7px;box-shadow:0 3px 8px rgba(0,0,0,.12);max-width:160px;line-height:1.4;pointer-events:none}
+.exp-bar{height:14px;background:#eee;border-radius:99px;overflow:hidden;margin:6px 0}
+.exp-bar i{display:block;height:100%;background:linear-gradient(90deg,#8ab6ff,#6a7bff);transition:width .4s}
+.exp-line{font-size:11px;color:#6a5d70;display:flex;justify-content:space-between}
+.badge-row{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.badge{font-size:10px;background:#fff;border:1.5px solid #e6dcef;border-radius:99px;padding:5px 10px;color:#9a8aa8}
+.badge.on{background:linear-gradient(135deg,#ffd98a,#ffb07a);color:#fff;border:none;font-weight:800}
+/* 表达小剧场 */
+.th-list{display:flex;flex-direction:column;gap:7px;margin:8px 0}
+.th-item{background:#fff;border:1.5px solid #f0d9e6;border-radius:14px;padding:10px 12px;cursor:pointer}
+.th-item .th-t{font-size:13px;font-weight:800;color:#c0507a}
+.th-item .th-m{font-size:10px;color:#b08aa0;margin-top:2px}
+.th-play{background:#fff;border-radius:18px;padding:12px;margin:8px 0;box-shadow:0 4px 12px rgba(180,120,200,.12)}
+.th-round{font-size:10px;color:#a08ab0;margin-bottom:3px}
+.th-npc{display:flex;gap:8px;align-items:flex-start;margin:6px 0}
+.th-npc .th-ava{font-size:28px;animation:dpulse 1.6s infinite}
+.th-npc .th-bub{background:#f3ecff;border-radius:14px;padding:9px 11px;font-size:13px;line-height:1.6;color:#3d3a44;flex:1}
+.th-npc.me .th-bub{background:#e6f7ee}
+.th-timer{text-align:center;font-size:12px;color:#c0651a;font-weight:800;margin:4px 0}
+.th-input{width:100%;min-height:84px;border:1.5px solid #e6dcef;border-radius:14px;padding:9px;font-size:13px;resize:vertical;font-family:inherit}
+.th-report{background:#fff;border-radius:18px;padding:12px;margin:8px 0;box-shadow:0 4px 12px rgba(180,120,200,.12)}
+.th-report .rp-sec{margin-bottom:8px}
+.th-report .rp-h{font-size:12px;font-weight:900;margin-bottom:4px}
+.th-report .rp-h.ok{color:#2f7a4d}.th-report .rp-h.bad{color:#c0392b}.th-report .rp-h.tip{color:#8a5ac0}
+.th-report .rp-li{font-size:11.5px;line-height:1.7;color:#4a3d55;margin-left:2px}
+.th-report .tag{display:inline-block;background:#f3ecff;color:#7a4fc0;border-radius:99px;font-size:10px;padding:3px 9px;margin:3px 4px 0 0}
+.th-report .rp-std{background:#fbf3ea;border-radius:12px;padding:8px 10px;font-size:11.5px;line-height:1.7;color:#5a3d2a}
+.th-hist{font-size:11px;color:#6a5d70;background:#faf6f1;border-radius:12px;padding:8px 10px;margin:5px 0;line-height:1.6}
+
 </style>
 </head>
 <body>
@@ -1629,6 +1688,20 @@
   <div class="modal-mask" id="m6DiseaseMask" onclick="if(event.target===this)m6CloseDisease()">
     <div class="modal-card dz-card" id="m6DiseaseCard"></div>
   </div>
+  <!-- ===== 医识小乐园（并入学习模块，数据互通） ===== -->
+  <div class="game-banner med">
+    <div class="gb-t">🩺 医识小乐园</div>
+    <div class="gb-s">把疾病知识变闯关游戏：症状侦探·病菌大作战·成长激励；闯关进度、错题同步到本模块与每日计划 ✨</div>
+    <span class="gb-go" onclick="ylOpen()">进入小乐园 ▸</span>
+  </div>
+  <div id="ylWrap" style="display:none">
+    <div class="yl-tabs">
+      <div class="yl-tab on" data-m="detect" onclick="ylTab(this,'detect')">🔍 症状侦探</div>
+      <div class="yl-tab" data-m="germ" onclick="ylTab(this,'germ')">🦠 病菌大作战</div>
+      <div class="yl-tab" data-m="grow" onclick="ylTab(this,'grow')">⭐ 成长中心</div>
+    </div>
+    <div class="yl-body" id="ylBody"></div>
+  </div>
 </section>
       <section class="module" id="m7">
   <div class="cal" data-mod="m7">
@@ -1780,7 +1853,22 @@
   <div class="sec-title">话术参考 · 模板 · 配套题 · 答完分析</div>
   <div class="sec-sub">每张话术卡：场景介绍 → 完整话术示例 → 四段式模板 → 配套情景题（作答后即给分析）</div>
   <div id="talk-cards-m9"></div>
-  <div class="tip">💬 <b>表达小练</b>：说话先结论后理由；拒绝时用"肯定+转折+替代方案"；汇报用"结果-过程-下一步"。每天录1段，21天表达明显更利落～</div></section>
+  <div class="tip">💬 <b>表达小练</b>：说话先结论后理由；拒绝时用"肯定+转折+替代方案"；汇报用"结果-过程-下一步"。每天录1段，21天表达明显更利落～</div>
+  <!-- ===== 表达小剧场（并入表达能力，数据互通） ===== -->
+  <div class="game-banner exp">
+    <div class="gb-t">🎭 表达小剧场</div>
+    <div class="gb-s">动画情景对话训练：面试/日常/辩论/即兴，自由输入回答；结束生成专属复盘报告，记录同步到本模块 ✨</div>
+    <span class="gb-go" onclick="thOpen()">进入小剧场 ▸</span>
+  </div>
+  <div id="thWrap" style="display:none">
+    <div class="yl-tabs">
+      <div class="yl-tab on" data-m="sel" onclick="thTab(this,'sel')">🎬 选剧本</div>
+      <div class="yl-tab" data-m="hist" onclick="thTab(this,'hist')">📜 历史复盘</div>
+      <div class="yl-tab" data-m="tpl" onclick="thTab(this,'tpl')">📋 模板库</div>
+    </div>
+    <div class="yl-body" id="thBody"></div>
+  </div>
+</section>
 <section class="module" id="m10">
   <div class="progress-card pc-movie">
     <div class="visual">🍿</div>
@@ -2144,9 +2232,11 @@ function defaultState(){
     prep:{},
     water:{goal:2000,log:[]},
     exercise:{goal:30,log:[]},
-    disease:{wrong:[],review:{},lib:{}},
+    disease:{wrong:[],review:{},lib:{},detective:{done:0,correct:0}},
     flips:{m6:[],m9:[]},
+    gameExp:0,gameBadge:{},
     studyTasks:[],
+    expTheater:{history:[],fav:[],wrong:[]},expCount:0,
     fin:{records:[],cycles:[],goal:2000,balance:0},
     remind:{m1:{alarm:true,sms:true},m2:{alarm:true,sms:true},m3:{alarm:true,sms:true},m4:{alarm:true,sms:true},m5:{alarm:true,sms:true},m6:{alarm:true,sms:true},m7:{alarm:true,sms:true},m8:{alarm:true,sms:true},m9:{alarm:true,sms:true},m10:{alarm:true,sms:true}},
     checkins:{},
@@ -2224,7 +2314,7 @@ function updateProgress(mod){
   if(mod==='m8'){const u=state.unlock||{};const n=['u1','u2','u3','u4','u5'].filter(k=>u[k]).length;setNum('c-m8-n',n);setBar('bar-m8',n/5*100);
     const go=document.getElementById('go-btn');const note=document.getElementById('lock-note-m8');
     if(n===5){go.classList.add('on');if(note)note.style.display='none';}else{go.classList.remove('on');if(note)note.style.display='';}}
-  if(mod==='m9'){const n=state.recCount+state.topicCount;setNum('c-m9-n',n);setBar('bar-m9',Math.min(n/3,1)*100);}
+  if(mod==='m9'){const n=(state.recCount||0)+(state.topicCount||0)+(state.expCount||0);setNum('c-m9-n',n);setBar('bar-m9',Math.min(n/3,1)*100);}
   if(mod==='m11'){const n=state.videoEnh.history.length;const e=document.getElementById('c-m11-n');if(e)e.textContent=n;}
   if(mod==='m12'){const n=(state.docs&&state.docs.list)?state.docs.list.length:0;const e=document.getElementById('c-m12-n');if(e)e.textContent=n;setBar('bar-m12',Math.min(n/5,1)*100);}
   if(mod==='m10'){const mv=state.movie||{};const done=(mv.history||[]).filter(x=>x.type==='work'&&x.date&&x.date.slice(0,7)===todayStr().slice(0,7)).length;const goal=mv.goal||12;setNum('c-m10-n',done);setNum('c-m10-t',goal);setBar('bar-m10',goal?Math.min(done/goal,1)*100:0);if(done>=goal&&!mv.badge){mv.badge=true;saveSilent();setTimeout(()=>{burstFW();alert('🎬 恭喜解锁「观影达人」徽章！本月已看 '+done+' 部，小猫给你撒星星～');},400);}}
@@ -4482,7 +4572,38 @@ const DISEASE_DB=[
  {name:'急性心梗(STEMI)',cat:'心血管',病因:'冠脉不稳定斑块破裂→急性血栓形成→管腔闭塞',机制:'急性缺血→心肌坏死（持续>20分钟多不可逆）',表现:'持续胸骨后压榨样剧痛>30min、冷汗濒死感、硝酸甘油不缓解',检查:'心电图ST段抬高；肌钙蛋白I/T显著升高；胸痛中心绿色通道',治疗:'早期再灌注（PCI优先/溶栓）；双抗+抗凝+他汀；防治并发症',注意:'绝对卧床、立即呼救120、嚼服阿司匹林、避免用力',鉴别:'与心绞痛（短暂可缓解）、主动脉夹层（撕裂样痛）鉴别',考点:'门球时间<90分钟；ST抬高型与非ST抬高型策略不同'},
  {name:'社区获得性肺炎',cat:'呼吸',病因:'细菌（肺炎链球菌多见）、病毒、支原体感染',机制:'病原体侵袭肺泡→炎症渗出→肺实变',表现:'发热、咳嗽咳痰（铁锈色痰）、胸痛、呼吸困难',检查:'胸片/胸部CT浸润影；血常规WBC↑；CRP/PCT↑',治疗:'按病原抗菌（青霉类/头孢/呼吸喹诺酮）；支持对症',注意:'多饮水、排痰、充分休息；老年人警惕重症',鉴别:'与肺结核（慢性、低热盗汗）、肺癌鉴别',考点:'肺炎链球菌典型铁锈色痰；支原体首选大环内酯类'},
  {name:'甲亢(Graves病)',cat:'内分泌',病因:'自身免疫（TRAb）刺激甲状腺',机制:'TSH受体抗体激活→甲状腺激素过量→高代谢',表现:'心悸、怕热多汗、消瘦、易怒、突眼、甲状腺肿大',检查:'FT3/FT4↑、TSH↓；TRAb阳性；摄碘率↑',治疗:'抗甲状腺药（甲巯咪唑）、放射性碘、手术；β阻滞剂对症',注意:'低碘饮食、避免劳累与精神刺激、定期查甲功和白细胞',鉴别:'与亚急性甲状腺炎（疼痛、摄碘率↓）、嗜铬细胞瘤鉴别',考点:'突眼与TRAb相关；用药警惕粒细胞减少/肝损害'},
- {name:'肝硬化',cat:'消化',病因:'乙肝/丙肝、酒精、脂肪肝、自身免疫性肝病',机制:'肝细胞坏死→纤维增生→假小叶形成→门脉高压',表现:'乏力纳差、肝掌蜘蛛痣、腹水、脾大、黄疸',检查:'肝功能异常、白蛋白↓、凝血↓；超声/CT脾大腹水；胃镜食管静脉曲张',治疗:'病因治疗（抗病毒/戒酒）、利尿消腹水、蛋白支持；肝移植',注意:'忌酒、软食防食管静脉破裂、限盐、监测腹水',鉴别:'与肝癌（AFP↑、占位）、淤血性肝大鉴别',考点:'门脉高压三大表现（脾大、腹水、侧支循环）；食管静脉破裂大出血'}
+ {name:'肝硬化',cat:'消化',病因:'乙肝/丙肝、酒精、脂肪肝、自身免疫性肝病',机制:'肝细胞坏死→纤维增生→假小叶形成→门脉高压',表现:'乏力纳差、肝掌蜘蛛痣、腹水、脾大、黄疸',检查:'肝功能异常、白蛋白↓、凝血↓；超声/CT脾大腹水；胃镜食管静脉曲张',治疗:'病因治疗（抗病毒/戒酒）、利尿消腹水、蛋白支持；肝移植',注意:'忌酒、软食防食管静脉破裂、限盐、监测腹水',鉴别:'与肝癌（AFP↑、占位）、淤血性肝大鉴别',考点:'门脉高压三大表现（脾大、腹水、侧支循环）；食管静脉破裂大出血'},
+ {name:'慢性右心衰',cat:'心血管',病因:'左心衰迁延、肺心病、右室梗死、瓣膜病（二尖瓣/三尖瓣）',机制:'右室收缩力↓→体循环淤血（静脉压↑）',表现:'颈静脉怒张、肝大压痛、双下肢水肿、腹胀纳差、胃肠道淤血',检查:'BNP↑、超声示右心扩大、下腔静脉增宽、肝淤血',治疗:'利尿、治疗原发病（肺心病抗感染、瓣膜病手术）、限钠',注意:'记录每日体重与尿量、限盐、抬高下肢',鉴别:'与肝硬化腹水鉴别（右心衰有颈静脉怒张、肝颈静脉回流征+）',考点:'肝颈静脉回流征阳性是右心衰特征；体循环淤血为主'},
+ {name:'脑出血',cat:'神经',病因:'高血压性脑小动脉破裂（最常见）、动脉瘤、血管畸形、外伤',机制:'血管破裂→脑实质内血肿→占位+周围水肿→神经功能缺损',表现:'活动中骤然剧烈头痛、呕吐、偏瘫、意识障碍，常伴高血压史',检查:'头颅CT示高密度血肿灶；血压显著升高',治疗:'控制血压、降颅压、必要时血肿清除/微创引流；防止再出血',注意:'绝对卧床、少搬动、控血压、保持大便通畅防再出血',鉴别:'与脑梗死（安静起病、CT低密度）鉴别；与蛛网膜下腔出血（剧烈头痛、脑膜刺激征）鉴别',考点:'活动中起病+高血压史+CT高密度→脑出血；降压防再出血'},
+ {name:'脑梗死',cat:'神经',病因:'大动脉粥样硬化、心源性栓塞、小血管病变',机制:'血栓形成/栓塞→脑供血中断→缺血性坏死',表现:'安静或睡眠中起病，偏瘫、失语、面瘫，多无头痛呕吐',检查:'头颅CT早期可正常、24h后低密度灶；MRI-DWI高信号；血管评估',治疗:'时间窗内静脉溶栓/取栓；抗聚、他汀、康复',注意:'识别FAST症状早送医、控制危险因素、早期康复',鉴别:'与脑出血（活动中伴头痛呕吐、CT高密度）鉴别',考点:'时间窗是溶栓取栓关键；安静起病+CT低密度→脑梗死'},
+ {name:'消化性溃疡',cat:'消化',病因:'幽门螺杆菌感染、NSAIDs药物、胃酸过多、应激',机制:'黏膜防御失衡→胃酸/蛋白酶自身消化→黏膜缺损',表现:'慢性、周期性、节律性上腹痛；十二指肠者空腹痛/夜间痛、进食缓解',检查:'胃镜见溃疡灶；C13/C14呼气试验查Hp；钡餐',治疗:'抑酸（PPI）、根除Hp（四联）、保护黏膜、停NSAIDs',注意:'规律饮食、忌辛辣酒、根除Hp防复发、警惕黑便',鉴别:'与胃癌（年龄大、体重下降、溃疡质硬）鉴别',考点:'十二指肠球部溃疡空腹痛夜间痛、进食缓解；PPI+四联根除Hp'},
+ {name:'支气管哮喘',cat:'呼吸',病因:'遗传过敏体质＋环境（尘螨、花粉、冷空气、运动）',机制:'气道慢性炎症→气道高反应→可逆性气流受限',表现:'反复发作喘息、气促、胸闷、咳嗽，双肺哮鸣音，可自行或用药缓解',检查:'肺功能支气管激发/舒张试验阳性；呼气峰流速变异率↑',治疗:'吸入糖皮质激素+β2激动剂、白三烯调节剂、回避诱因',注意:'随身备急救药、避过敏原、规律吸入、记哮喘日记',鉴别:'与COPD鉴别（哮喘青年、可逆、过敏史；COPD渐进、不可逆）',考点:'可逆性气流受限是核心；急救用短效β2激动剂'},
+ {name:'肾病综合征',cat:'泌尿',病因:'原发（微小病变、膜性）或继发（糖尿病、狼疮、乙肝）',机制:'肾小球滤过屏障受损→大量蛋白尿→低蛋白血症',表现:'大量蛋白尿、低蛋白血症、高度水肿（眼睑/双下肢）、高脂血症',检查:'24h尿蛋白>3.5g；白蛋白<30g/L；血脂↑；肾穿刺明确病理',治疗:'激素/免疫抑制剂、利尿消肿、ACEI降蛋白尿、降脂',注意:'优质蛋白饮食、防感染血栓、限盐、定期复查尿蛋白',鉴别:'与肾炎综合征（血尿高血压、非大量蛋白尿）鉴别',考点:'三高一低（大量蛋白尿、低白蛋白、高度水肿、高脂）'},
+ {name:'痛风',cat:'风湿',病因:'嘌呤代谢异常→尿酸生成过多或排泄减少',机制:'血尿酸↑→尿酸盐结晶沉积关节/肾',表现:'单关节急性红热剧痛（常第一跖趾），反复发作、痛风石',检查:'血尿酸↑；关节超声见双轨征；关节液见尿酸盐结晶',治疗:'急性期秋水仙碱/NSAIDs、间歇期别嘌醇/非布司他降尿酸',注意:'低嘌呤饮食、忌酒（尤啤酒）、多饮水、控制体重',鉴别:'与蜂窝织炎（红肿热痛但非单关节骤起）、假性痛风鉴别',考点:'第一跖趾关节红肿热痛+高尿酸；间歇期降尿酸防复发'}
+];
+/* 症状侦探 · 精选易混淆病例（答案均可在 DISEASE_DB 查到知识卡） */
+const CURATED_DETECTIVE=[
+ {scene:'老年男性，活动中突发剧烈头痛、喷射性呕吐、右侧肢体瘫痪、很快昏迷，有多年高血压史。CT 示脑内高密度灶。',q:'最可能是什么？',opts:['脑出血','脑梗死','偏头痛','癫痫'],ans:0,disease:'脑出血'},
+ {scene:'60岁男性，清晨醒来发现左侧肢体无力、说话含糊，无明显头痛呕吐，安静状态下起病。CT 24h 后示低密度灶。',q:'最可能是什么？',opts:['脑梗死','脑出血','低血糖','周围性面瘫'],ans:0,disease:'脑梗死'},
+ {scene:'慢性心衰患者，近期颈静脉怒张、肝脏肿大压痛、双下肢凹陷性水肿、腹胀纳差。',q:'更倾向哪一侧心衰？',opts:['慢性右心衰','慢性左心衰','肺栓塞','心肌炎'],ans:0,disease:'慢性右心衰'},
+ {scene:'患者劳力时胸闷气促，夜间阵发性呼吸困难、必须坐起才舒服，咳粉红色泡沫痰，双肺满布湿啰音。',q:'更符合哪种心衰？',opts:['慢性左心衰','慢性右心衰','支气管哮喘','社区获得性肺炎'],ans:0,disease:'慢性左心衰'},
+ {scene:'年轻女性，反复发作喘息胸闷，双肺可闻哮鸣音，自行喷药后缓解，有过敏性鼻炎史。',q:'最可能？',opts:['支气管哮喘','慢阻肺COPD','慢性左心衰','社区获得性肺炎'],ans:0,disease:'支气管哮喘'},
+ {scene:'长期吸烟老人，慢性咳嗽咳痰数年，近年走平路也气促，桶状胸，肺功能 FEV1/FVC<70%。',q:'最可能？',opts:['慢阻肺COPD','支气管哮喘','肺癌','肺结核'],ans:0,disease:'慢阻肺COPD'},
+ {scene:'中年男子，空腹痛、夜间痛，进食后缓解，反复发作上腹隐痛，C13 呼气试验阳性。',q:'最可能？',opts:['消化性溃疡','胃癌','慢性胆囊炎','急性胰腺炎'],ans:0,disease:'消化性溃疡'},
+ {scene:'中年男性，第一跖趾关节夜间骤然红热剧痛，以往也有类似发作，血尿酸 560 μmol/L。',q:'最可能？',opts:['痛风','蜂窝织炎','类风湿关节炎','骨关节炎'],ans:0,disease:'痛风'},
+ {scene:'青年，心悸怕热多汗、消瘦易怒、突眼、甲状腺肿大，FT3/FT4 升高、TSH 降低。',q:'最可能？',opts:['甲亢(Graves病)','甲状腺功能减退','2型糖尿病','心脏病'],ans:0,disease:'甲亢(Graves病)'},
+ {scene:'乙肝患者，近期腹胀、双下肢水肿、腹壁静脉曲张、脾大，胃镜见食管静脉迂曲。',q:'最可能？',opts:['肝硬化','原发性肝癌','慢性肾炎','慢性右心衰'],ans:0,disease:'肝硬化'},
+ {scene:'中年人，多饮多尿多食、体重下降，空腹血糖 13、尿糖阳性、血酮体阳性。',q:'诊断倾向？',opts:['2型糖尿病','尿崩症','甲亢(Graves病)','慢性肾盂肾炎'],ans:0,disease:'2型糖尿病'},
+ {scene:'学龄儿童，颜面眼睑水肿、尿量减少，尿检大量泡沫，血白蛋白低、胆固醇高。',q:'最可能？',opts:['肾病综合征','急性肾炎','尿路感染','肾结石'],ans:0,disease:'肾病综合征'}
+];
+/* 表达小剧场 · 剧本库 */
+const SCENARIO_DB=[
+ {mode:'面试',title:'医院面试·应急处理',intro:'模拟医护编制/医院面试中的应急情景题，NPC 会连环追问。',rounds:[{npc:'假如夜间值班时，两名患者同时突发不适，你该如何处理？',tip:'注意优先级与沟通顺序'},{npc:'如果其中一位家属情绪激动、不理解你的安排，你怎么沟通？',tip:'先共情再解释'}],std:'①先评估轻重缓急：危及生命者优先抢救、呼叫援手；②同步安抚另一位及家属，说明"先救急"原则；③事后补沟通记录。沟通用"肯定+解释+替代方案"。'},
+ {mode:'面试',title:'结构化自我介绍',intro:'1分钟自我介绍，突出与岗位匹配度。',rounds:[{npc:'请用1分钟介绍你自己，并说明为什么适合这个岗位。',tip:'背景-能力-动机 三段式'}],std:'背景：我是…（学历/规培）；能力：擅长…（举1例）；动机：认同贵院…文化。控制在1分钟内，少空话、有数据。'},
+ {mode:'日常',title:'委婉拒绝他人',intro:'朋友请你帮忙但不便时，练习得体拒绝。',rounds:[{npc:'这周末帮我加个班呗，就你最闲了～',tip:'拒绝也要给对方留台阶'}],std:'肯定+说明难处+替代建议："谢谢信任，但这周我已排满复查和备考，实在抽不开；要不我介绍小王？下次我请你吃饭赔罪。"'},
+ {mode:'日常',title:'安抚他人情绪',intro:'同事/家人焦虑时，练习先共情再给支持。',rounds:[{npc:'我真的好烦，今天又被领导说了……',tip:'先接住情绪，别急着给方案'}],std:'先共情："听得出你挺委屈的，换我也会烦。"再轻问："想说说具体怎么了吗？"最后给支持而非说教。'},
+ {mode:'辩论',title:'逻辑对抗·观点反驳',intro:'对方向你抛出观点，训练有理有据反驳。',rounds:[{npc:'我觉得规培生就该多干杂活，反正还在学。',tip:'用框架反驳：背景-问题-原因-方案'}],std:'①背景：规培既是学习也是劳动力；②问题：只干杂活学不到核心技能；③方案：分层安排，杂活与跟诊/操作按比例。结论：既要干活也要成长。'},
+ {mode:'即兴',title:'即兴表达·社会热点',intro:'随机话题，限时组织观点。',rounds:[{npc:'你怎么看"AI 会不会取代医生"这个话题？',tip:'限时思考，先结论后理由'}],std:'结论先行：不会完全取代，但会改变医生角色。理由：①AI 擅长影像与数据处理，难替人文关怀与最终决策；②医生转向"AI 协作者"。收尾：拥抱工具、强化不可替代力。'}
 ];
 function addDays(ds,n){const d=new Date(ds+'T00:00:00');d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function m6SearchDisease(q){
@@ -6344,6 +6465,152 @@ function submitTopic(){
   html+='</div>';
   document.getElementById('topic-anls').innerHTML=html;
 }
+
+/* ================= 医识小乐园（并入 m6 学习模块，本地数据互通） ================= */
+function addExp(n){state.gameExp=(state.gameExp||0)+n;saveSilent();}
+function ylTodayInc(k){state.ylToday=state.ylToday||{date:'',det:0,germ:0};if(state.ylToday.date!==todayStr())state.ylToday={date:todayStr(),det:0,germ:0};state.ylToday[k]=(state.ylToday[k]||0)+1;}
+let ylDetCursor=0;
+function ylOpen(){const w=document.getElementById('ylWrap');const open=w.style.display!=='none';w.style.display=open?'none':'block';if(!open)ylRenderDetect();}
+function ylTab(btn,m){document.querySelectorAll('#ylWrap .yl-tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');if(m==='detect')ylRenderDetect();else if(m==='germ')ylRenderGerm();else ylRenderGrow();}
+function ylRenderDetect(){
+ state._ylTries=0;
+ const box=document.getElementById('ylBody');if(!box)return;
+ const c=CURATED_DETECTIVE[ylDetCursor%CURATED_DETECTIVE.length];ylDetCursor++;
+ box.innerHTML='<div class="det-patient"><div class="dp-emoji">🧑‍⚕️</div><div class="dp-who">👤 虚拟病人（第 '+ylDetCursor+' 关）</div><div class="dp-say">'+esc(c.scene)+'</div></div>'
+  +'<div class="det-q">'+esc(c.q)+'</div>'
+  +c.opts.map((o,i)=>'<button class="det-opt" id="dopt'+i+'" onclick="ylPick('+i+','+c.ans+',\''+esc(c.disease)+'\')">'+esc(o)+'</button>').join('')
+  +'<div id="dFb"></div><div class="det-hint">答对看知识卡，答错给线索、两次机会用完再揭晓答案。</div>';
+}
+function ylPick(i,ans,disease){
+ const fb=document.getElementById('dFb');if(!fb)return;
+ const btns=document.querySelectorAll('#ylBody .det-opt');
+ if(btns[i].classList.contains('ok')||btns[i].classList.contains('no'))return;
+ if(i===ans){
+  btns.forEach(b=>b.style.pointerEvents='none');btns[i].classList.add('ok');
+  addExp(10);ylTodayInc('det');state.disease.detective=state.disease.detective||{done:0,correct:0};state.disease.detective.done++;state.disease.detective.correct++;saveSilent();
+  fb.innerHTML='<div class="det-hint" style="background:#e8f7ee;color:#2f7a4d">✅ 答对啦！奖励 +10 经验 ⭐ 知识卡已弹出</div>';
+  m6DiseaseDetail(disease);burstFW();
+ }else{
+  btns[i].classList.add('no');
+  state._ylTries=(state._ylTries||0)+1;
+  if(state._ylTries<2){
+   fb.innerHTML='<div class="det-hint">❌ 再想想～ 提示：回病史抓「关键体征」——发病状态（活动中/安静）、有无头痛呕吐、影像学特点，常能锁定方向。</div>';
+  }else{
+   btns[ans].classList.add('ok');btns.forEach(b=>b.style.pointerEvents='none');
+   state.disease.detective=state.disease.detective||{done:0,correct:0};state.disease.detective.done++;saveSilent();
+   fb.innerHTML='<div class="det-hint">两次机会用完，正确答案是高亮项。点它看完整知识卡 👇</div>';
+   m6DiseaseDetail(disease);
+  }
+ }
+}
+function ylRenderGerm(){
+ const box=document.getElementById('ylBody');if(!box)return;
+ const germs=[{e:'🦠',d:'流感/新冠',t:'经呼吸道传播，侵犯上呼吸道黏膜'},
+  {e:'🦠',d:'幽门螺杆菌',t:'定居胃黏膜，诱发炎症→消化性溃疡'},
+  {e:'🫀',d:'冠心病',t:'动脉粥样硬化斑块破裂→冠脉堵塞→心梗'},
+  {e:'🩸',d:'高血压',t:'小动脉痉挛重构→外周阻力↑→靶器官损害'},
+  {e:'🍬',d:'2型糖尿病',t:'胰岛素抵抗→β细胞失代偿→慢性高血糖'},
+  {e:'🫁',d:'支气管哮喘',t:'气道慢性炎症→可逆性气流受限→喘息'}];
+ box.innerHTML='<div class="det-hint">点掉漂浮的病菌，消灭一只解锁一种疾病发病机制；全部清完奖励经验 🎮</div><div class="germ-area" id="germArea"></div><div id="germInfo"></div>';
+ const area=document.getElementById('germArea');let left=germs.length;
+ germs.forEach(g=>{const el=document.createElement('div');el.className='germ';el.textContent=g.e;el.style.left=(8+Math.random()*78)+'%';el.style.top=(8+Math.random()*70)+'%';el.style.animationDelay=(Math.random()*2)+'s';
+  el.onclick=()=>{if(el._done)return;el._done=true;el.remove();left--;ylTodayInc('germ');const info=document.getElementById('germInfo');info.innerHTML='<div class="germ-pop" style="position:static;box-shadow:none;background:#f3f0ff;margin:4px 0">🦠 <b>'+g.d+'</b>：'+g.t+'</div>';addExp(5);
+   if(left<=0){addExp(20);state.gameBadge=state.gameBadge||{};state.gameBadge.germ=true;saveSilent();info.innerHTML+='<div class="det-card"><div class="dc-t">🎉 全部清除！</div><div class="dc-sec">你已掌握 '+germs.length+' 种疾病的发病钥匙，+'+ (5*germs.length+20)+' 经验 🏆</div></div>';}};
+  area.appendChild(el);});
+}
+function ylRenderGrow(){
+ const box=document.getElementById('ylBody');if(!box)return;
+ const exp=state.gameExp||0;const lv=Math.floor(exp/100)+1;const into=exp%100;
+ const det=(state.disease.detective||{}).done||0;const wrong=(state.disease.wrong||[]).length;
+ const badges=[['🌱 初识小医生',exp>=10],['🔍 侦探新星',det>=5],['🦠 病菌克星',!!(state.gameBadge&&state.gameBadge.germ)],['📕 错题猎人',wrong>=10],['⭐ 百题过关',det>=50]];
+ const t=state.ylToday||{date:'',det:0,germ:0};const todayOK=(t.date===todayStr());
+ box.innerHTML='<div class="det-card"><div class="dc-t">⭐ 我的成长</div>'
+  +'<div class="exp-line"><span>等级 Lv.'+lv+'</span><span>'+exp+' 经验</span></div>'
+  +'<div class="exp-bar"><i style="width:'+into+'%"></i></div>'
+  +'<div class="exp-line"><span>距下一级</span><span>'+(100-into)+' 经验</span></div></div>'
+  +'<div class="det-hint">闯关答对 +10 经验，消灭病菌 +5，错题/收藏也计入学习进度。</div>'
+  +'<div class="sec-title">🏅 成就徽章</div><div class="badge-row">'+badges.map(b=>'<span class="badge'+(b[1]?' on':'')+'">'+b[0]+'</span>').join('')+'</div>'
+  +'<div class="sec-title">📅 今日训练</div><div class="det-hint">今日已闯关 '+(todayOK?t.det:0)+' 题、消灭病菌 '+(todayOK?t.germ:0)+' 只。<button class="add-btn" style="margin-top:8px" onclick="ylSyncPlan()">＋ 同步到学习模块任务</button></div>';
+}
+function ylSyncPlan(){state.studyTasks=state.studyTasks||[];state.studyTasks.push({id:uid(),name:'医识小乐园·今日疾病闯关',deadline:'',amt:1,note:'点「✅ 打卡」记录今日已闯关',log:{},auto:'医识'});saveSilent();if(typeof studyTaskRender==='function')studyTaskRender();if(typeof updateProgress==='function')updateProgress('m6');toast('已加入学习模块任务 ✅');}
+
+/* ================= 表达小剧场（并入 m9 表达能力，本地数据互通） ================= */
+let thCur=null,thRound=0,thAnswers=[],thTimer=null;
+function thOpen(){const w=document.getElementById('thWrap');const open=w.style.display!=='none';w.style.display=open?'none':'block';if(!open)thRenderSel();}
+function thTab(btn,m){document.querySelectorAll('#thWrap .yl-tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');if(m==='sel')thRenderSel();else if(m==='hist')thRenderHist();else thRenderTpl();}
+function modeIcon(m){return {面试:'🎓',日常:'💬',辩论:'⚔️',即兴:'⚡'}[m]||'🎬';}
+function thRenderSel(){
+ const box=document.getElementById('thBody');if(!box)return;
+ const modes=['面试','日常','辩论','即兴'];
+ box.innerHTML=modes.map(m=>{const list=SCENARIO_DB.filter(s=>s.mode===m);return '<div class="sec-title">'+modeIcon(m)+' '+m+'剧场</div><div class="th-list">'+list.map(s=>'<div class="th-item" onclick="thStart(\''+m+'\','+SCENARIO_DB.indexOf(s)+')"><div class="th-t">'+esc(s.title)+'</div><div class="th-m">'+esc(s.intro)+'</div></div>').join('')+'</div>';}).join('');
+}
+function thStart(mode,idx){const s=SCENARIO_DB[idx];if(!s)return;thCur=s;thRound=0;thAnswers=[];thRenderRound();}
+function thRenderRound(){
+ const s=thCur;const r=s.rounds[thRound];const box=document.getElementById('thBody');
+ const t0=state.expTimer||90;
+ box.innerHTML='<div class="th-play"><div class="th-round">第 '+(thRound+1)+' / '+s.rounds.length+' 轮 · '+modeIcon(s.mode)+' '+s.mode+'</div>'
+  +'<div class="th-npc"><div class="th-ava">🎭</div><div class="th-bub">'+esc(r.npc)+'</div></div>'
+  +'<div class="th-timer" id="thTimer">⏱ 思考 '+(t0)+'s（点「开始」计时）</div>'
+  +'<div style="font-size:10px;color:#a08ab0;margin:4px 0">倒计时：<select id="thTsel" onchange="state.expTimer=+this.value;saveSilent()"><option value="60">60s</option><option value="90" selected>90s</option><option value="120">120s</option></select> · 模拟临场压力</div>'
+  +'<textarea class="th-input" id="thIn" placeholder="写下你的回答，自由发挥，不用选现成选项…"></textarea>'
+  +'<button class="add-btn" onclick="thSubmit()">提交这一轮 ▸</button>'
+  +'<button class="add-btn" style="background:#eef;color:#557;margin-top:6px" onclick="thToggleTimer()">⏱ 开始 / 暂停倒计时</button>'
+  +'<div id="thTip" class="det-hint">💡 小提示：'+esc(r.tip||'先结论后理由，用"背景-问题-原因-方案"分点。')+'</div></div>';
+}
+function thToggleTimer(){const el=document.getElementById('thTimer');if(!el)return;if(thTimer){clearInterval(thTimer);thTimer=null;el.textContent='⏱ 已停止';return;}let t=state.expTimer||90;el.textContent='⏱ '+t+'s';thTimer=setInterval(()=>{t--;if(t<=0){clearInterval(thTimer);thTimer=null;el.textContent='⏱ 时间到！';return;}el.textContent='⏱ '+t+'s';},1000);}
+function thSubmit(){
+ const v=(document.getElementById('thIn').value||'').trim();if(!v){toast('先写点什么吧～');return;}
+ if(thTimer){clearInterval(thTimer);thTimer=null;}
+ thAnswers.push(v);thRound++;
+ if(thRound<thCur.rounds.length){thRenderRound();}else{thReport();}
+}
+function thAnalyze(answers){
+ const full=answers.join('\n');const good=[],bad=[],tags=[];
+ const fw=['背景','问题','原因','方案','首先','其次','最后','第一','第二','第三','其一','其二','一方面','步骤','综上'];
+ let fwCount=0;fw.forEach(w=>{if(full.indexOf(w)>=0)fwCount++;});
+ const hasPoint=/[①②③⑷]|[1-9]、|\d+\./.test(full);
+ const len=full.length;
+ if(fwCount>=3)good.push('逻辑框架清晰，能用"背景/问题/原因/方案"或分层（首先/其次）组织，结构感强。');
+ else bad.push('缺少结构化框架：回答偏散，建议按「背景→问题→原因→方案」四步展开，先结论后理由。');
+ if(hasPoint)good.push('用了分点/序号表达，重点一目了然，听众更易抓住。');
+ else bad.push('没有分点标记（①②③或第一/第二），信息堆在一起，建议用小序号拆解。');
+ if(len<40)bad.push('回答过短、信息量不足，关键要素没说清；至少把"是什么、为什么、怎么做"各说一句。');
+ else if(len<400)good.push('篇幅适中，信息量足够。');
+ else good.push('内容充实，注意挑重点先说，避免铺垫过长。');
+ if(/理解|抱歉|感谢|共情|我懂|辛苦|体谅/.test(full))good.push('有共情与情绪承接，沟通温度好。');
+ if(fwCount<2)tags.push('框架薄弱');
+ if(!hasPoint)tags.push('不会分点表达');
+ if(len<40)tags.push('内容偏短');
+ tags.push('应急话术'+((/处理|抢救|安抚|沟通|优先|评估/.test(full))?'尚可':'不足'));
+ return {good,bad,tags};
+}
+function thReport(){
+ const s=thCur;const a=thAnalyze(thAnswers);const box=document.getElementById('thBody');
+ const goodHtml=a.good.length?'<div class="rp-sec"><div class="rp-h ok">✅ 优点</div>'+a.good.map(x=>'<div class="rp-li">· '+x+'</div>').join('')+'</div>':'';
+ const badHtml=a.bad.length?'<div class="rp-sec"><div class="rp-h bad">⚠️ 可改进</div>'+a.bad.map(x=>'<div class="rp-li">· '+x+'</div>').join('')+'</div>':'';
+ const tagHtml='<div class="rp-sec"><div class="rp-h tip">🏷 标签</div>'+a.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div>';
+ const stdHtml='<div class="rp-sec"><div class="rp-h tip">📝 优化示范</div><div class="rp-std">'+esc(s.std)+'</div></div>';
+ box.innerHTML='<div class="th-report"><div class="rp-h" style="font-size:15px;text-align:center;color:#b65a9b;margin-bottom:8px">📊 表达复盘报告</div>'+goodHtml+badHtml+tagHtml+stdHtml
+  +'<button class="add-btn" style="margin-top:6px" onclick="thFav()">💖 收藏此剧本</button>'
+  +'<button class="add-btn" onclick="thBackSel()">◂ 返回选剧本</button></div>';
+ state.expTheater=state.expTheater||{history:[],fav:[],wrong:[]};
+ state.expTheater.history.push({title:s.title,mode:s.mode,answers:thAnswers.slice(),date:todayStr()});
+ state.expCount=(state.expCount||0)+1;
+ if(document.getElementById('c-m9-n')){const n=(state.recCount||0)+(state.topicCount||0)+(state.expCount||0);document.getElementById('c-m9-n').textContent=n;document.getElementById('bar-m9').style.width=Math.min(n/3,1)*100+'%';}
+ saveSilent();
+}
+function thBackSel(){thRenderSel();document.querySelectorAll('#thWrap .yl-tab').forEach((b,i)=>b.classList.toggle('on',i===0));}
+function thRenderHist(){
+ const box=document.getElementById('thBody');const h=(state.expTheater&&state.expTheater.history)||[];
+ if(!h.length){box.innerHTML='<div class="th-hist">还没有复盘记录，去「选剧本」玩一局吧～</div>';return;}
+ box.innerHTML='<div class="sec-title">📜 历史复盘（'+h.length+' 场）</div>'+h.slice().reverse().map(x=>'<div class="th-hist"><b>'+esc(x.title)+'</b> · '+x.mode+' · '+x.date+'<br>'+x.answers.map(a=>'▸ '+esc(a.slice(0,80))).join('<br>')+'</div>').join('');
+}
+function thRenderTpl(){
+ const box=document.getElementById('thBody');
+ const tpls=[['面试答题模板','背景(我是谁/经历)→能力(举例)→动机(为何适合)；1分钟内，少空话。'],['结构化沟通','肯定对方+说明难处+替代方案；先共情再解释。'],['应急四步','①评估轻重②优先抢救/呼救③同步沟通④事后记录。'],['表达框架','背景→问题→原因→方案，先结论后理由。']];
+ box.innerHTML='<div class="sec-title">📋 表达模板库</div>'+tpls.map(t=>'<div class="th-hist"><b>'+t[0]+'</b><br>'+t[1]+'</div>').join('')+'<div class="det-hint">训练时随时回看，结束后套用模板重写自己的答案。</div>';
+}
+function thFav(){state.expTheater=state.expTheater||{history:[],fav:[],wrong:[]};state.expTheater.fav.push({title:(thCur&&thCur.title)||'剧本',date:todayStr()});saveSilent();toast('已收藏当前剧本 💖');}
 
 </script>
 </html>
