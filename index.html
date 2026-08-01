@@ -3004,7 +3004,7 @@ function modalOK(){
     else if(x.type!=='html'){v[x.id]=document.getElementById('mf-'+x.id).value;}});
   const cb=card._cb;closeModal();if(cb)cb(v);
 }
-function closeModal(){document.getElementById('modalMask').classList.remove('show');}
+function closeModal(){const m=document.getElementById('modalMask');if(m)m.classList.remove('show');const c=document.getElementById('modalCard');if(c)c.innerHTML='';}
 
 /* ===== 双提醒引擎 ===== */
 function toggleRemind(mod,type,el){state.remind[mod][type]=!state.remind[mod][type];el.classList.toggle('on',state.remind[mod][type]);saveSilent();}
@@ -4865,6 +4865,9 @@ async function finXlsxToRows(buf){
  const ws=wb.Sheets[wb.SheetNames[0]];
  const range=XLSX.utils.decode_range(ws['!ref']||'A1');
  const rows=[];const pad=n=>String(n).padStart(2,'0');
+ const fmtExcelDate=(d,utc)=>utc
+  ? (d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate())+' '+pad(d.getUTCHours())+':'+pad(d.getUTCMinutes())+':'+pad(d.getUTCSeconds()))
+  : (d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds()));
  for(let R=range.s.r;R<=range.e.r;R++){
   const row=[];
   for(let C=range.s.c;C<=range.e.c;C++){
@@ -4874,7 +4877,11 @@ async function finXlsxToRows(buf){
    let v;
    if(cell.t==='d'||cell.v instanceof Date){
     const d=cell.v instanceof Date?cell.v:new Date(cell.v);
-    v=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+    v=fmtExcelDate(d,false);
+   } else if(cell.t==='n'&&typeof cell.v==='number'&&cell.v>=20000&&cell.v<=60000&&Number.isFinite(cell.v)&&Math.floor(cell.v)===cell.v){
+    // 裸 Excel 日期序列号（无日期格式的导出也会这样存）：20000~60000 的整数最可能是日期
+    const d=new Date((cell.v-25569)*86400000);
+    v=fmtExcelDate(d,true);
    } else {
     v=cell.w!=null?cell.w:(cell.v==null?'':String(cell.v));
    }
